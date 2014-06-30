@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/js/qualitymetrics.js=UTF-8
+encoding//WebContent/WEB-INF/jsp/addUser.jsp=UTF-8
+encoding//WebContent/WEB-INF/jsp/commonpart/mainMenu.jsp=UTF-8
+encoding//src/com/env/qualitymetrics/controller/MainframeController.java=UTF-8
+encoding//src/com/env/qualitymetrics/tool/SurveyMonkeyHandler.java=UTF-8
+encoding//src/config/spring=UTF-8
+encoding//src/config/spring/surveymonkey.properties=UTF-8
+encoding/<project>=UTF-8

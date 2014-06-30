@@ -1,0 +1,525 @@
+*
+{
+	font-family:微软雅黑
+}
+
+
+#navigatorForm
+{
+	font-size:16px;
+}
+
+#formModule,#formProduct
+{
+	width:400px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#formModule select,#formModule #project_name, #formProduct select, #formProduct #project_name
+{
+	margin-bottom:15px;
+}
+
+#formModule #project_name
+{
+	display:block;
+}
+
+#formModule h3, #formProduct h3
+{
+	width:280px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:30px;
+}
+
+#divPrint
+{
+	width:600px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:120px;
+}
+
+#spanPrintTitle
+{
+	display:block;
+	width:100%;
+	font-size:24px;
+	font-weight:bold;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+}
+
+#divBtnPrint
+{
+	float:right;
+	padding-bottom:10px;
+	margin-left:10px;
+}
+
+#selectSprintVersion, #selectRedmine
+{
+	width:200px;
+}
+
+#frmLogin .form-control,#frmLogin .btn-block
+{
+	width:300px;
+	margin-bottom:10px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#frmLogin
+{
+	width:600px;
+/* 	margin-top:160px;
+	margin-bottom:10px; */
+	margin-left:auto;
+	margin-right:auto;
+	padding-top:40px;
+	padding-bottom:40px;
+}
+
+#divTitle
+{
+	font-size:28px;
+	width:80%;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	margin-bottom:20px;
+	/* color:white; */
+}
+
+#divSubTitle
+{
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;
+	font-size:36px;
+	margin-bottom:15px;
+	text-align:center;
+}
+
+#divLogin
+{
+	margin-top:120px;
+	background-color:#eee;
+	width:800px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+
+#build_sonar_flag
+{
+	width:300px;
+	font-weight:bold;
+	font-size:15px;
+	color: red;
+	float:right;
+}
+
+table tr,table th
+{
+	align:center;
+	vertical-align:middle;
+}
+
+table td
+{
+	vertical-align:middle;
+	font-size:16px;
+}
+
+table th
+{
+	font-size:16px;
+}
+
+#formKPI select
+{
+	height:34px;
+}
+
+#formKPI h3
+{
+	width:200px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:20px;
+}
+
+#formKPI select
+{
+	margin-right:15px;
+	width:150px;
+}
+
+#formKPI #spanFlag
+{
+	margin-left:15px;
+	font-size:16px;
+	color:red;
+}
+
+#sprintStart,#sprintEnd
+{
+	height:34px;
+	margin-bottom:12px;
+	width:120px;
+	margin-right:15px;
+}
+
+#tableUser a
+{
+	margin-right:10px;
+}
+
+#divAddUser,#divEditUser
+{
+	width:30%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+li
+{
+	list-style-type:none;
+}
+
+#divEditUser label
+{
+	margin-top:10px;
+}
+
+#divAddUser h3,#divEditUser h3
+{
+	font-size:24px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:30px;
+}
+
+#formAddUser button,#formEditUser button
+{
+	padding-left:20px;
+	padding-right:20px;
+	margin-right:10px;
+	float:right;
+}
+
+#formAddUser input,select
+{
+	margin-bottom:15px;
+}
+
+#txtSelectProject
+{
+	height:30px;
+	width:200px;
+	font-size:16px;
+}
+
+
+
+#divLogoName
+{
+	position:fixed;
+	top:0px;
+	margin:0px,0px,0px,0px;
+	width:100%;
+	/* background-color:#1a1a1a;#F0F1F4; */
+	background-color:rgb(43, 122, 205);
+	display:inline;
+	z-index:5;
+}
+
+#update_flag
+{
+	font-size:16px;
+}
+
+#divMainMenu a,#divLogoName a,#divNavMenu a
+{
+	text-decoration:none;
+	color:white;
+}
+
+#divMainMenu a:hover,#divNavMenu a:hover
+{
+	text-decoration: underline;
+}
+
+
+#spanUser,#spanLog
+{
+	font-size:16px;
+	padding:0px 0px 8px 20px;
+	float:right;
+}
+
+.narbar,.navbar-inverse,.navbar-collapse,.narbar-fixed-top
+{
+	border-style:none;
+}
+
+#divMainMenu,#divNavMenu
+{
+	position:fixed;
+	top:48px;
+	width:100%;
+	background-color:rgb(43, 122, 205);
+	padding-left:155px;
+	padding-right:105px;
+	z-index:5;
+}
+
+#ulMainMenu li,#ulNavMenu li
+{
+	font-size:16px;
+	font-weight:bold;
+	font-family:΢���ź�;
+	float:left;
+	padding:10px 20px 8px 0px;
+}
+
+.imgLogo
+{
+	width:140px;
+	height:48px;
+	float:left;
+}
+
+#aProjectName
+{
+	font-size: 24px;
+}
+
+table
+{
+	vertical-align:middle;
+	align:center;
+	font-size:14px;
+}
+
+#tbl_indicator_weight
+{
+	margin:10px;
+}
+
+/* #tblWeight
+{
+	border: 1px solid #888888;
+	border-collapse: collapse;
+	margin-top: 10px;
+	width: 100%; 
+	TABLE-LAYOUT: fixed;
+	align:center;
+	ver
+} */
+
+input[type="submit"],input[type="button"]
+{
+	margin:5px;
+}
+
+#sprint_tipLabel
+{
+	margin-top:10px;
+	font-size:16px;
+	color:red;
+}
+
+.project_tipLabel
+{
+	margin-top:10px;
+	color:red;
+	font-size:16px;
+}
+
+
+.spanTipWeight
+{
+	margin-top:10px;
+	color:red;
+	font-size:16px;
+}
+
+#bodyLogin #divContent
+{
+	width:500px;
+	height:300px;
+}
+
+#divContent
+{
+	margin-top:120px;
+}
+
+#divMainContent
+{
+	margin-top:120px;
+}
+
+#divCurrentUser
+{
+	display:inline;
+	float:right;
+}
+
+#divLogout
+{
+	float:right;
+	display:inline;
+}
+
+#divAlignLeft{
+	margin:10px;
+	float:left;
+	width:240px;
+}
+
+
+#divAlignRight
+{
+	margin:10px;
+	float:right;
+	width:240px;
+}
+
+#divAlignLeft input, #divAlignRight input
+{
+	margin-bottom:12px;
+}
+
+
+#divWeightButton
+{
+	clear:both;
+}
+
+#divFooter
+{
+	position:fixed;
+	/* position:relative; */
+	display: block;
+	margin: 0px 0px 0px 0px;
+	bottom: 0px;
+	clear: both;
+	width: 100%;
+	color: #fff;
+	height: 35px;
+	right: 0;
+	text-align: center;
+	line-height: 35px;
+	font-size: 12px;
+	min-width: 1280px;
+	background-color:rgb(43, 122, 205);
+}
+
+input[type="button"]
+{
+	color: #fff;
+	background-color: #428bca;
+	border-color: #357ebd;
+}
+
+
+#spanBrowseHistory
+{
+	font-size:16px;
+	float:right;
+	font-weight:bold;
+}
+
+.projectdetail input[type="radio"]
+{
+	margin-left:10px;
+}
+
+#spanPromptWait
+{
+	margin:0 0 0 10px;
+}
+
+.hideElement
+{
+	visibility:hidden;
+}
+
+#tbl_rankings tr td
+{
+	font-size:14px;
+}
+
+#tbl_rankings tr th
+{
+	font-size:16px;
+	height:32px;
+	line-height:32px;
+}
+
+tr:nth-child(odd) td
+{
+	background-color:rgb(221, 221, 221);
+}
+
+tr:nth-child(even) td
+{
+	
+}
+
+#labelTotalRank
+{
+	align:center;
+	font-size:24px;
+}
+
+#divSetSprintDetail h1
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 200px;
+	font: bold 22px "微软雅黑";
+}
+
+.frmSetSprintDetail
+{
+	padding:20px 20px 10px 20px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom:20px;
+	width:700px;
+	background-color: #fff;
+	border-radius: 4px 4px 0 0;
+	box-shadow: none;
+	border-width: 1px;
+	border-color: #ddd;
+	border-style:solid;
+	height:100%;
+	overflow:auto;
+	font-size:16px;
+}
+
+label
+{
+	font-size:16px;
+}
+
+#lmt_score_flag, #ipd_score_flag
+{
+	font-size:20px;
+	color:red;
+	margin-left:15px;
+	font-weight:bold;
+}
+
+#spanEnvision a:hover
+{
+	text-decoration:none;
+}
