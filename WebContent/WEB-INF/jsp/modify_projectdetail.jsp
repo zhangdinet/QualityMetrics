@@ -114,7 +114,7 @@
 				}
 				$("#formProduct").attr("action", "saveModifyProject");
 			} else if (i == 1) {
-				$("#formProduct").attr("action", "backToMainframe");
+				$("#formProduct").attr("action", "projectlist");
 			}
 			$("#formProduct").submit();
 		}

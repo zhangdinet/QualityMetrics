@@ -170,7 +170,7 @@
 				}
 				$("#formModule").attr("action", "saveModifyProjectModule");
 			} else if (i == 1) {
-				$("#formModule").attr("action", "backToMainframe");
+				$("#formModule").attr("action", "projectlist");
 			}
 			$("#formModule").submit();
 		}

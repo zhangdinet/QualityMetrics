@@ -875,8 +875,4 @@ public class MainframeController {
 		mv.addObject("weightDto",weightDto);
 		return mv;
 	}
-	
-	
-	
-	
 }
