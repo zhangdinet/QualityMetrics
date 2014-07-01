@@ -366,8 +366,48 @@ public class MainframeController {
 		
 		String project_name = req.getParameter("project_name");
 		String project_name_tl = req.getParameter("testlinkName");
-		String project_name_rm = req.getParameter("redmineName");		
-		String project_name_rm_support = req.getParameter("redmineSupportName");		
+		String project_name_rm = req.getParameter("redmineName");
+		String project_name_rm_support = req.getParameter("redmineSupportName");
+ 
+		ModelAndView mv = new ModelAndView();
+		if(projectService.updateProjectNameById(project_id,project_name) &&
+				projectService.updateProjectSourceNames(project_id,project_name_tl,project_name_rm,"")
+				&& projectService.updateRedmineSupportName(project_id,project_name_rm_support)
+				&& projectService.updateProjectFlagById(project_id, SysUtil.project_flag)){
+			mv.addObject("updateResult","ok");
+		}else{
+			mv.addObject("updateResult","err");
+		}
+		mv.setViewName("redirect:projectlist");
+		//=======================
+		return mv;
+	}
+	
+	
+	/*@RequestMapping("/saveModifyProject")
+	//保存编辑结果
+	public ModelAndView saveModifyProject(HttpServletRequest req){
+		String project_id_string = req.getParameter("project_id");
+		Integer project_id = null;
+		if(project_id_string.equals("0")){
+			ProjectDto project = projectService.createNewProject();
+			project_id = project.getProject_id();
+		}else{
+			project_id = Integer.parseInt(req.getParameter("project_id"));
+		}
+
+		Integer user_project_id = (Integer) req.getSession().getAttribute("project_id");
+		if(user_project_id == null || (user_project_id != project_id && user_project_id != 0)){
+			//非管理员，也不是本Project的管理人员
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("error");
+			return mv;
+		}
+		
+		String project_name = req.getParameter("project_name");
+		String project_name_tl = req.getParameter("testlinkName");
+		String project_name_rm = req.getParameter("redmineName");
+		String project_name_rm_support = req.getParameter("redmineSupportName");
  
 		ModelAndView mv = new ModelAndView();
 		if(projectService.updateProjectNameById(project_id,project_name) &&
@@ -383,10 +423,11 @@ public class MainframeController {
 		.addObject("project_id", project_id).addObject("project_name_rm_support", project_name_rm_support);
 		//=================zhangdi 140421===============
 		 //mv.setViewName("modify_projectdetail");
-		mv.setViewName("mainframe");
+		//mv.setViewName("mainframe");
+		mv.setViewName("projectlist");
 		//=======================
 		return mv;
-	}
+	}*/
 	
 	@RequestMapping("/saveModifyProjectModule")
 	//保存项目模块编辑结果
@@ -410,7 +451,7 @@ public class MainframeController {
 		
 		String project_name = req.getParameter("project_name");
 		String project_name_tl = req.getParameter("testlinkName");
-		String project_name_rm = req.getParameter("redmineName");		
+		String project_name_rm = req.getParameter("redmineName");
 		String project_name_rm_support = req.getParameter("redmineSupportName");
 		
 		String[] topsuites_testlinks = req.getParameterValues("topsuite_testlink");
@@ -422,7 +463,7 @@ public class MainframeController {
 		String[] categories_redmine = req.getParameterValues("category_redmine");
 		String category_name_rm=Arrays.toString(categories_redmine);
 		category_name_rm=category_name_rm.substring(1,category_name_rm.length()-1);
-		category_name_rm=category_name_rm.replaceAll(",",SysUtil.splitFlag);		
+		category_name_rm=category_name_rm.replaceAll(",",SysUtil.splitFlag);
  
 		ModelAndView mv = new ModelAndView();
 		if(projectService.updateProjectNameById(project_id,project_name) &&

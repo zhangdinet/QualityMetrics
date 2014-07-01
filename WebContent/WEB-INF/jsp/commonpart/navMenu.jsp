@@ -5,8 +5,8 @@
 <div id="divNavMenu">
 	<ul id="ulNavMenu">
 		<li><a href="mainframe?menuIndex=0">质量龙虎榜 </a></li>
-		<li><a href="mainframe?menuIndex=1">产品模块设置 </a></li>
-		<li id="liMenuProject"><a href="projectlist">Demo产品模块设置 </a></li>
+		<!-- <li><a href="mainframe?menuIndex=1">产品模块设置 </a></li> -->
+		<li id="liMenuProject"><a href="projectlist">产品模块设置 </a></li>
 		<li id="liMenuWeight"><a href="weightlist">权重设置</a></li>
 		<!-- <li><a href="mainframe?menuIndex=3">权重设置 </a></li> -->
 		<li><a href="employeeskpi">员工质量KPI</a></li>
