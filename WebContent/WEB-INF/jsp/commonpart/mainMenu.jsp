@@ -5,16 +5,13 @@
 <div id="divMainMenu">
 	<ul id="ulMainMenu">
 		<li><a href="#" onclick="showRankings()">质量龙虎榜 </a></li>
-		<!-- <li id="menu_settings"><a href="#" onclick="showSettings()">产品模块设置 </a></li> -->
 		<li id="liMenuProject"><a href="projectlist">产品模块设置 </a></li>
 		<li id="liMenuWeight"><a href="weightlist">权重设置</a></li>
-		<!-- <li id="menu_weightSettings"><a href="#" onclick="showWeightSettings()">权重设置 </a></li> -->
 		<li id="liMenuKPI"><a href="employeeskpi">员工质量KPI</a></li>
 		<%
 			if(session.getAttribute("username").equals("admin"))
 			{
 		%>
-			<!-- <li id="menu_usersManagement"><a href="#" onclick="showUserConfig()">系统管理 </a></li> -->
 			<li id="liMenuSystemSetting"><a href="systemsettinglist">系统管理</a></li>
 		<%
 			}

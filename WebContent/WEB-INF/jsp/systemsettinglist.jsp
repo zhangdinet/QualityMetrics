@@ -46,5 +46,47 @@
 			</table>
 		<jsp:include page="commonpart/containerEnd.jsp"></jsp:include>
 		<jsp:include page="commonpart/footer.jsp"></jsp:include>
+		<script type="text/javascript">
+			function resetPwd(user_id){
+				if(confirm("确定要重置用户密码吗？")){
+					$.ajax({
+						url: 'resetPwd',
+						type: 'post',
+						data: {"user_id":user_id},
+						success:function(data){
+							if(data == 'ok'){
+								alert("重置成功");
+								
+							}else{
+								alert("重置失败");
+							}
+						},
+						error:function(){
+							alert("showSprintByProjectId error!");
+						},
+					});
+					
+				}
+			}
+	
+			function deleteUser(user_id){
+				if(confirm("删除后无法恢复，确定要删除用户吗？")){
+					$.ajax({
+						url: 'deleteUser',
+						type: 'post',
+						data: {"user_id":user_id},
+						success:function(data)
+						{
+							//alert("已删除！");
+							location.reload();
+						},
+						error:function(){
+							alert("delete user error!");
+						},
+					});
+					
+				}
+			}
+		</script>
 	</body>
 </html>

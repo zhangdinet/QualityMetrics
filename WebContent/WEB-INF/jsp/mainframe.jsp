@@ -54,7 +54,6 @@
 				</div>
 					
 				<div id="users"></div>
-				<div id="indicator_weight"></div>
 			</div>
 		</div>
 		
@@ -106,10 +105,7 @@
 			var flag_admin = '<%=session.getAttribute("flag_admin")%>';
 			//普通用户 不显示产品设置
 			if(flag_admin == 'no'){
-				/* $("#menu_settings").hide();
-				$("#menu_modifypwd").hide(); */
 				$("#menu_usersManagement").hide();
-				/* $("#menu_weightSettings").hide(); */
 			}else{
 				var project_id = '<%=session.getAttribute("project_id")%>';
 				if(project_id != '0'){
@@ -162,7 +158,6 @@
 			$("#rankings").show();
 			$("#settings").hide();
 			$("#users").hide();
-			$("#indicator_weight").hide();
 			showNewestRankings();
 			showRankingChart();
 			$('select[name="rankingPeriod"]').val("0");
@@ -172,7 +167,6 @@
 			$("#settings").show();
 			$("#rankings").hide();
 			$("#users").hide();
-			$("#indicator_weight").hide();
 			showSettingsDetail();
 			hidePromptWait();
 		}
@@ -180,12 +174,11 @@
 			$("#users").show();
 			$("#settings").hide();
 			$("#rankings").hide();
-			$("#indicator_weight").hide();
 			showUserList();
 			hidePromptWait();
 		}
 		
-		function showUserManagement()
+/* 		function showUserManagement()
 		{
 			alert("test");
 		}
@@ -195,7 +188,6 @@
 			$("#users").hide();
 			$("#settings").hide();
 			$("#rankings").hide();
-			showWeightList();
 			hidePromptWait();
 		}
 		
@@ -211,7 +203,7 @@
 				}
 			});
 		}
-		
+		 */
 		function showNewestRankings(){
 			$.ajax({
 				url: 'showRankings',
@@ -268,22 +260,6 @@
 			});
 		}
 
-		function showWeightList(){
-			$.ajax({
-				url: 'showIndicatorWeight',
-				type: 'post',
-				success:function(data){
-				    if(data.indexOf('<html>')>-1){
-				    	window.location = "login";
-				    	return;
-					}
-					$("#indicator_weight").html(data);
-		  		 },
-		   		error:function(){
-		  			alert("showWeightList error!");
-		  	     },
-			});
-		}
 
 		//添加Project信息
 		function addProject(){
@@ -333,49 +309,7 @@
 				},
 			});
 		}
-		function resetPwd(user_id){
-			if(confirm("确定要重置用户密码吗？")){
-				$.ajax({
-					url: 'resetPwd',
-					type: 'post',
-					data: {"user_id":user_id},
-					success:function(data){
-						if(data == 'ok'){
-							alert("重置成功");
-							
-						}else{
-							alert("重置失败");
-						}
-					},
-					error:function(){
-						alert("showSprintByProjectId error!");
-					},
-				});
-				
-			}
-		}
-
-		function deleteUser(user_id){
-			if(confirm("删除后无法恢复，确定要删除用户吗？")){
-				$.ajax({
-					url: 'deleteUser',
-					type: 'post',
-					data: {"user_id":user_id},
-					success:function(data){
-						if(data == 'ok'){
-							alert("已删除！");
-							showUserList();
-						}else{
-							alert("删除失败");
-						}
-					},
-					error:function(){
-						alert("delete user error!");
-					},
-				});
-				
-			}
-		}
+		
 	</script>
 </body>
 </html>

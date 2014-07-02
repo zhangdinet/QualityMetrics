@@ -859,14 +859,7 @@ public class MainframeController {
 		pw.write("ok");
 	}
 	
-	@RequestMapping("/deleteUser")
-	public void deleteUser(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-		resp.setContentType("text/plain");
-		PrintWriter pw = resp.getWriter();
-		int user_id = Integer.parseInt(req.getParameter("user_id"));
-		userService.deleteUserById(user_id);
-		pw.write("ok");
-	}
+	
 	
 	@RequestMapping("/addUser")
 	public ModelAndView addUser(HttpServletRequest req){

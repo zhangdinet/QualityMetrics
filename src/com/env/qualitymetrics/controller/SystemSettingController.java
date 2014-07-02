@@ -51,16 +51,6 @@ public class SystemSettingController
 		return mv;
 	}
 	
-	@RequestMapping("/showUserList")
-	public ModelAndView showUserList(HttpServletRequest req){
-		ModelAndView mv = new ModelAndView();
-		List<UserDto> userList = userService.getUserList();
-		mv.addObject("userList",userList);
-		mv.setViewName("userlist");
-		return mv;
-	}
-	
-	
 	/***
 	 * 编辑用户信息
 	 * @return
@@ -142,7 +132,7 @@ public class SystemSettingController
 			userService.updateUserInfo(user_id, flag_admin, project_id, username);
 		}
  
-		mv.setViewName("mainframe");
+		mv.setViewName("redirect:systemsettinglist");
 		return mv;
 	}
 	
@@ -179,6 +169,18 @@ public class SystemSettingController
 		mv.addObject("user_id",user_id);
 		mv.addObject("modifyResult","ok");
 		mv.setViewName("redirect:/showModifyUsers");
+		return mv;
+	}
+	
+	@RequestMapping("/deleteUser")
+	public ModelAndView deleteUser(HttpServletRequest req, HttpServletResponse resp) throws IOException
+	{
+		int user_id = Integer.parseInt(req.getParameter("user_id"));
+		userService.deleteUserById(user_id);
+		ModelAndView mv = new ModelAndView();
+		/*List<UserDto> userList = userService.getUserList();
+		mv.addObject("userList",userList);*/
+		mv.setViewName("systemsettinglist");
 		return mv;
 	}
 }
