@@ -92,7 +92,7 @@
 			</c:choose>
 				<td>${item.project_name_rm_support }</td>
 				<td>
-					<a onclick="showSprintByProjectId('${item.project_id}','${item.project_name }','1')" href="#">Sprint详情</a>
+					<a href="sprintlist?project_id=${item.project_id}&project_name=${item.project_name}&pageNumber=1">Sprint详情</a>
 				</td>
 			</tr>
 			</c:forEach>
@@ -102,6 +102,18 @@
 		<jsp:include page="commonpart/footer.jsp"></jsp:include>
 		<script type="text/javascript">
 			function showSprintByProjectId(project_id,project_name,pageNumber){
+				$.ajax({
+					url: 'showSettingsSprint',
+					type: 'post',
+					data: {"project_id":project_id,"project_name":project_name,"pageNumber":pageNumber},
+					/* success:function(data){
+					},
+					error:function(){
+					}, */
+				});
+			}
+		
+			/* function showSprintByProjectId(project_id,project_name,pageNumber){
 				$.ajax({
 					url: 'showSettingsSprint',
 					type: 'post',
@@ -117,7 +129,7 @@
 						alert("showSprintByProjectId error!");
 					},
 				});
-			}
+			} */
 			
 			function gotoSelectedPage()
 			{

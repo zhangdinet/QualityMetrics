@@ -79,7 +79,7 @@
 				url: 'showRankings',
 				data: {'rankId':0},
 				type: 'post',
-				success:function(data){
+			/* 	success:function(data){
 					if(data.indexOf('<html>')>-1){
 						window.location = "login";
 						return;
@@ -88,7 +88,7 @@
 					},
 					error:function(){
 						alert("showNewestRankings error!");
-				},
+				}, */
 			});
 		}
 		
@@ -168,9 +168,9 @@
 					}
 					$("#settings_sprint").html(data);
 				},
-				error:function(){
+				/* error:function(){
 					alert("showSprintByProjectId error!");
-				},
+				}, */
 			});
 		}
 		

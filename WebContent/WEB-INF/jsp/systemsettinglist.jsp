@@ -61,9 +61,9 @@
 								alert("重置失败");
 							}
 						},
-						error:function(){
+					/* 	error:function(){
 							alert("showSprintByProjectId error!");
-						},
+						}, */
 					});
 					
 				}

@@ -111,6 +111,7 @@ public class MainframeController {
 	}
 	
 	
+	 
 	
 	@RequestMapping("/showProjectDetail")
 	//显示项目详情
@@ -184,28 +185,6 @@ public class MainframeController {
 		return mv;
 	}
 	
-	@RequestMapping("/showSettingsSprint")
-	//显示产品设置中的Sprint信息
-	public ModelAndView showSettingsSprintDetail(HttpServletRequest req){
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("settings_sprint");
-		Integer project_id = Integer.parseInt(req.getParameter("project_id"));
-		String project_name = req.getParameter("project_name");
-		int project_flag=projectService.getProjectFlagById(project_id);
-		int pageNumber = Integer.parseInt(req.getParameter(("pageNumber")));
-		Page page = new Page();
-		page.setCurrentPage(pageNumber);
-		List<SprintDto> sprintList = sprintService.getSprintsByProjectId(project_id,page);
-		int totalPages = page.getTotal()/page.getPageSize()+ ((page.getTotal()%page.getPageSize())>0?1:0);
-		mv.addObject("sprintList", sprintList);
-		mv.addObject("project_name",project_name);
-		mv.addObject("project_id", project_id);
-		mv.addObject("totalPages",totalPages);
-		mv.addObject("pageNumber",page.getCurrentPage());
-		mv.addObject("pageSize",page.getPageSize());
-		mv.addObject("project_flag", project_flag);
-		return mv;
-	}
 	
 	@RequestMapping("/showModifyProject")
 	//编辑产品信息
@@ -313,52 +292,6 @@ public class MainframeController {
 		//=======================
 		return mv;
 	}
-	
-	
-	/*@RequestMapping("/saveModifyProject")
-	//保存编辑结果
-	public ModelAndView saveModifyProject(HttpServletRequest req){
-		String project_id_string = req.getParameter("project_id");
-		Integer project_id = null;
-		if(project_id_string.equals("0")){
-			ProjectDto project = projectService.createNewProject();
-			project_id = project.getProject_id();
-		}else{
-			project_id = Integer.parseInt(req.getParameter("project_id"));
-		}
-
-		Integer user_project_id = (Integer) req.getSession().getAttribute("project_id");
-		if(user_project_id == null || (user_project_id != project_id && user_project_id != 0)){
-			//非管理员，也不是本Project的管理人员
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("error");
-			return mv;
-		}
-		
-		String project_name = req.getParameter("project_name");
-		String project_name_tl = req.getParameter("testlinkName");
-		String project_name_rm = req.getParameter("redmineName");
-		String project_name_rm_support = req.getParameter("redmineSupportName");
- 
-		ModelAndView mv = new ModelAndView();
-		if(projectService.updateProjectNameById(project_id,project_name) &&
-				projectService.updateProjectSourceNames(project_id,project_name_tl,project_name_rm,"")
-				&& projectService.updateRedmineSupportName(project_id,project_name_rm_support)
-				&& projectService.updateProjectFlagById(project_id, SysUtil.project_flag)){
-			mv.addObject("updateResult","ok");
-		}else{
-			mv.addObject("updateResult","err");
-		}
-		mv.addObject("project_name", project_name).addObject("project_name_tl", project_name_tl)
-		.addObject("project_name_rm", project_name_rm).addObject("project_name_sn", "")
-		.addObject("project_id", project_id).addObject("project_name_rm_support", project_name_rm_support);
-		//=================zhangdi 140421===============
-		 //mv.setViewName("modify_projectdetail");
-		//mv.setViewName("mainframe");
-		mv.setViewName("projectlist");
-		//=======================
-		return mv;
-	}*/
 	
 	@RequestMapping("/saveModifyProjectModule")
 	//保存项目模块编辑结果
@@ -746,27 +679,7 @@ public class MainframeController {
 		writer.write(strcategoryNames);
 	}
 	
-	@RequestMapping("/printRankings")
-	public ModelAndView printRankings(HttpServletRequest req){
-		Integer rank_id = Integer.parseInt(req.getParameter("selectedPeriodId"));
-		String rank_period;
-		List<ProjectDto> projectList;
-		if(rank_id==0)
-		{
-			projectList = projectService.getNewestRankList();
-			rank_period="当前";
-		}
-		else
-		{
-			rank_period = req.getParameter("selectedPeriodName");
-			projectList = rankingService.getSelectedRankList(rank_id);
-		}
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("projectList", projectList);
-		mv.addObject("rank_period",rank_period);
-		mv.setViewName("rankings_print");
-		return mv;
-	}
+	
 	
 	
 	/***
@@ -805,11 +718,7 @@ public class MainframeController {
 		
 	}
 	
-	@RequestMapping("/updateRankings")
-	public ModelAndView updateRankings(){
-		quarterTask.CollectRankings();
-		return null;
-	}
+
 	
 	@RequestMapping("/showIndicatorWeight")
 	//显示指标权重设置信息

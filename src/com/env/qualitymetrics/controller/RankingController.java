@@ -159,4 +159,32 @@ public class RankingController {
 			}
 		}
 	}
+	
+	@RequestMapping("/printRankings")
+	public ModelAndView printRankings(HttpServletRequest req){
+		Integer rank_id = Integer.parseInt(req.getParameter("selectedPeriodId"));
+		String rank_period;
+		List<ProjectDto> projectList;
+		if(rank_id==0)
+		{
+			projectList = projectService.getNewestRankList();
+			rank_period="当前";
+		}
+		else
+		{
+			rank_period = req.getParameter("selectedPeriodName");
+			projectList = rankingService.getSelectedRankList(rank_id);
+		}
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("projectList", projectList);
+		mv.addObject("rank_period",rank_period);
+		mv.setViewName("rankings_print");
+		return mv;
+	}
+	
+	@RequestMapping("/updateRankings")
+	public ModelAndView updateRankings(){
+		quarterTask.CollectRankings();
+		return null;
+	}
 }
