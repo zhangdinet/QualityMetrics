@@ -46,7 +46,10 @@ public class ProjectDaoImpl implements ProjectDao{
 			projectDto.setProject_id(p.getProject_id());
 			projectDto.setProject_name(p.getProject_name());
 			projectDto.setAvg_score(p.getAvg_score());
-			int avg_score_five = SysUtil.convertProjectScore(p.getAvg_score());
+			//=====zhangdi 140701======
+			//int avg_score_five = SysUtil.convertProjectScore(p.getAvg_score());
+			//===========
+			float avg_score_five = p.getAvg_score();
 			projectDto.setAvg_score_five(avg_score_five);
 			projectDto.setProject_flag(p.getProject_flag());
 			projectList.add(projectDto);

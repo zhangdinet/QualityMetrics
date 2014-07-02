@@ -151,7 +151,7 @@ public class MainframeController {
 		mv.addObject("projectList", projectList);
 		mv.addObject("rank_id", rankID);
 		mv.setViewName("rankings");
-		return  mv;
+		return mv;
 	}
 
 	@RequestMapping("showRankingChart")
@@ -597,20 +597,7 @@ public class MainframeController {
 		return mv;
 	}
 	
-	@RequestMapping("/modifyPassword")
-	public ModelAndView modifyPassword(HttpServletRequest req){
-		String username = req.getParameter("username");
-		String password = req.getParameter("newPassword");
-		boolean changePwd = userService.changePassword(username,password);
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("modify_password");
-		if(changePwd){
-			mv.addObject("modifyResult", "ok");
-		}else{
-			mv.addObject("modifyResult", "err");
-		}
-		return mv;
-	}
+	
 	
 	@RequestMapping("/addProject")
 	public ModelAndView addProject(HttpServletRequest req){

@@ -153,22 +153,25 @@
 			});
 		});
 	
-		function send(i) {
-			if (i == 0) {
+		function send(i)
+		{
+			if (i == 0)
+			{
 				var project_name = $("input[name='project_name']").val();
 				var project_name_tl = $("select[name='testlinkName']").val();
 				var project_name_rm = $("select[name='redmineName']").val();
 				var project_name_rm_support = $("select[name='redmineSupportName']").val();
 				var topsuite_name_tl = $('#topsuite_testlink option:selected').text();
 				var category_name_rm = $('#category_redmine option:selected').text();
-				if (project_name == "" || project_name_tl == "" || project_name_rm == "" 
-					|| project_name_rm_support == "" || topsuite_name_tl == "" || category_name_rm == "")
+				if (project_name == "" || project_name_tl == "" || project_name_rm == "" || project_name_rm_support == "" || topsuite_name_tl == "" || category_name_rm == "")
 				{
 					$("#project_tipLabel").html("请完整填写信息！");
 					return;
 				}
 				$("#formModule").attr("action", "saveModifyProjectModule");
-			} else if (i == 1) {
+			}
+			else if (i == 1)
+			{
 				$("#formModule").attr("action", "projectlist");
 			}
 			$("#formModule").submit();

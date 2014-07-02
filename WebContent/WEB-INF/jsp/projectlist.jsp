@@ -29,12 +29,12 @@
 		<!-- todo 140514 合并form 根据按钮判断action -->
 		<form action = "addProject" style="float:right">
 			<c:if test="${sessionScope.flag_admin == 'yes' and sessionScope.project_id == 0}">
-				<input type="submit" id="addProductProject" class="btn btn-primary" value="添加产品类Item"></input>
+				<input type="submit" id="addProductProject" class="btn btn-primary" value="添加产品类项"></input>
 			</c:if>
 		</form>
 		<form action = "addProjectModule" style="float:right">
 			<c:if test="${sessionScope.flag_admin == 'yes' and sessionScope.project_id == 0}">
-				<input type="submit" id="addModuleProject" class="btn btn-primary" value="添加模块类Item"></input>
+				<input type="submit" id="addModuleProject" class="btn btn-primary" value="添加模块类项"></input>
 			</c:if>
 		</form>
 		<table id="tbl_project">
@@ -47,14 +47,14 @@
 			</tr>
 			<c:forEach items="${projectList}" var="item">
 				<tr>
-					<td> 
+					<td>
 						<c:if test="${sessionScope.project_id != item.project_id and sessionScope.project_id != 0}">
-		   					 ${item.project_name }
+							 ${item.project_name }
 						</c:if>
 						<c:if test="${sessionScope.project_id != item.project_id and sessionScope.project_id == 0}">
 							<c:choose>
 								<c:when test="${item.project_flag==1}">
-		    						<a href="showModifyProject?project_id=${item.project_id}&project_name=${item.project_name }">
+									<a href="showModifyProject?project_id=${item.project_id}&project_name=${item.project_name }">
 										${item.project_name }
 									</a>
 								</c:when>
@@ -90,14 +90,42 @@
 			</td>
 			</c:otherwise>
 			</c:choose>
-			<td>${item.project_name_rm_support }</td>
-			<td>
-				<a onclick="showSprintByProjectId('${item.project_id}','${item.project_name }','1')" href="#">Sprint详情</a>
-			</td>
+				<td>${item.project_name_rm_support }</td>
+				<td>
+					<a onclick="showSprintByProjectId('${item.project_id}','${item.project_name }','1')" href="#">Sprint详情</a>
+				</td>
 			</tr>
 			</c:forEach>
 		</table>
+		<div id="settings_sprint"></div>
 		<jsp:include page="commonpart/containerEnd.jsp"></jsp:include>
 		<jsp:include page="commonpart/footer.jsp"></jsp:include>
+		<script type="text/javascript">
+			function showSprintByProjectId(project_id,project_name,pageNumber){
+				$.ajax({
+					url: 'showSettingsSprint',
+					type: 'post',
+					data: {"project_id":project_id,"project_name":project_name,"pageNumber":pageNumber},
+					success:function(data){
+						if(data.indexOf('<html>')>-1){
+							window.location = "login";
+							return;
+						}
+						$("#settings_sprint").html(data);
+					},
+					error:function(){
+						alert("showSprintByProjectId error!");
+					},
+				});
+			}
+			
+			function gotoSelectedPage()
+			{
+				var pageNumber = $('select[name="pageNumber"]').children('option:selected').val();
+				var project_id = $("input[name='project_id']").val();
+				var project_name = $("input[name='project_name']").val();
+				showSprintByProjectId(project_id,project_name,pageNumber);
+			}
+		</script>
 	</body>
 </html>

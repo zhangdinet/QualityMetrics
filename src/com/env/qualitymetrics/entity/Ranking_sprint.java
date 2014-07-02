@@ -36,5 +36,4 @@ public class Ranking_sprint {
 	public void setSprint_name(String sprint_name) {
 		this.sprint_name = sprint_name;
 	}
-	
 }

@@ -32,7 +32,8 @@
 			</c:when>
 			<c:otherwise>
 				<span id="spanNotEnvision">
-					<a id="aLog" href="mainframe?menuIndex=4"><%=session.getAttribute("username")%></a>
+					<a id="aLog" href="password"><%=session.getAttribute("username")%></a>
+					<%-- <a id="aLog" href="mainframe?menuIndex=4"><%=session.getAttribute("username")%></a> --%>
 				</span>
 			</c:otherwise>
 		</c:choose>

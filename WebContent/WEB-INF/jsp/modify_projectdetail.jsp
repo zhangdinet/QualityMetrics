@@ -108,7 +108,7 @@
 				var project_name_rm = $("select[name='redmineName']").val();
 				var project_name_rm_support = $("select[name='redmineSupportName']").val();
 				
-				if (project_name == "" || project_name_tl == ""|| project_name_rm == ""	|| project_name_rm_support == "") {
+				if (project_name == "" || project_name_tl == ""|| project_name_rm == "" || project_name_rm_support == "") {
 					$("#project_tipLabel").html("请完整填写信息！");
 					return;
 				}

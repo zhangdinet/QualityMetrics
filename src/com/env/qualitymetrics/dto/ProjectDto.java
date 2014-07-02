@@ -4,7 +4,8 @@ public class ProjectDto {
 	int project_id;
 	String project_name;
 	float avg_score;
-	int avg_score_five;
+	//int avg_score_five;
+	float avg_score_five;
 	String rank_period;
 	float rate_patch;
 	int project_flag;
@@ -72,10 +73,11 @@ public class ProjectDto {
 	public void setRate_patch(float rate_patch) {
 		this.rate_patch = rate_patch;
 	}
-	public int getAvg_score_five() {
+	//public int getAvg_score_five() {
+	public float getAvg_score_five() {
 		return avg_score_five;
 	}
-	public void setAvg_score_five(int avg_score_five) {
+	public void setAvg_score_five(float avg_score_five) {
 		this.avg_score_five = avg_score_five;
 	}
 	public int getProject_flag() {

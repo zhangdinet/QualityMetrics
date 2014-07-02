@@ -30,9 +30,9 @@
 						<span id="spanBrowseHistory" style="float:right">查看往期
 							<select name="rankingPeriod">
 								<option value="0">请选择</option>
-									<c:forEach var="item" items="${rankingList}" varStatus="status">
+								<c:forEach var="item" items="${rankingList}" varStatus="status">
 									<option value="${item.rank_id}">${item.rank_period}</option>
-									</c:forEach>
+								</c:forEach>
 							</select>
 						</span>
 				</div>

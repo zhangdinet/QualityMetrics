@@ -70,24 +70,29 @@ public class RankingDaoImpl implements RankingDao{
 	}
 
 	@Override
-	public RankingDto createNewRanking(String rankPeriod) {
+	public RankingDto createNewRanking(String rankPeriod)
+	{
 		String hql = "from Rankings r where r.rank_period = ?";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setString(0, rankPeriod);
 		List rankList = query.list();
 		RankingDto rankingDto = new RankingDto();
 		rankingDto.setRank_period(rankPeriod);
-		if(rankList.size() == 0){
+		if(rankList.size() == 0)
+		{
 			Rankings r = new Rankings();
 			r.setRank_period(rankPeriod);
 			sessionFactory.getCurrentSession().save(r);
 			rankingDto.setRank_id(r.getRank_id());
-		}else{
+		}
+		else
+		{
 			Rankings r = (Rankings) rankList.get(0);
 			rankingDto.setRank_id(r.getRank_id());
 		}
 		return rankingDto;
 	}
+	
 
 	@Override
 	public void updateRankingDetail(RankingDto rankingDto) {
@@ -100,34 +105,14 @@ public class RankingDaoImpl implements RankingDao{
 		Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
 		List projectList = query.list();
 		Iterator iterator = projectList.iterator();
-		while(iterator.hasNext()){
+		while(iterator.hasNext())
+		{
 			Ranking_detail ranking_detail = new Ranking_detail();
 			Ranking_detail_pk ranking_detail_pk = new Ranking_detail_pk();
 			ranking_detail_pk.setRank_id(rankingDto.getRank_id());
 			Project p = (Project) iterator.next();
 			ranking_detail_pk.setProject_id(p.getProject_id());
-			if(quarter == 1){
-				//第一季度。
-				ranking_detail.setRank_score(p.getAvg_score());
-			}else{
-				Float scoreTotal = 0f;
-				for(int i = 1; i <quarter;i++){
-					hql = "select rd.rank_score from Ranking_detail rd, Rankings r " +
-							"where r.rank_period= ? and r.rank_id = rd.ranking_detail_pk.rank_id and rd.ranking_detail_pk.project_id = ?";
-					query = this.sessionFactory.getCurrentSession().createQuery(hql);
-					query.setString(0, year+"Q"+i);
-					query.setString(1, p.getProject_id()+"");
-					List scoreList = query.list();
-					if(scoreList.size() == 0){
-						log.error("该项目"+year+"第"+i+"季度没有分数，按0分计算！");
-						continue;
-					}else{
-						scoreTotal += (Float)scoreList.get(0);
-					}
-				}
-				Float avg_Score = (scoreTotal+p.getAvg_score())/quarter;
-				ranking_detail.setRank_score(avg_Score);
-			}
+			ranking_detail.setRank_score(p.getAvg_score());
 			ranking_detail.setProject_name(p.getProject_name());
 			ranking_detail.setRanking_detail_pk(ranking_detail_pk);
 			sessionFactory.getCurrentSession().saveOrUpdate(ranking_detail);
