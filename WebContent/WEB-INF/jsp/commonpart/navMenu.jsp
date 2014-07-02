@@ -4,12 +4,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <div id="divNavMenu">
 	<ul id="ulNavMenu">
-		<li><a href="mainframe?menuIndex=0">质量龙虎榜 </a></li>
-		<!-- <li><a href="mainframe?menuIndex=1">产品模块设置 </a></li> -->
+		<!-- <li><a href="mainframe?menuIndex=0">质量龙虎榜 </a></li> -->
+		<li id="liMenuRank"><a href="ranklist">质量龙虎榜</a></li>
 		<li id="liMenuProject"><a href="projectlist">产品模块设置 </a></li>
 		<li id="liMenuWeight"><a href="weightlist">权重设置</a></li>
-		<!-- <li><a href="mainframe?menuIndex=3">权重设置 </a></li> -->
-		<li><a href="employeeskpi">员工质量KPI</a></li>
+		<li id="liMenuKPI"><a href="employeeskpi">员工质量KPI</a></li>
 		<%
 			if(session.getAttribute("username").equals("admin"))
 			{

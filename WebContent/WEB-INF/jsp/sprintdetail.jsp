@@ -38,8 +38,8 @@
 			<tr>
 			<th width="15%">衡量维度</th>
 			<th>衡量点</th>
-			<th>得分</th>
-			<th>备注说明</th>
+			<th>5分制得分</th>
+			<th>原始得分</th>
 			</tr>
 			<tr>
 			<td rowspan="2">过程质量</td>

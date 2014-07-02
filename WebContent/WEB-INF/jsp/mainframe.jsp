@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -11,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-theme.css">
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base.css">
-		<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico"  type="image/x-icon"/>
+		<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
 		<link rel="Bookmark" href="${pageContext.request.contextPath}/img/favicon.ico" />
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/highcharts.js"></script>
@@ -24,40 +23,9 @@
 		
 		<div class = "container theme-showcase">
 			<div id="divMainContent" class="jumbotron">
-				<div id="rankings">
-					<div class="contentTitle">
-						<h3>软件产品质量龙虎榜</h3>
-						<span id="spanBrowseHistory" style="float:right">查看往期
-							<select name="rankingPeriod">
-								<option value="0">请选择</option>
-								<c:forEach var="item" items="${rankingList}" varStatus="status">
-									<option value="${item.rank_id}">${item.rank_period}</option>
-								</c:forEach>
-							</select>
-						</span>
-				</div>
-					<div id="container" style="min-width:800px;height:400px;margin-bottom:10px"></div>
-					<div id="rankingsContent">
-					</div>
-					<form id="form" class = "print">
-						<input type="hidden" name="selectedPeriodId"></input>
-						<input type="hidden" name="selectedPeriodName"></input>
-						<input type="submit" value="打印预览" class="btn btn-primary" style="float:right;" onclick="printRankings()"></input>
-					</form>
-				</div>
-				
-				<div id="settings">
-					<div id="settings_project">
-					</div>
-					<div id="settings_sprint">
-					</div>
-				</div>
-					
-				<div id="users"></div>
+				just for debug!!!
 			</div>
 		</div>
-		
-		
 	<jsp:include page="commonpart/footer.jsp"></jsp:include>
 	<script type="text/javascript">
 		var projectName=[];
@@ -65,36 +33,17 @@
 		var menuIndex=-1;
 		
 		$(document).ready(function(){
-		    var strReferrer=document.referrer;		//zhangdi 以后JQuery获取
-		    menuIndex=<%=request.getAttribute("menuIndex")%>;
-		    if(menuIndex==1)
-		    {
-		    	showSettings();
-		    }
-		    else if(menuIndex==2)
-		    {
-		    	showUserConfig();
-		    }
-		    else if(menuIndex==3)
-		    {
-		    	showWeightSettings();
-		    }
-		    else if((strReferrer==null) || (strReferrer==undefined)||(strReferrer==""))
-		    {
-		    	showNewestRankings();
-		    	showRankingChart();
-		    }
-		    else if(strReferrer.indexOf("showModifyProject")!=-1)
-		    {
-		    	showSettings();
-		    }
+			var strReferrer=document.referrer;	//zhangdi 以后JQuery获取
+			if((strReferrer==null) || (strReferrer==undefined)||(strReferrer==""))
+			{
+				showNewestRankings();
+				showRankingChart();
+			}
 		    else if(strReferrer.indexOf("showModifySprint")!=-1)
 		    {
 		    	var projectID = "${param.project_id}";
 		    	var projectName="${project_name}";
 		    	var pageNumber=1;
-		    	
-		    	showSettings();
 		    	showSprintByProjectId(projectID,projectName,pageNumber);
 		    }
 			else
@@ -115,95 +64,16 @@
 		});
 		$('li').click(function(){
 		});
-
-		$('select[name="rankingPeriod"]').change(function(){
-			var selectedRankId = $(this).children('option:selected').val();
-			if(selectedRankId == "0"){
-				showNewestRankings();
-				showRankingChart();
-				return;
-			}
-			$.ajax({
-				url: 'showRankings',
-				type: 'post',
-				data: {'rankId':selectedRankId},
-				success:function(data){
-					$("#rankingsContent").html(data);
-				},
-				error:function(){
-					alert("showSelectedRankings error!");
-				},
-			});
-			$.ajax({
-				url: 'showRankingChart',
-				type: 'post',
-				data: {'rankId':selectedRankId},
-				success:function(data){
-					 $.each(JSON.parse(data),function(i,d){
-							projectName.push([d.project_name]);
-							avgScore.push([d.avg_score]);
-						});
-						chart.series[0].setData(avgScore,true);
-						chart.xAxis[0].setCategories(projectName);
-						projectName=[];
-						avgScore=[];
-				},
-				error:function(){
-					alert("showSelectedRankingChart error!");
-				},
-			});
-		});
 		
 		function showRankings(){
 			$("#rankings").show();
-			$("#settings").hide();
 			$("#users").hide();
 			showNewestRankings();
 			showRankingChart();
 			$('select[name="rankingPeriod"]').val("0");
 			hidePromptWait();
 		}
-		function showSettings(){
-			$("#settings").show();
-			$("#rankings").hide();
-			$("#users").hide();
-			showSettingsDetail();
-			hidePromptWait();
-		}
-		function showUserConfig(){
-			$("#users").show();
-			$("#settings").hide();
-			$("#rankings").hide();
-			showUserList();
-			hidePromptWait();
-		}
-		
-/* 		function showUserManagement()
-		{
-			alert("test");
-		}
-				
-		function showWeightSettings(){
-			$("#indicator_weight").show();
-			$("#users").hide();
-			$("#settings").hide();
-			$("#rankings").hide();
-			hidePromptWait();
-		}
-		
-		function showUserList(){
-			$.ajax({
-				url:'showUserList',
-				type:'post',
-				success: function(data){
-					$("#users").html(data);
-				},
-				error:function(){
-					alert("error!");
-				}
-			});
-		}
-		 */
+
 		function showNewestRankings(){
 			$.ajax({
 				url: 'showRankings',
@@ -258,12 +128,6 @@
 		  			alert("showSettingsDetail error!");
 		  	     },
 			});
-		}
-
-
-		//添加Project信息
-		function addProject(){
-			alert("add");
 		}
 
 		function printRankings(){

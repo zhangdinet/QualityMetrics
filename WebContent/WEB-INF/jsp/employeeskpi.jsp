@@ -235,7 +235,6 @@
 						formatter:function(){
 							 return ' <b>'+ this.x +
 							'</b><br/><b>'+ this.y +'</b>';
-							/*return '<b>'+ this.y +'</b>';*/
 						}
 					},
 					series: [{
@@ -576,7 +575,7 @@
 					},
 					tooltip: {
 						//pointFormat: 'zhangdi'
-						pointFormat: '{series.name}'
+						//pointFormat: '{series.name}'
 					},
 					plotOptions: {
 						pie: {
@@ -593,7 +592,7 @@
 					},
 					series: [{
 						type: 'pie',
-						name: 'Browser share',
+						name: 'Value',
 						data: []
 					}]
 				}
@@ -659,7 +658,7 @@
 					},
 					tooltip: {
 						//pointFormat: 'zhangdi'
-						pointFormat: '{series.name}'
+						//pointFormat: '{series.name}'
 					},
 					plotOptions: {
 						pie: {
@@ -676,7 +675,7 @@
 					},
 					series: [{
 						type: 'pie',
-						name: 'Browser share',
+						name: 'Value',
 						data: []
 					}]
 				}
@@ -738,7 +737,7 @@
 					},
 					tooltip: {
 						//pointFormat: 'zhangdi'
-						pointFormat: '{series.name}'
+						//pointFormat: '{series.name}'
 					},
 					plotOptions: {
 						pie: {
@@ -755,7 +754,7 @@
 					},
 					series: [{
 						type: 'pie',
-						name: 'Browser share',
+						name: 'Value',
 						data: []
 					}]
 				}
@@ -821,7 +820,7 @@
 					},
 					tooltip: {
 						//pointFormat: 'zhangdi'
-						pointFormat: '{series.name}'
+						//pointFormat: '{series.name}'
 					},
 					plotOptions: {
 						pie: {
@@ -838,7 +837,7 @@
 					},
 					series: [{
 						type: 'pie',
-						name: 'Browser share',
+						name: 'Value',
 						data: []
 					}]
 				}
@@ -943,7 +942,7 @@
 					},
 					tooltip: {
 						//pointFormat: 'zhangdi'
-						pointFormat: '{series.name}'
+						//pointFormat: '{series.name}'
 					},
 					plotOptions: {
 						pie: {
@@ -960,7 +959,7 @@
 					},
 					series: [{
 						type: 'pie',
-						name: 'Browser share',
+						name: 'Value',
 						data: []
 					}]
 				}
@@ -1138,7 +1137,7 @@
 					},
 					tooltip: {
 						//pointFormat: 'zhangdi'
-						pointFormat: '{series.name}'
+						//pointFormat: '{series.name}'
 					},
 					plotOptions: {
 						pie: {
@@ -1155,7 +1154,7 @@
 					},
 					series: [{
 						type: 'pie',
-						name: 'Browser share',
+						name: 'Value',
 						data: []
 					}]
 				}
@@ -1182,7 +1181,7 @@
 					},
 					tooltip: {
 						//pointFormat: 'zhangdi'
-						pointFormat: '{series.name}'
+						//pointFormat: '{series.name}'
 					},
 					plotOptions: {
 						pie: {
@@ -1199,7 +1198,7 @@
 					},
 					series: [{
 						type: 'pie',
-						name: 'Browser share',
+						name: 'Value',
 						data: []
 					}]
 				}
@@ -1226,7 +1225,7 @@
 					},
 					tooltip: {
 						//pointFormat: 'zhangdi'
-						pointFormat: '{series.name}'
+						//pointFormat: '{series.name}'
 					},
 					plotOptions: {
 						pie: {
@@ -1243,7 +1242,7 @@
 					},
 					series: [{
 						type: 'pie',
-						name: 'Browser share',
+						name: 'Value',
 						data: []
 					}]
 				}

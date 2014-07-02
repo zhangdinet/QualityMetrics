@@ -54,7 +54,7 @@
 			</c:forEach>
 		</table>
 
-		<form action="backToMainframe">
+		<form action="ranklist">
 			<div class="project_detail_bottom"></div>
 			<input type="submit" class="btn btn-primary" value="返回"/>
 		</form>

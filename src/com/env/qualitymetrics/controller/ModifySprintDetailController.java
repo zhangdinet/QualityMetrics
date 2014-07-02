@@ -5,17 +5,21 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 //import org.apache.catalina.tribes.util.Arrays;
 import java.util.Arrays;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.env.qualitymetrics.dto.ProjectDto;
 import com.env.qualitymetrics.dto.SprintDto;
 import com.env.qualitymetrics.service.ProjectService;
 import com.env.qualitymetrics.service.SprintService;
@@ -122,13 +126,15 @@ public class ModifySprintDetailController {
 			mv.addObject("updateResult","日期为空！");
 		}
 		String project_name = req.getParameter("project_name");
-		mv.addObject("sprint",sprintDto);
+		/*mv.addObject("sprint",sprintDto);
 		mv.addObject("project_name", project_name);
-		mv.addObject("project_flag", project_flag);
-		mv.setViewName("mainframe");
+		mv.addObject("project_flag", project_flag);*/
+
+		mv.setViewName("projectlist");
+		List<ProjectDto> projectList = projectService.getAllProjectsDetail();
+		mv.addObject("projectList",projectList);
 		return mv;
 	}
-	
 	
 	@RequestMapping("/checkTestplanTestlinkName")  //===zhangdi 140418=======
 	public void checkTestplanTestlinkName(HttpServletRequest req, HttpServletResponse resp) throws IOException{

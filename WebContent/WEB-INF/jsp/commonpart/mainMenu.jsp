@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <div id="divMainMenu">
 	<ul id="ulMainMenu">
-		<li><a href="#" onclick="showRankings()">质量龙虎榜 </a></li>
+		<!-- <li><a href="#" onclick="showRankings()">质量龙虎榜 </a></li> -->
+		<li id="liMenuRank"><a href="ranklist">质量龙虎榜 </a></li>
 		<li id="liMenuProject"><a href="projectlist">产品模块设置 </a></li>
 		<li id="liMenuWeight"><a href="weightlist">权重设置</a></li>
 		<li id="liMenuKPI"><a href="employeeskpi">员工质量KPI</a></li>

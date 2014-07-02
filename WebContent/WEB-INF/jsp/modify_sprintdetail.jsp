@@ -345,8 +345,9 @@
 
 		function backToMainframe()
 		{
-			$("#form").attr("action", "backToMainframe");
-			$("#form").submit();
+			history.go(-1);
+			/* $("#form").attr("action", "projectlist");
+			$("#form").submit(); */
 		}
 
 		$(".radidItem").change(function() {

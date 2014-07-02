@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -12,7 +12,6 @@
 		<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
 		<link rel="Bookmark" href="${pageContext.request.contextPath}/img/favicon.ico" />
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/qualitymetrics.js" charset="gb2312"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/highcharts.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/ranking_chart.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/qualitymetrics.js" charset="gb2312"></script>
@@ -21,10 +20,8 @@
 		<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
 		<jsp:include page="commonpart/navMenu.jsp"></jsp:include>
 		<jsp:include page="commonpart/containerStart.jsp"></jsp:include>
-			<h3>龙虎榜</h3>
+			<h3>软件产品质量龙虎榜</h3>
 			<div style="margin-top:20px">
-				<label>筛选产品模块</label>
-				<input name="selectProject" type="text" id="txtSelectProject" placeholder="输入后请回车" onchange="selectProject(this)"/>
 				<span id="spanBrowseHistory" style="float:right">查看往期
 					<select name="rankingPeriod" sytle="float:right">
 						<option value="0">请选择</option>
@@ -34,33 +31,39 @@
 					</select>
 				</span>
 			</div>
+			<div id="container" style="min-width:800px;height:400px;margin-bottom:10px"></div>
+			
+			<div id="rankingsContent" style="margin-top:80px">
 				
-				
-			<table id="tbl_rankings">
-				<tr>
-					<th>排名</th>
-					<th>产品模块名称</th>
-					<th>总平均分</th>
-					<th>详情</th>
-				</tr>
-				<c:forEach items="${projectList}" var="item" varStatus="status">
-					<tr>
-						<td>${status.count}</td>
-						<td>${item.project_name}</td>
-						<td>${item.avg_score}</td>
-						<td>
-							<c:choose>
-								<c:when test="${rank_id != '0'}">
-									<a href="showProjectHistoryDetail?project_id=${item.project_id}&project_name=${item.project_name}&rank_id=${rank_id}">查看详情</a>
-								</c:when>
-								<c:otherwise>
-									<a href="showProjectDetail?project_id=${item.project_id}&project_name=${item.project_name}&rank_id=${rank_id}">查看详情</a>
-								</c:otherwise>
-							</c:choose>
-						</td>
-					</tr>
-				</c:forEach>
-			</table>
+					<label>筛选产品模块</label>
+					<input name="selectProject" type="text" id="txtSelectProject" placeholder="输入后请回车" onchange="selectProject(this)"/>
+					<table id="tbl_rankings">
+						<tr>
+							<th>排名</th>
+							<th>产品模块名称</th>
+							<th>总平均分</th>
+							<th>详情</th>
+						</tr>
+						<c:forEach items="${projectList}" var="item" varStatus="status">
+							<tr>
+								<td>${status.count}</td>
+								<td>${item.project_name}</td>
+								<td>${item.avg_score}</td>
+								<td>
+									<c:choose>
+										<c:when test="${rank_id != '0'}">
+											<a href="showProjectHistoryDetail?project_id=${item.project_id}&project_name=${item.project_name}&rank_id=${rank_id}">查看详情</a>
+										</c:when>
+										<c:otherwise>
+											<a href="showProjectDetail?project_id=${item.project_id}&project_name=${item.project_name}&rank_id=${rank_id}">查看详情</a>
+										</c:otherwise>
+									</c:choose>
+								</td>
+							</tr>
+						</c:forEach>
+					</table>
+			</div>
+			
 
 			<form id="form" class = "print">
 				<input type="hidden" name="selectedPeriodId"></input>
@@ -70,6 +73,51 @@
 
 		<jsp:include page="commonpart/containerEnd.jsp"></jsp:include>
 		<script type="text/javascript">
+			$(document).ready(function(){
+				showNewestRankings();
+				showRankingChart();
+			});
+			
+			$('select[name="rankingPeriod"]').change(function(){
+				var projectName=[];
+				var avgScore=[];
+				var selectedRankId = $(this).children('option:selected').val();
+				if(selectedRankId == "0"){
+					showNewestRankings();
+					showRankingChart();
+					return;
+				}
+				$.ajax({
+					url: 'showRankings',
+					type: 'post',
+					data: {'rankId':selectedRankId},
+					success:function(data){
+						$("#rankingsContent").html(data);
+					},
+					error:function(){
+						alert("showSelectedRankings error!");
+					},
+				});
+				$.ajax({
+					url: 'showRankingChart',
+					type: 'post',
+					data: {'rankId':selectedRankId},
+					success:function(data){
+						 $.each(JSON.parse(data),function(i,d){
+								projectName.push([d.project_name]);
+								avgScore.push([d.avg_score]);
+							});
+							chart.series[0].setData(avgScore,true);
+							chart.xAxis[0].setCategories(projectName);
+							projectName=[];
+							avgScore=[];
+					},
+					error:function(){
+						alert("showSelectedRankingChart error!");
+					},
+				});
+			});
+		
 			function selectProject(name)
 			{
 				var tableRank = document.getElementById('tbl_rankings');
@@ -91,6 +139,8 @@
 			}
 			
 			function showNewestRankings(){
+				var projectName=[];
+				var avgScore=[];
 				$.ajax({
 					url: 'showRankings',
 					data: {'rankId':0},
@@ -121,6 +171,9 @@
 			}
 			
 			function showRankingChart(){
+				var projectName=[];
+				var avgScore=[];
+				var menuIndex=-1;
 				$.ajax({
 					url: 'showRankingChart',
 					data: {'rankId':0},
@@ -129,10 +182,7 @@
 						$.each(JSON.parse(data),function(i,d){
 								projectName.push([d.project_name]);
 								avgScore.push([d.avg_score]);
-								//alert("key "+d.key+" value "+d.value);
 						});
-						//alert(data);
-						//json_data=data;
 						chart.series[0].setData(avgScore,true);
 						chart.xAxis[0].setCategories(projectName);
 						projectName=[];

@@ -110,76 +110,7 @@ public class MainframeController {
 		return mv;
 	}
 	
-	@RequestMapping("/showNewestRankings")
-	//显示最新的质量龙虎榜排名
-	public ModelAndView showNewestRankings(HttpServletRequest req){
-		List<ProjectDto> projectList = projectService.getNewestRankList();
-		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("projectList", projectList);
-		mv.addObject("rank_id", 0);
-		mv.setViewName("rankings");
-		return mv;
-	}
 	
-	@RequestMapping("/showSelectedRankings")
-	//显示往期排名
-	public ModelAndView  showSelectedRankings(HttpServletRequest req){
-		Integer rank_id = Integer.parseInt(req.getParameter("rankId"));
-		List<ProjectDto> projectList = rankingService.getSelectedRankList(rank_id);
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("projectList", projectList);
-		mv.addObject("rank_id", rank_id);
-		mv.setViewName("rankings");
-		return  mv;
-	}
-	
-	@RequestMapping("showRankings")
-	public ModelAndView showRankings(HttpServletRequest req)
-	{
-		Integer rankID = Integer.parseInt(req.getParameter("rankId"));
-		List<ProjectDto> projectList;
-		if(rankID==0) //往期可能为零？？
-		{
-			projectList = projectService.getNewestRankList();
-		}
-		else
-		{
-			projectList = rankingService.getSelectedRankList(rankID);
-		}
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("projectList", projectList);
-		mv.addObject("rank_id", rankID);
-		mv.setViewName("rankings");
-		return mv;
-	}
-
-	@RequestMapping("showRankingChart")
-	public void showRankingChart(HttpServletRequest req,HttpServletResponse res)throws IOException
-	{
-		Integer rankID = Integer.parseInt(req.getParameter("rankId"));
-		PrintWriter out=null;
-		ModelAndView mv = new ModelAndView();
-		List<ProjectDto> projectList;
-		if(rankID==0) //往期可能为零？？
-		{
-			projectList = projectService.getNewestRankList();
-		}
-		else
-		{
-			projectList = rankingService.getSelectedRankList(rankID);
-		}
-		if(projectList.size()!=0){
-			JSONArray jsonArray=JSONArray.fromObject(projectList);
-			out = res.getWriter();
-			//out.print(jsonArray.toString());
-			out.write(jsonArray.toString());
-			if(out!=null)
-			{
-				out.close();
-			}
-		}
-	}
 	
 	@RequestMapping("/showProjectDetail")
 	//显示项目详情
@@ -783,7 +714,7 @@ public class MainframeController {
 	public void getSuiteNames(HttpServletRequest req,HttpServletResponse resp) throws IOException
 	{
 		resp.setContentType("text/html;charset=UTF-8");
-		PrintWriter writer=resp.getWriter();			 
+		PrintWriter writer=resp.getWriter();
 		String projectName=req.getParameter("testProjectName");
 		List<String> suiteNames=this.testlinkForSuiteHandler.getSuiteNamesByTestprojectName(projectName);
 		String[] arrSuiteNames=new String[suiteNames.size()];
@@ -842,13 +773,6 @@ public class MainframeController {
 	 * 显示用户列表，进行用户管理
 	 * @return
 	 */
-	
-	
-	//======zhangdi todo 多个项目======
-	//todo
-	//================================
-	
-	
 
 	@RequestMapping("/resetPwd")
 	public void resetPwd(HttpServletRequest req, HttpServletResponse resp) throws IOException{
