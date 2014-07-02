@@ -55,25 +55,6 @@
 					
 				<div id="users"></div>
 				<div id="indicator_weight"></div>
-				<div id="changePassword" style="display:none">
-					<div class="loginBox">
-						<div class="loginBoxCenter">
-							<p><label for="password">原密码</label></p>
-							<p><input type="password" id="oldPassword" name="password" class="loginInput" placeholder="原密码" value="" /></p>
-							
-							<p><label for="password">新密码</label></p>
-							<p><input type="password" id="newPassword" name="password" class="loginInput" placeholder="新密码" value="" /></p>
-							
-							<p><label for="password">确认密码</label></p>
-							<p><input type="password" id="confirmPassword" name="password" class="loginInput" placeholder="确认新密码" value="" /></p>
-							<p><label for="password" id = "tipLabel" style="color:red"></label></p>
-						</div>
-						<div class="loginBoxButtons">
-							<button class="btn btn-primary" id = "save" onclick = "modifyPassword()">保存</button>
-							<button class= "btn btn-primary" id = "cancel" onclick = "cancelModifyPassword()">取消</button>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 		
@@ -98,10 +79,6 @@
 		    else if(menuIndex==3)
 		    {
 		    	showWeightSettings();
-		    }
-		    else if(menuIndex==4)
-		    {
-		    	showMidifyPassword();
 		    }
 		    else if((strReferrer==null) || (strReferrer==undefined)||(strReferrer==""))
 		    {
@@ -184,7 +161,6 @@
 		function showRankings(){
 			$("#rankings").show();
 			$("#settings").hide();
-			$("#changePassword").hide();
 			$("#users").hide();
 			$("#indicator_weight").hide();
 			showNewestRankings();
@@ -195,26 +171,13 @@
 		function showSettings(){
 			$("#settings").show();
 			$("#rankings").hide();
-			$("#changePassword").hide();
 			$("#users").hide();
 			$("#indicator_weight").hide();
 			showSettingsDetail();
 			hidePromptWait();
 		}
-		function showMidifyPassword(){
-			$("#changePassword").show();
-			$("#settings").hide();
-			$("#rankings").hide();
-			$("#users").hide();
-			$("#indicator_weight").hide();
-			$("#oldPassword").val("");
-		 	$("#newPassword").val("");
-		 	$("#confirmPassword").val("");
-		 	$("#tipLabel").html("");
-		}
 		function showUserConfig(){
 			$("#users").show();
-			$("#changePassword").hide();
 			$("#settings").hide();
 			$("#rankings").hide();
 			$("#indicator_weight").hide();
@@ -230,7 +193,6 @@
 		function showWeightSettings(){
 			$("#indicator_weight").show();
 			$("#users").hide();
-			$("#changePassword").hide();
 			$("#settings").hide();
 			$("#rankings").hide();
 			showWeightList();
@@ -321,54 +283,6 @@
 		  			alert("showWeightList error!");
 		  	     },
 			});
-		}
-
-		function modifyPassword(){
-			var oldPwd = $("#oldPassword").val();
-			var newPwd = $("#newPassword").val();
-			var confirmPwd = $("#confirmPassword").val();
-			var password = "<%=session.getAttribute("password")%>";
-			if(password == null){
-				window.location = "login";
-		    	return;
-			}
-
-			if(oldPwd == ""||newPwd ==""||confirmPwd == ""){
-				$("#tipLabel").html("相关记录不能为空！");
-				return;
-			}
-			//alert(password);
-			if(oldPwd != password){
-				$("#tipLabel").html("原密码输入错误！");
-				return;
-			}
-			if(newPwd == confirmPwd){
-				var username = "<%=session.getAttribute("username")%>";
-				$.ajax({
-					   url:'modifyPassword',
-					   type:'get',
-					   data:{"username":username,"newPassword":confirmPwd},
-					   success:function(data){
-						    if(data.indexOf('<html>')>-1){
-						    	window.location = "login";
-						    	return;
-							}
-					    	$("#changePassword").html(data);
-					   },
-					   error:function(data){
-						   $("#tipLabel").html("系统异常，请稍后再试！");
-					   },
-				});
-			}else{
-				$("#tipLabel").html("新密码前后输入不一致！");
-			}
-		}
-		
-		function cancelModifyPassword(){
-			$("#oldPassword").val("");
-		 	$("#newPassword").val("");
-		 	$("#confirmPassword").val("");
-		 	$("#tipLabel").html("");
 		}
 
 		//添加Project信息
