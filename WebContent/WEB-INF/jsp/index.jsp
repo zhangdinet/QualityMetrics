@@ -26,7 +26,6 @@
 					</div>
 				</form>
 			</div>
-
 		<jsp:include page="commonpart/footer.jsp"></jsp:include>
-</body>
+	</body>
 </html>

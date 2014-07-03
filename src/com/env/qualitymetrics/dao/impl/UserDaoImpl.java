@@ -15,7 +15,7 @@ import com.env.qualitymetrics.dao.UserDao;
 import com.env.qualitymetrics.dto.UserDto;
 import com.env.qualitymetrics.entity.Project;
 import com.env.qualitymetrics.entity.User;
-import com.env.qualitymetrics.tasks.DailyTask;
+//import com.env.qualitymetrics.tasks.DailyTask;
 
 public class UserDaoImpl implements UserDao{
 	private static final Logger log = LoggerFactory.getLogger(UserDaoImpl.class);

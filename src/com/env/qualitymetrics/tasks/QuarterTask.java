@@ -35,7 +35,9 @@ public class QuarterTask {
 		int month = cal.get(Calendar.MONTH);
 		int year = cal.get(Calendar.YEAR);
 		int quarter = month/3;
-		if(month == 0){
+		//此处原语句有错，导致出现Q0数据  ====zhangdi 140703=======
+		//if(month == 0){
+		if(quarter == 0){
 			quarter = 4;
 			year--;
 		}
