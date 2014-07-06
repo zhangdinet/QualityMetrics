@@ -51,8 +51,8 @@
   </property>
   <!-- cron表达式 -->
   <property name="cronExpression">
-  	<!-- <value>10 0,10,20,30,40,50 * * * ?</value> -->
-  	<value>30 * * * * ?</value>
+  	<value>10 0,10,20,30,40,50 * * * ?</value>
+  	<!-- <value>30 * * * * ?</value> -->
   </property>
  </bean>
  

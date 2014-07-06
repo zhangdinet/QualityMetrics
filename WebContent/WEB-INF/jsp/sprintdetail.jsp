@@ -67,12 +67,12 @@
 			</tr>
 			<tr>
 				<td>内部质量</td>
-				<td>代码整体质量</td>
+				<td>Sonar代码质量扫描</td>
 				<td>${sprint.sonar_score}</td>
 				<td>
 				<c:choose>
 					<c:when test="${sprint.sonar_score_origin eq -1}">NA</c:when>
-					<c:otherwise>${sprint.sonar_score_origin}%</c:otherwise>
+					<c:otherwise>${sprint.sonar_score_origin} 分</c:otherwise>
 				</c:choose>
 			</td>
 			</tr>
@@ -168,14 +168,7 @@
 				<input type="hidden" value="${sprint.sprint_id}" name="sprint_id"/>
 				<input type="hidden" value="${sprint.project_id}" name="project_id"/>
 				<input type="hidden" value="${rank_id}" name="rank_id"/>
-				<!-- 
-					<----c:if test="${sessionScope.flag_admin == 'yes' and sessionScope.project_id == 0 or sessionScope.project_id == sprint.project_id}">
-					<----c:if test="${sessionScope.flag_admin == 'yes'}">
-						<input type="button" class="btn btn-primary" value="更新" onclick="updateSprint()"/>
-					<----/c:if>
-				 -->
-				
-				
+
 				<%
 					if(session.getAttribute("username").equals("admin"))
 					{

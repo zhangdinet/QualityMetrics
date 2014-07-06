@@ -128,8 +128,9 @@ public class RankingDaoImpl implements RankingDao{
 		
 		String hql = "from Sprint s";
 		Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
-		List projectList = query.list();
-		Iterator iterator = projectList.iterator();
+		//List projectList = query.list();
+		List sprintList=query.list();
+		Iterator iterator = sprintList.iterator();
 		while(iterator.hasNext()){
 			Ranking_sprint ranking_sprint = new Ranking_sprint();
 			Ranking_sprint_pk ranking_sprint_pk = new Ranking_sprint_pk();

@@ -134,22 +134,24 @@
 				}
 			}
 			
+			
+			//==============zhangdi 140704========================
 			function getProjectInfo()
 			{
 				var redmineName = $("select[name='selectRedmine']").val().trim();
 				//var version=$("select[name='version']").val().trim();
-				//var sprintStart=$("input[name='sprintStart']").val().trim();
-				//var sprintEnd=$("input[name='sprintEnd']").val().trim();
+				var sprintStart=$("input[name='sprintStart']").val().trim();
+				var sprintEnd=$("input[name='sprintEnd']").val().trim();
 				
 				$.ajax({
 					url : 'getProjectInfoByVersion',
 					type : 'post',
 					async: false,
 					data : {
-						'redmineName' : redmineName
+						'redmineName' : redmineName,
 						//'version':version,
-						//'sprintStart':sprintStart,
-						//'sprintEnd':sprintEnd
+						'sprintStart':sprintStart,
+						'sprintEnd':sprintEnd
 					},
 					success : function(data) {
 						if(data=='[]')
@@ -167,9 +169,9 @@
 						{
 							arrItem=arrData[i].split("#");
 							columnName.push(arrItem[0]);
-							columnImplementedFeatures.push(parseInt(arrItem[1]));
-							columnFixedBugs.push(parseInt(arrItem[2]));
-							columnNewBugs.push(parseInt(arrItem[3]));
+							columnImplementedFeatures.push(parseInt(arrItem[1])||0);
+							columnFixedBugs.push(parseInt(arrItem[2])||0);
+							columnNewBugs.push(parseInt(arrItem[3])||0);
 						}
 						var chart=prepareProjectInfoChart(columnImplementedFeatures,columnFixedBugs,columnNewBugs);
 						chart.xAxis[0].setCategories(columnName);
@@ -185,13 +187,12 @@
 				var options={
 					chart:{
 						renderTo:'divProjectInfo',
-						type:'column'
+						//type:'column'
 					},
 					title: {
 						text: 'Features Implemented -- Bugs Fixed -- Bugs Found',
-						 
 						style:{
-	                		fontWeight:'bold'
+						fontWeight:'bold'
 						}
 					},
 					credits: { //右下角网址信息
@@ -200,13 +201,13 @@
 					xAxis: {
 						title:{
 							text:'Version',
-		                	style:{
-		                		fontWeight:'bold',
-		                		fontSize:'16px',
-		                		width:'200px',
-		                		marginLeft:'auto',
-		                		marginRight:'auto'
-		                	}
+							style:{
+								fontWeight:'bold',
+								fontSize:'16px',
+								width:'200px',
+								marginLeft:'auto',
+								marginRight:'auto'
+							}
             		},
 					categories: [],
 					labels: {
@@ -237,6 +238,12 @@
 							'</b><br/><b>'+ this.y +'</b>';
 						}
 					},
+					legend: {
+					          layout: 'vertical',
+					          align: 'right',
+					          verticalAlign: 'middle',
+					          borderWidth: 0
+					      },
 					series: [{
 					            name: 'Features Implemented',
 					            data: columnImplementedFeatures
@@ -253,8 +260,7 @@
 				return chart;
 			}
 			
-			
-			function getScopeStability()
+			/* function getScopeStability()
 			{
 				var redmineName = $("select[name='selectRedmine']").val().trim();
 				var version=$("select[name='version']").val().trim();
@@ -262,7 +268,7 @@
 				var sprintEnd=$("input[name='sprintEnd']").val().trim();
 				
 				$.ajax({
-					url : 'getScopeStability',
+					url : 'getBugsScopeStability',
 					type : 'post',
 					async: false,
 					data : {
@@ -294,16 +300,66 @@
 					error : function(data) {
 					},
 				});
+			} */
+			
+			function getScopeStability()
+			{
+				var redmineName = $("select[name='selectRedmine']").val().trim();
+				var version=$("select[name='version']").val().trim();
+				var sprintStart=$("input[name='sprintStart']").val().trim();
+				var sprintEnd=$("input[name='sprintEnd']").val().trim();
+				
+				$.ajax({
+					url : 'getScopeStability',
+					type : 'post',
+					async: false,
+					data : {
+						'redmineName' : redmineName,
+						'version':version,
+						'sprintStart':sprintStart,
+						'sprintEnd':sprintEnd
+					},
+					success : function(data) {
+						if(data=='[]')
+						{
+							return;
+						}
+						var tempData=data.substring(2,data.length-2);
+						var arrData=tempData.split('","');
+						var columnValue=[];
+						var columnName=[];
+						var arrItem=[];
+						var arrBugsCount=[];
+						var arrFeaturesCount=[];
+						for(var i=0;i<arrData.length;i++)
+						{
+							/* arrBugItem=arrData[i].split("#");
+							columnName.push(arrBugItem[0]);
+							arrBugItem[1]=parseFloat(arrBugItem[1]);
+							columnValue.push(arrBugItem); */
+							arrItem=arrData[i].split("#");
+							columnName.push(arrItem[0]);
+							arrBugsCount.push(parseInt(arrItem[1]));
+							arrFeaturesCount.push(parseInt(arrItem[2]));
+							
+						}
+						var chart=prepareScopeStabilityChart(arrBugsCount,arrFeaturesCount);
+						//chart.series[0].setData(arrBugsCount,true);
+						//chart.series[1].setData(arrFeaturesCount,true);
+						chart.xAxis[0].setCategories(columnName);
+					},
+					error : function(data) {
+					},
+				});
 			}
 			
-			
-			function prepareScopeStabilityChart()
+			function prepareScopeStabilityChart(arrBugsCount,arrFeaturesCount)
 			{
 				var chart;
 				var options={
 					chart:{
 						renderTo:'divScopeStability',
-						type:'column'
+						//type:'column'
 					},
 					title: {
 						text: 'Scope Stability',
@@ -357,9 +413,22 @@
 							return '<b>'+ this.y +'</b>';
 						}
 					},
-					series: [{
-						data: []
-					}]
+					legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+					series: [
+							{
+								name:'Bugs',
+								data:arrBugsCount
+							},
+							{
+								name:'Features',
+								data:arrFeaturesCount
+							}
+						]
 				};
 				var chart = new Highcharts.Chart(options);
 				return chart;
@@ -539,16 +608,34 @@
 						var arrData=tempData.split('","');
 						var columnValue=[];
 						var columnName=[];
+						var severityName=['Critical','Major','Average','Minor','Enhancement'];
+						var severityValue=[0,0,0,0,0];
 						for(var i=0;i<arrData.length;i++)
 						{
+							
 							arrBugItem=arrData[i].split("#");
-							columnName.push(arrBugItem[0]);
-							arrBugItem[1]=parseFloat(arrBugItem[1]);
-							columnValue.push(arrBugItem);
+							switch(arrBugItem[0])
+							{
+								case 'Critical':
+									severityValue[0]=parseFloat(arrBugItem[1]);
+								case 'Major':
+									severityValue[1]=parseFloat(arrBugItem[1]);
+								case 'Average':
+									severityValue[2]=parseFloat(arrBugItem[1]);
+								case 'Minor':
+									severityValue[3]=parseFloat(arrBugItem[1]);
+								case 'Enhancement':
+									severityValue[4]=parseFloat(arrBugItem[1]);
+							}
+							//columnName.push(arrBugItem[0]);
+							//arrBugItem[1]=parseFloat(arrBugItem[1]);
+							//columnValue.push(arrBugItem);
 						}
 						var chart=prepareFixedRateBySeverityChart();
-						chart.series[0].setData(columnValue,true);
-						chart.xAxis[0].setCategories(columnName);
+						//chart.series[0].setData(columnValue,true);
+						//chart.xAxis[0].setCategories(columnName);
+						chart.series[0].setData(severityValue,true);
+						chart.xAxis[0].setCategories(severityName);
 					},
 					error : function(data) {
 					},
@@ -1396,7 +1483,7 @@
 						text: 'Fixed Rate by Severity',
 						 
 						style:{
-	                		fontWeight:'bold'
+						fontWeight:'bold'
 						}
 					},
 					credits: { //右下角网址信息
@@ -1405,14 +1492,13 @@
 					xAxis: {
 						title:{
 							text:'Severity',
-							/* align:'high', */
 							style:{
-		                		fontWeight:'bold',
-		                		fontSize:'16px',
-		                		width:'200px',
-		                		marginLeft:'auto',
-		                		marginRight:'auto'
-		                	}
+								fontWeight:'bold',
+								fontSize:'16px',
+								width:'200px',
+								marginLeft:'auto',
+								marginRight:'auto'
+							}
 						},
 						categories: [],
 						labels: {

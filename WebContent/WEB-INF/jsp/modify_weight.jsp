@@ -101,7 +101,7 @@
 				if(isNaN(ipdOrLmt_rate)||isNaN(sonar_rate)||isNaN(test_pass_rate)||isNaN(tc_exec_rate)||isNaN(bug_new_rate)
 					||isNaN(bug_reopen_rate)||isNaN(bug_escape_rate)||isNaN(rate_patch_rate)||isNaN(rate_support_rate)||isNaN(rate_ce_rate))
 				{
-					$("#project_tipLabel").html("权重值为(0-100]之间的数字");
+					$("#project_tipLabel").html("权重值为[0-100]之间的数字");
 					return;
 				}
 				
@@ -119,7 +119,7 @@
 				if (!checkNumber(ipdOrLmt_float) || !checkNumber(sonar_float) || !checkNumber(test_pass_float) || !checkNumber(tc_exec_float)
 						|| !checkNumber(bug_new_float) || !checkNumber(bug_reopen_float) || !checkNumber(bug_escape_float) || !checkNumber(rate_patch_float)
 						|| !checkNumber(rate_support_float) || !checkNumber(rate_ce_float)) {
-					$("#project_tipLabel").html("权重值为(0-100]之间的数字");
+					$("#project_tipLabel").html("权重值为[0-100]之间的数字");
 					return;
 				} 
 				else
@@ -136,7 +136,7 @@
 		
 		function checkNumber(num)
 		{
-			if(num>0 && num<=100)
+			if(num>=0 && num<=100)
 			{
 				return true;
 			}

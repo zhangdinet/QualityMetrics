@@ -17,8 +17,6 @@ public class Ranking_sprint_score_item {
 	@Column
 	private float score_origin;
 
-	
-
 	public Ranking_sprint_score_item_pk getRanking_sprint_score_item_pk() {
 		return ranking_sprint_score_item_pk;
 	}

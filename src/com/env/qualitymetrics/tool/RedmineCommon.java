@@ -25,10 +25,7 @@ public class RedmineCommon {
     public void setdataSource_redmine(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
-    
-  
-    
-    //==========zhangdi 140417============
+
     public List<String> getRedmineSupportProjectNames()
    	{
    		final List<String> lstName=new ArrayList<String>();
@@ -41,8 +38,7 @@ public class RedmineCommon {
    		 }
    		 return lstName;
    	}     
-    //=================================
-  //=======zhangdi 140421============
+
     public List<String> getVersionNames(int pro_id)
    	{
     	final List<String> lstName=new ArrayList<String>();
@@ -56,7 +52,6 @@ public class RedmineCommon {
 		 return lstName;
    	} 
     
-    //=======zhangdi 140417============
     public List<String> getRedmineProjectNames()
 	{
 		final List<String> lstName=new ArrayList<String>();
@@ -429,39 +424,6 @@ public class RedmineCommon {
 	}
 	
 	
-	/*
-	 * Map<String,Long> userAndFixedCount=new TreeMap<String,Long>();
-		Map<String,Long> userAndReopenCount=new TreeMap<String,Long>();
-		
-		for(Object o:rowsReopenByUserAndIssue)
-		{
-			Map map=(Map)o;
-			{
-				userAndReopenCount.put((String)map.get("developer"), (Long)map.get("reopenCount"));
-			}
-		}
-		
-		for(Object o : rowsFixed)
-		{
-			Map map = (Map) o;
-			String name=(String)map.get("developer");
-			if(userAndReopenCount.containsKey(name))
-			{
-				userAndFixedCount.put(name, (Long)map.get("fixedCount"));
-			}
-		}
-		
-		Iterator iter=userAndFixedCount.entrySet().iterator();
-		while(iter.hasNext())
-		{
-			Map.Entry<String,Long> entry=(Map.Entry<String,Long>)iter.next();
-			Long reopen=userAndReopenCount.get(entry.getKey());
-			lstResult.add(entry.getKey() + "#" +(float)reopen/entry.getValue());
-		}
-		return lstResult;
-	 */
-	
-	
 	public List<String> getFixedBugsBySeverity(String redmineName,String version)
 	{
 		List<String> lstResult=new ArrayList<String>();
@@ -606,7 +568,281 @@ public class RedmineCommon {
 		return lstResult;
 	}
 	
+	//========zhangdi 140704========
+	public List<String> getBugsScopeStability(String redmineName, String version, String sprintStart, String sprintEnd)
+	{
+		List<String> lstResult=new ArrayList<String>();
+		
+		String sqlNew = "select issues.id as id,date_format(issues.created_on,'%Y-%c-%d') as updatedate from issues "+
+				"join projects on projects.id=issues.project_id "+
+				"join versions on versions.id=issues.fixed_version_id "+
+				"where projects.name=? and versions.name=? "+
+				"and issues.created_on between ? and ? "+
+				"and issues.tracker_id = 1 "+
+				"order by issues.created_on desc ";
+		
+		String sqlUpdate = "select distinct(issues.id) as id, date_format(journals.created_on,'%Y-%c-%d') as updatedate from issues "+
+				"join journals on journals.journalized_id=issues.id " +
+				"join journal_details on journal_details.journal_id=journals.id " +
+				"join projects on projects.id=issues.project_id "+
+				"join versions on versions.id=issues.fixed_version_id "+
+				"where projects.name=? and versions.name=? "+
+				"and issues.created_on between ? and ? "+
+				"and journal_details.prop_key='fixed_version_id' "+
+				"and issues.tracker_id = 1 "+
+				"order by journals.created_on desc ";
+		
+		Object[] params=new Object[]{redmineName,version,sprintStart+" 00:00:00",sprintEnd+" 23:59:59"};
+		
+		List rowsNew =this.jdbcTemplate.queryForList(sqlNew,params);
+		List rowsUpdate = this.jdbcTemplate.queryForList(sqlUpdate,params);
+		Map<Integer,String> idAndDate=new TreeMap<Integer,String>();
+		Map<String,Long> dateAndCount=new TreeMap<String,Long>();
+		
+		for(Object o : rowsNew)
+		{
+			Map map = (Map) o;
+			idAndDate.put((Integer)map.get("id"),(String)map.get("updatedate"));
+		}
+		
+		for(Object o : rowsUpdate)
+		{
+			Map map = (Map) o;
+			idAndDate.put((Integer)map.get("id"),(String)map.get("updatedate"));
+		}
+		
+		Iterator iter=idAndDate.entrySet().iterator();
+		
+		while(iter.hasNext())
+		{
+			Map.Entry<Integer,String> entry=(Map.Entry<Integer,String>)iter.next();
+			if(dateAndCount.containsKey(entry.getValue()))
+			{
+				Long count=dateAndCount.get(entry.getValue());
+				dateAndCount.put(entry.getValue(), count+1);
+			}
+			else
+			{
+				dateAndCount.put(entry.getValue(), 1L);
+			}
+		}
+		
+		iter=dateAndCount.entrySet().iterator();
+		while(iter.hasNext())
+		{
+			Map.Entry<String,Long> entry=(Map.Entry<String,Long>)iter.next();
+			lstResult.add(entry.getKey() + "#" +entry.getValue().toString());
+		}
+		return lstResult;
+	}
+	
+	public List<String> getFeaturesScopeStability(String redmineName, String version, String sprintStart, String sprintEnd)
+	{
+		List<String> lstResult=new ArrayList<String>();
+		
+		String sqlNew = "select issues.id as id,date_format(issues.created_on,'%Y-%c-%d') as updatedate from issues "+
+				"join projects on projects.id=issues.project_id "+
+				"join versions on versions.id=issues.fixed_version_id "+
+				"where projects.name=? and versions.name=? "+
+				"and issues.created_on between ? and ? "+
+				"and issues.tracker_id = 2 "+
+				"order by issues.created_on desc ";
+		
+		String sqlUpdate = "select distinct(issues.id) as id, date_format(journals.created_on,'%Y-%c-%d') as updatedate from issues "+
+				"join journals on journals.journalized_id=issues.id " +
+				"join journal_details on journal_details.journal_id=journals.id " +
+				"join projects on projects.id=issues.project_id "+
+				"join versions on versions.id=issues.fixed_version_id "+
+				"where projects.name=? and versions.name=? "+
+				"and issues.created_on between ? and ? "+
+				"and journal_details.prop_key='fixed_version_id' "+
+				"and issues.tracker_id = 2 "+
+				"order by journals.created_on desc ";
+		
+		Object[] params=new Object[]{redmineName,version,sprintStart+" 00:00:00",sprintEnd+" 23:59:59"};
+		
+		List rowsNew =this.jdbcTemplate.queryForList(sqlNew,params);
+		List rowsUpdate = this.jdbcTemplate.queryForList(sqlUpdate,params);
+		Map<Integer,String> idAndDate=new TreeMap<Integer,String>();
+		Map<String,Long> dateAndCount=new TreeMap<String,Long>();
+		
+		for(Object o : rowsNew)
+		{
+			Map map = (Map) o;
+			idAndDate.put((Integer)map.get("id"),(String)map.get("updatedate"));
+		}
+		
+		for(Object o : rowsUpdate)
+		{
+			Map map = (Map) o;
+			idAndDate.put((Integer)map.get("id"),(String)map.get("updatedate"));
+		}
+		
+		Iterator iter=idAndDate.entrySet().iterator();
+		
+		while(iter.hasNext())
+		{
+			Map.Entry<Integer,String> entry=(Map.Entry<Integer,String>)iter.next();
+			if(dateAndCount.containsKey(entry.getValue()))
+			{
+				Long count=dateAndCount.get(entry.getValue());
+				dateAndCount.put(entry.getValue(), count+1);
+			}
+			else
+			{
+				dateAndCount.put(entry.getValue(), 1L);
+			}
+		}
+		
+		iter=dateAndCount.entrySet().iterator();
+		while(iter.hasNext())
+		{
+			Map.Entry<String,Long> entry=(Map.Entry<String,Long>)iter.next();
+			lstResult.add(entry.getKey() + "#" +entry.getValue().toString());
+		}
+		return lstResult;
+	}
+	
+	public List<String> getDaysByRange(String strDateStart,String strDateEnd) throws ParseException
+	{
+		List<String> lstDate=new ArrayList<String>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date start = sdf.parse(strDateStart);
+		Date end = sdf.parse(strDateEnd);
+		double between=(end.getTime()-start.getTime())/1000;//除以1000是为了转换成秒
+		double day=between/(24*3600);
+		for(int i = 1;i<=day;i++)
+		{
+			Calendar cd = Calendar.getInstance();
+			cd.setTime(sdf.parse(strDateStart));
+			cd.add(Calendar.DATE, i);//增加一天 
+			//cd.add(Calendar.MONTH, n);//增加一个月
+			lstDate.add(sdf.format(cd.getTime()));
+		}
+		return lstDate;
+	}
+	
+	
 	public List<String> getScopeStability(String redmineName, String version, String sprintStart, String sprintEnd)
+	{
+		List<String> lstResult=new ArrayList<String>();
+		List<String> lstDate=new ArrayList<String>();
+		try
+		{
+			lstDate = getDaysByRange(sprintStart,sprintEnd);
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
+		String sqlNew = "select date_format(issues.created_on,'%Y-%m-%d') as updatedate,count(*) as number from issues "+
+				"join projects on projects.id=issues.project_id "+
+				"join versions on versions.id=issues.fixed_version_id "+
+				"where projects.name=? and versions.name=? "+
+				"and issues.created_on between ? and ? "+
+				"and issues.tracker_id = 1 "+
+				"group by issues.created_on "+
+				"order by issues.created_on";
+		
+		String sqlUpdate = "select date_format(journals.created_on,'%Y-%m-%d') as updatedate,count(*) as number from issues "+
+				"join journals on journals.journalized_id=issues.id " +
+				"join journal_details on journal_details.journal_id=journals.id " +
+				"join projects on projects.id=issues.project_id "+
+				"join versions on versions.id=issues.fixed_version_id "+
+				"where projects.name=? and versions.name=? "+
+				"and issues.created_on between ? and ? "+
+				"and journal_details.prop_key='fixed_version_id' "+
+				"and issues.tracker_id = 2 "+
+				"group by journals.created_on "+
+				"order by journals.created_on";
+		
+		String sqlNewFeature = "select date_format(issues.created_on,'%Y-%m-%d') as updatedate,count(*) as number from issues "+
+				"join projects on projects.id=issues.project_id "+
+				"join versions on versions.id=issues.fixed_version_id "+
+				"where projects.name=? and versions.name=? "+
+				"and issues.created_on between ? and ? "+
+				"and issues.tracker_id = 2 "+
+				"group by issues.created_on "+
+				"order by issues.created_on";
+		
+		String sqlUpdateFeature = "select date_format(journals.created_on,'%Y-%m-%d') as updatedate,count(*) as number from issues "+
+				"join journals on journals.journalized_id=issues.id " +
+				"join journal_details on journal_details.journal_id=journals.id " +
+				"join projects on projects.id=issues.project_id "+
+				"join versions on versions.id=issues.fixed_version_id "+
+				"where projects.name=? and versions.name=? "+
+				"and issues.created_on between ? and ? "+
+				"and journal_details.prop_key='fixed_version_id' "+
+				"and issues.tracker_id = 2 "+
+				"group by journals.created_on "+
+				"order by journals.created_on";
+		
+		Object[] params=new Object[]{redmineName,version,sprintStart+" 00:00:00",sprintEnd+" 23:59:59"};
+		
+		List rowsNew =this.jdbcTemplate.queryForList(sqlNew,params);
+		List rowsUpdate = this.jdbcTemplate.queryForList(sqlUpdate,params);
+		List rowsNewFeature=this.jdbcTemplate.queryForList(sqlNewFeature,params);
+		List rowsUpdateFeature=this.jdbcTemplate.queryForList(sqlUpdateFeature,params);
+		Map<Integer,String> idAndDate=new TreeMap<Integer,String>();
+		Map<String,Long> dateAndCount=new TreeMap<String,Long>();
+		Map<String,SeverityClass> mapResult=new TreeMap<String,SeverityClass>();
+		for(String strDate:lstDate)
+		{
+			mapResult.put(strDate,new SeverityClass());
+		}
+		
+		for(Object o : rowsNew)
+		{
+			Map map = (Map) o;
+			String date=(String)map.get("updatedate");
+			SeverityClass severity=mapResult.get(date);
+			Long count = (Long)map.get("number");
+			severity.setNewBugsCount(count);
+			mapResult.replace(date, severity);
+		}
+		
+		for(Object o : rowsUpdate)
+		{
+			Map map = (Map) o;
+			String date=(String)map.get("updatedate");
+			SeverityClass severity=mapResult.get(date);
+			Long count = (Long)map.get("number");
+			severity.setUpdateBugsCount(count);
+			mapResult.replace(date, severity);
+		}
+		
+		for(Object o : rowsNewFeature)
+		{
+			Map map = (Map) o;
+			String date=(String)map.get("updatedate");
+			SeverityClass severity=mapResult.get(date);
+			Long count = (Long)map.get("number");
+			severity.setNewFeaturesCount(count);
+			mapResult.replace(date, severity);
+		}
+		
+		for(Object o : rowsUpdateFeature)
+		{
+			Map map = (Map) o;
+			String date=(String)map.get("updatedate");
+			SeverityClass severity=mapResult.get(date);
+			Long count = (Long)map.get("number");
+			severity.setUpdateFeaturesCount(count);
+			mapResult.replace(date, severity);
+		}
+		
+		Iterator iter=mapResult.entrySet().iterator();
+		while(iter.hasNext())
+		{
+			Map.Entry<String,SeverityClass> entry=(Map.Entry<String,SeverityClass>)iter.next();
+			lstResult.add(entry.getKey()+"#"+entry.getValue().getNewBugsCount()+entry.getValue().getUpdateBugsCount()+"#"+entry.getValue().getNewFeaturesCount()+entry.getValue().getUpdateFeaturesCount());
+		}
+		return lstResult;
+	}
+	
+	
+	/*public List<String> getScopeStability(String redmineName, String version, String sprintStart, String sprintEnd)
 	{
 		List<String> lstResult=new ArrayList<String>();
 		
@@ -671,14 +907,15 @@ public class RedmineCommon {
 			lstResult.add(entry.getKey() + "#" +entry.getValue().toString());
 		}
 		return lstResult;
-	}
+	}*/
 	
 
-	public List<String> getProjectInfoByVersion(String redmineName)
+	public List<String> getProjectInfoByVersion(String redmineName,String sprintStart,String sprintEnd)
 	{
 		List<String> lstResult=new ArrayList<String>();
 		Map<String,String> mapResult=new TreeMap<String,String>();
 		
+		//TargetVerison
 		String sqlImplementedFeatures="select versions.name as versionName ,count(*) as number "+
 				"from issues "+
 				"join projects on projects.id=issues.project_id "+
@@ -687,6 +924,7 @@ public class RedmineCommon {
 				"group by issues.fixed_version_id "+
 				"order by versions.name ";
 		
+		//TargetVerison
 		String sqlFixedBugs="select versions.name as versionName,count(*) as number "+
 				"from issues "+
 				"join projects on projects.id=issues.project_id "+
@@ -695,18 +933,24 @@ public class RedmineCommon {
 				"group by issues.fixed_version_id "+
 				"order by versions.name ";
 		
-		String sqlNewBugs="select versions.name as versionName ,count(*) as number "+
+		//AffectedVersion
+		String sqlNewBugs="select versions.name as versionName,count(*) as number "+
 				"from issues "+
 				"join projects on projects.id=issues.project_id "+
-				"right join versions on versions.id=issues.fixed_version_id "+
-				"where projects.name= ? and tracker_id=2 and issues.status_id <>6 "+
-				"group by issues.fixed_version_id "+
+				"join custom_values on custom_values.customized_id=issues.id "+
+				"join custom_fields on custom_fields.id=custom_values.custom_field_id "+
+				"right join versions on custom_values.value=versions.id "+
+				"where custom_fields.id=9 and issues.tracker_id=1 and issues.status_id <> 6 "+
+				"and projects.name= ? and issues.created_on between ? and ? "+ 
+				"group by versions.name "+
 				"order by versions.name ";
+	
 		
 		Object[] params=new Object[]{redmineName};
 		List rowsImplementedFeature=this.jdbcTemplate.queryForList(sqlImplementedFeatures, params);
 		List rowsFixedBug=this.jdbcTemplate.queryForList(sqlFixedBugs, params);
-		List rowsNewBug=this.jdbcTemplate.queryForList(sqlNewBugs,params);
+		Object[] newBugsParams=new Object[]{redmineName,sprintStart,sprintEnd};
+		List rowsNewBug=this.jdbcTemplate.queryForList(sqlNewBugs,newBugsParams);
 
 		for(Object o : rowsImplementedFeature)
 		{
@@ -764,5 +1008,55 @@ public class RedmineCommon {
 			lstResult.add(entry.getKey() + "#" + entry.getValue());
 		}
 		return lstResult;
+	}
+}
+
+//zhangdi 140704 todo long类型只是为方便处理sql类型结果====此类后面重构====
+class SeverityClass
+{
+	private long newBugsCount=0;
+	private long updateBugsCount=0;
+	private long newFeaturesCount=0;
+	private long updateFeaturesCount=0;
+	
+	public SeverityClass()
+	{
+		
+	}
+	
+	public long getNewBugsCount()
+	{
+		return this.newBugsCount;
+	}
+	public void setNewBugsCount(long count)
+	{
+		this.newBugsCount=count;
+	}
+	
+	public long getUpdateBugsCount()
+	{
+		return updateBugsCount;
+	}
+	public void setUpdateBugsCount(long count)
+	{
+		this.updateBugsCount=count;
+	}
+	
+	public long getNewFeaturesCount()
+	{
+		return this.newFeaturesCount;
+	}
+	public void setNewFeaturesCount(long count)
+	{
+		this.newFeaturesCount=count;
+	}
+	
+	public long getUpdateFeaturesCount()
+	{
+		return this.updateFeaturesCount;
+	}
+	public void setUpdateFeaturesCount(long count)
+	{
+		this.updateFeaturesCount=count;
 	}
 }

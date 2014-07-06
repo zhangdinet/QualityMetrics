@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity  
-@Table(name="tbl_rankings")  
+@Table(name="tbl_rankings")
 public class Rankings {
 	
 	  	@Id  

@@ -19,11 +19,11 @@ public class QuarterTask {
 	 * 定时收集排行榜信息：每个季度末的时候把项目的平均分计入历史
 	 */
 	public void CollectRankings(){
-		log.info("季度末开始拉取本季度项目平均分。");
+		/*log.info("季度末开始拉取本季度项目平均分。");
 		String rankPeriod = getRankPeriod();
 		RankingDto rankingDto = rankingService.createNewRanking(rankPeriod);
 		rankingService.updateRankingDetail(rankingDto);
-		rankingService.updateRankingSprint(rankingDto);
+		rankingService.updateRankingSprint(rankingDto);*/
 	}
 	/***
 	 * 根据当前时间确定rankperiod名字

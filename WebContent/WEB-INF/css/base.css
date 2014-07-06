@@ -233,7 +233,6 @@ li
 	top:0px;
 	margin:0px,0px,0px,0px;
 	width:100%;
-	/* background-color:#1a1a1a;#F0F1F4; */
 	background-color:rgb(43, 122, 205);
 	display:inline;
 	z-index:5;
@@ -271,10 +270,10 @@ li
 #divMainMenu,#divNavMenu
 {
 	position:fixed;
-	top:48px;
+	top:40px;
 	width:100%;
 	background-color:rgb(43, 122, 205);
-	padding-left:155px;
+	padding-left:120px;
 	padding-right:105px;
 	z-index:5;
 }
@@ -290,8 +289,8 @@ li
 
 .imgLogo
 {
-	width:140px;
-	height:48px;
+	width:120px;
+	height:40px;
 	float:left;
 }
 
@@ -311,17 +310,6 @@ table
 {
 	margin:10px;
 }
-
-/* #tblWeight
-{
-	border: 1px solid #888888;
-	border-collapse: collapse;
-	margin-top: 10px;
-	width: 100%; 
-	TABLE-LAYOUT: fixed;
-	align:center;
-	ver
-} */
 
 input[type="submit"],input[type="button"]
 {
