@@ -461,14 +461,18 @@
 						var arrData=tempData.split('","');
 						var columnValue=[];
 						var columnName=[];
+						var issueTip={};
 						for(var i=0;i<arrData.length;i++)
 						{
 							arrBugItem=arrData[i].split("#");
-							columnName.push(arrBugItem[0]);
+							var name=arrBugItem[0];
+							columnName.push(name);
 							arrBugItem[1]=parseFloat(arrBugItem[1]);
-							columnValue.push(arrBugItem);
+							columnValue.push(arrBugItem[1]);
+							issueTip[name]=arrBugItem[2];
+							//issueTip.push(arrBugItem[2]);
 						}
-						var chart=prepareReopenRatioChart();
+						var chart=prepareReopenRatioChart(issueTip);
 						chart.series[0].setData(columnValue,true);
 						chart.xAxis[0].setCategories(columnName);
 					},
@@ -478,7 +482,7 @@
 			}
 			
 			
-			function prepareReopenRatioChart()
+			function prepareReopenRatioChart(issTip)
 			{
 				var chart;
 				var options={
@@ -528,18 +532,19 @@
 						column:{
 							pointPadding: 0.2,
 							borderWidth: 0,
-							events:{
+							/* events:{
 								click:function(event)
 								{
 									alert(this.name);
 								}
-							}
+							} */
 						}
 					},
 					tooltip: {
 						formatter:function(){
-							return ' <b>'+ this.x +
-							'</b><br/><b>'+ parseFloat(this.y*100).toFixed(2) +'%</b>';
+							return '<b>'+ this.x +
+							'</b><br/><b>'+ parseFloat(this.y*100).toFixed(2) +'%</b>'+ '<br>'
+							+'<b>Issues:<br></b>'+ issTip[this.x];
 						}
 					},
 					series: [{

@@ -520,7 +520,7 @@ public class RedmineCommon {
 			"where projects.name= ? and versions.name= ? and issues.created_on between ? and ? and issues.status_id in (4,5,10) and tracker_id in(1,2) and custom_fields.ID = 9 "+
 			"group by developer order by developer";
 		
-		String sqlReopenByUserAndIssue = "select users.login as developer,count(issues.id)*count(issues.id) as reopenCount "+
+		String sqlReopenByUserAndIssue = "select users.login as developer,issues.id as issid,count(issues.id)*count(issues.id) as reopenCount "+
 			"from users "+
 			"left join issues on issues.assigned_to_id=users.id "+
 			"join projects on projects.id=issues.project_id "+
@@ -529,8 +529,8 @@ public class RedmineCommon {
 			"join versions on versions.id=issues.fixed_version_id "+
 			"where projects.name= ? and versions.name= ? and issues.created_on between ? and ? "+
 			"and journal_details.prop_key='status_id' and journal_details.value = 8 "+
-			"group by developer, issues.id " +
-			"order by developer";
+			"group by developer,issues.id " +
+			"order by developer,issues.id ";
 		
 		Object[] params=new Object[]{redmineName,version,sprintStart+" 00:00:00",sprintEnd+" 23:59:59"};
 		List rowsFixed = this.jdbcTemplate.queryForList(sqlFixed,params);
@@ -538,12 +538,27 @@ public class RedmineCommon {
 		
 		Map<String,Long> userAndFixedCount=new TreeMap<String,Long>();
 		Map<String,Long> userAndReopenCount=new TreeMap<String,Long>();
+		Map<String,String> userAndIssues=new TreeMap<String,String>();
 		
 		for(Object o:rowsReopenByUserAndIssue)
 		{
 			Map map=(Map)o;
 			{
-				userAndReopenCount.put((String)map.get("developer"), (Long)map.get("reopenCount"));
+				String key=(String)map.get("developer");
+				Long reopenCount=(Long)map.get("reopenCount");
+				Integer id=(Integer)map.get("issid");
+				if(userAndReopenCount.containsKey(key))
+				{
+					Long count=userAndReopenCount.get(key);
+					userAndReopenCount.replace(key,count+reopenCount);
+					String strID=userAndIssues.get(key);
+					userAndIssues.replace(key,strID+"<br>"+id);
+				}
+				else
+				{
+					userAndReopenCount.put(key,reopenCount);
+					userAndIssues.put(key, id.toString());
+				}
 			}
 		}
 		
@@ -563,7 +578,7 @@ public class RedmineCommon {
 			Map.Entry<String,Long> entry=(Map.Entry<String,Long>)iter.next();
 			Long reopen=userAndReopenCount.get(entry.getKey());
 			float result= (float)reopen/entry.getValue();
-			lstResult.add(entry.getKey() + "#" + result);
+			lstResult.add(entry.getKey() + "#" + result+ "#" +userAndIssues.get(entry.getKey()));
 		}
 		return lstResult;
 	}
@@ -840,75 +855,6 @@ public class RedmineCommon {
 		}
 		return lstResult;
 	}
-	
-	
-	/*public List<String> getScopeStability(String redmineName, String version, String sprintStart, String sprintEnd)
-	{
-		List<String> lstResult=new ArrayList<String>();
-		
-		String sqlNew = "select issues.id as id,date_format(issues.created_on,'%Y-%c-%d') as updatedate from issues "+
-				"join projects on projects.id=issues.project_id "+
-				"join versions on versions.id=issues.fixed_version_id "+
-				"where projects.name=? and versions.name=? "+
-				"and issues.created_on between ? and ? "+
-				"and issues.tracker_id in(1,2) "+
-				"order by issues.created_on desc ";
-		
-		String sqlUpdate = "select distinct(issues.id) as id, date_format(journals.created_on,'%Y-%c-%d') as updatedate from issues "+
-				"join journals on journals.journalized_id=issues.id " +
-				"join journal_details on journal_details.journal_id=journals.id " +
-				"join projects on projects.id=issues.project_id "+
-				"join versions on versions.id=issues.fixed_version_id "+
-				"where projects.name=? and versions.name=? "+
-				"and issues.created_on between ? and ? "+
-				"and journal_details.prop_key='fixed_version_id' "+
-				"and issues.tracker_id in(1,2) "+
-				"order by journals.created_on desc ";
-		
-		Object[] params=new Object[]{redmineName,version,sprintStart+" 00:00:00",sprintEnd+" 23:59:59"};
-		
-		List rowsNew =this.jdbcTemplate.queryForList(sqlNew,params);
-		List rowsUpdate = this.jdbcTemplate.queryForList(sqlUpdate,params);
-		Map<Integer,String> idAndDate=new TreeMap<Integer,String>();
-		Map<String,Long> dateAndCount=new TreeMap<String,Long>();
-		
-		for(Object o : rowsNew)
-		{
-			Map map = (Map) o;
-			idAndDate.put((Integer)map.get("id"),(String)map.get("updatedate"));
-		}
-		
-		for(Object o : rowsUpdate)
-		{
-			Map map = (Map) o;
-			idAndDate.put((Integer)map.get("id"),(String)map.get("updatedate"));
-		}
-		
-		Iterator iter=idAndDate.entrySet().iterator();
-		
-		while(iter.hasNext())
-		{
-			Map.Entry<Integer,String> entry=(Map.Entry<Integer,String>)iter.next();
-			if(dateAndCount.containsKey(entry.getValue()))
-			{
-				Long count=dateAndCount.get(entry.getValue());
-				dateAndCount.put(entry.getValue(), count+1);
-			}
-			else
-			{
-				dateAndCount.put(entry.getValue(), 1L);
-			}
-		}
-		
-		iter=dateAndCount.entrySet().iterator();
-		while(iter.hasNext())
-		{
-			Map.Entry<String,Long> entry=(Map.Entry<String,Long>)iter.next();
-			lstResult.add(entry.getKey() + "#" +entry.getValue().toString());
-		}
-		return lstResult;
-	}*/
-	
 
 	public List<String> getProjectInfoByVersion(String redmineName,String sprintStart,String sprintEnd)
 	{
