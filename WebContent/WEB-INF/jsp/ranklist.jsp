@@ -94,9 +94,10 @@
 					success:function(data){
 						$("#rankingsContent").html(data);
 					},
-				/* 	error:function(){
+				 	error:function(data){
+				 		alert("test");
 						alert("showSelectedRankings error!");
-					}, */
+					},
 				});
 				$.ajax({
 					url: 'showRankingChart',
@@ -113,7 +114,7 @@
 							avgScore=[];
 					},
 					error:function(){
-						alert("showSelectedRankingChart error!");
+						//alert("showSelectedRankingChart error!");
 					},
 				});
 			});
@@ -145,16 +146,17 @@
 					url: 'showRankings',
 					data: {'rankId':0},
 					type: 'post',
-				/* 	success:function(data){
-						if(data.indexOf('<html>')>-1){
+					success:function(data){
+						/* if(data.indexOf('<html>')>-1){
 						window.location = "login";
 						return;
 						}
-						$("#rankingsContent").html(data);
+						$("#rankingsContent").html(data); */
 					},
-					error:function(){
-						alert("showNewestRankings error!");
-					}, */
+					error:function(data){
+						/* alert("test new"); */
+						//alert("showNewestRankings error!");
+					},
 				});
 			}
 		
@@ -189,7 +191,7 @@
 						avgScore=[];
 					},
 					error:function(){
-						alert("showRankingChart error!");
+						//alert("showRankingChart error!");
 					},
 				});
 			}

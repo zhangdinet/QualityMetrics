@@ -65,7 +65,7 @@ public class RankingController {
 	@Resource(name="sonarHandler")
 	SonarHandler sonarHandler;
 	
-	@RequestMapping("/ranklist")
+	@RequestMapping("/rank")
 	public ModelAndView ranking(HttpServletRequest req)
 	{
 		String strID=req.getParameter("rankID");
@@ -85,7 +85,7 @@ public class RankingController {
 		mv.addObject("rank_id", rankID);
 		List<RankingDto> rankingList = rankingService.getRankingPeriodList();
 		mv.addObject("rankingList",rankingList);
-		mv.setViewName("rankinglist");
+		mv.setViewName("ranklist");
 		return mv;
 	}
 	
@@ -97,7 +97,7 @@ public class RankingController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectList", projectList);
 		mv.addObject("rank_id", 0);
-		mv.setViewName("rankings");
+		mv.setViewName("ranklist");
 		return mv;
 	}
 	
@@ -109,14 +109,19 @@ public class RankingController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectList", projectList);
 		mv.addObject("rank_id", rank_id);
-		mv.setViewName("rankings");
-		return  mv;
+		mv.setViewName("ranklist");
+		return mv;
 	}
 	
-	@RequestMapping("showRankings")
+	@RequestMapping("/showRankings")
 	public ModelAndView showRankings(HttpServletRequest req)
 	{
-		Integer rankID = Integer.parseInt(req.getParameter("rankId"));
+		String strID=req.getParameter("rankId");
+		Integer rankID=0;
+		if(strID!=null||strID!="")
+		{
+			rankID = Integer.parseInt(strID);
+		}
 		List<ProjectDto> projectList;
 		if(rankID==0) //往期可能为零？？
 		{
@@ -129,7 +134,7 @@ public class RankingController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectList", projectList);
 		mv.addObject("rank_id", rankID);
-		mv.setViewName("rankings");
+		mv.setViewName("ranklist");
 		return mv;
 	}
 
