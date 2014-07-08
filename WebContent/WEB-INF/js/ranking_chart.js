@@ -14,15 +14,12 @@ $(function (){
             		marginRight:'auto'
                 }
             },
-         subtitle: {
-                x: -20
-            },
          credits: { //右下角网址信息
 	            enabled: false
 	        },
          xAxis: {
             	title:{
-            		text:'产品模块',
+            		text:'产品模块名称',
                 	style:{
                 		fontWeight:'bold',
                 		fontSize:'16px',
@@ -37,8 +34,9 @@ $(function (){
                  }
             },
          yAxis: {
+        	 	max:5,
                 title: {
-                    text: '平均分',
+                    text: '总平均分',
                     style:{
                 		fontWeight:'bold',
                 		fontSize:'16px',
@@ -50,11 +48,15 @@ $(function (){
             },
             plotOptions: {
 	        	 column: {
-	        		//pointPadding: 0.2,
 	        		pointPadding: 0.2,
 		            borderWidth: 0,
 	            	dataLabels: {
 	            	   enabled: true,
+	            	   y:100,
+	            	  backgroundColor: 'rgba(252, 255, 197, 0.7)',
+	            	   borderRadius: 5,
+	            	   borderWidth: 1,
+	                   borderColor: '#AAA',
 	            	   formatter:function()
 	            	   {
 	            			if(this.y!=0)

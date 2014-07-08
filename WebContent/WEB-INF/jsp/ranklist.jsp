@@ -34,7 +34,6 @@
 			<div id="container" style="min-width:800px;height:400px;margin-bottom:10px"></div>
 			
 			<div id="rankingsContent" style="margin-top:80px">
-				
 					<label>筛选产品模块</label>
 					<input name="selectProject" type="text" id="txtSelectProject" placeholder="输入后请回车" onchange="selectProject(this)"/>
 					<table id="tbl_rankings">
@@ -44,9 +43,27 @@
 							<th>总平均分</th>
 							<th>详情</th>
 						</tr>
+						<c:set value="1" var="rankNumber" />
 						<c:forEach items="${projectList}" var="item" varStatus="status">
 							<tr>
-								<td>${status.count}</td>
+								<td>
+									<c:choose>
+										<c:when test="${status.count==1}">
+											${status.count}
+										</c:when>
+										<c:otherwise>
+											<c:choose>
+												<c:when test="${item.avg_score eq projectList[status.index-1].avg_score}">
+													<c:out value="${rankNumber}" />
+												</c:when>
+												<c:otherwise>
+													${status.count}
+													<c:set value="${status.count}" var="rankNumber"/>
+												</c:otherwise>
+											</c:choose>
+										</c:otherwise>
+									</c:choose>
+								</td>
 								<td>${item.project_name}</td>
 								<td>${item.avg_score}</td>
 								<td>

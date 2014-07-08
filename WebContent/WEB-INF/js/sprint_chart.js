@@ -29,6 +29,8 @@ $(function (){
 	            	}
 	            },
 	         yAxis: {
+	        	 	max:5,
+	        	 	min:0,
 	                title: {
 	                    text: '分数',
 	                    style:{

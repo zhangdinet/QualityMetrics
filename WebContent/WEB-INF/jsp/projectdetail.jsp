@@ -25,7 +25,7 @@
 
 		<h3 style="margin-bottom:20px">${project_name} Sprint质量衡量分数表</h3>
 		<div id="container" style="min-width:800px;height:400px;"></div>
-		<table class="table">
+		<table>
 			<tr>
 			<th>Sprint</th>
 			<th>评分</th>
