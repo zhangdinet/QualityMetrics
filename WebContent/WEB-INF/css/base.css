@@ -249,11 +249,12 @@ li
 	color:white;
 }
 
-#divMainMenu a:hover,#divNavMenu a:hover
-{
-	text-decoration: underline;
-}
 
+/* #divMainMenu a:active ,#divLogoName a:active,#divNavMenu a:active
+{
+	text-decoration:none;
+	color:green;
+} */
 
 #spanUser,#spanLog
 {

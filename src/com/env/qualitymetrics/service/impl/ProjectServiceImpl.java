@@ -108,4 +108,9 @@ public class ProjectServiceImpl implements ProjectService{
 		return projectDao.getSource_ProjectName(project_id, source_name);
 	}
 
+	@Override
+	public boolean isProjectExist(String projectName)
+	{
+		return projectDao.isProjectExist(projectName);
+	}
 }

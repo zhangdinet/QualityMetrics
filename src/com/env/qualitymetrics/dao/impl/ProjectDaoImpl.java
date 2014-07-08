@@ -385,5 +385,21 @@ public class ProjectDaoImpl implements ProjectDao{
 			return source_project;
 		}
 	}
-
+	
+	@Override
+	public boolean isProjectExist(String projectName)
+	{
+		String hql="from Project p where p.project_name=? ";
+		Query query=sessionFactory.getCurrentSession().createQuery(hql);
+		query.setString(0, projectName);
+		List list=query.list();
+		if(list.size()==0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 }

@@ -43,7 +43,7 @@ public class LoginController{
 			}
 			session.setAttribute("username", username);
 			session.setAttribute("password", password);
-			mv.setViewName("redirect:rank");
+			mv.setViewName("redirect:ranklist");
 		}else{
 			req.setAttribute("errFlag", "error");
 			mv.setViewName("index");

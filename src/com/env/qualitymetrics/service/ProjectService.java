@@ -120,4 +120,6 @@ public interface ProjectService {
 	 * @return
 	 */
 	String getSource_ProjectName(int project_id, String source_name);
+	
+	public boolean isProjectExist(String projectName);
 }

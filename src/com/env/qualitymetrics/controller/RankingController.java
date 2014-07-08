@@ -65,7 +65,7 @@ public class RankingController {
 	@Resource(name="sonarHandler")
 	SonarHandler sonarHandler;
 	
-	@RequestMapping("/rank")
+	@RequestMapping("/ranklist")
 	public ModelAndView ranking(HttpServletRequest req)
 	{
 		String strID=req.getParameter("rankID");

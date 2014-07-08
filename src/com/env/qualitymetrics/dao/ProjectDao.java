@@ -49,4 +49,6 @@ public interface ProjectDao {
 	int getProjectFlagById(int project_id);
 	//根据project id 获取系统保存的source name
 	String getSource_ProjectName(int project_id, String source_name);
+	
+	public boolean isProjectExist(String projectName);
 }

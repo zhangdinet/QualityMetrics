@@ -101,6 +101,16 @@
 
 	
 	<script type="text/javascript">
+		$(document).ready(function(){
+			if($("#project_name").val())
+			{
+				$("#formProduct").attr("action", "saveModifyProject");
+			}
+			else
+			{
+				$("#formProduct").attr("action", "saveNewProject");
+			}
+		});
 		function send(i) {
 			if (i == 0) {
 				var project_name = $("input[name='project_name']").val();
@@ -112,7 +122,6 @@
 					$("#project_tipLabel").html("请完整填写信息！");
 					return;
 				}
-				$("#formProduct").attr("action", "saveModifyProject");
 			} else if (i == 1) {
 				$("#formProduct").attr("action", "projectlist");
 			}
