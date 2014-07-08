@@ -22,7 +22,7 @@
 			<form id="formModule" method="post">
 			<h3>产品模块基础数据录入</h3>
 				<div>
-					<label>产品名称</label>
+					<label>模块名称</label>
 					<c:if test="${project_name eq ''}">
 						<input name="project_name" id="project_name" value="${project_name }" class="form-control"></input>
 					</c:if>
@@ -31,7 +31,7 @@
 					</c:if>
 				</div>
 				<div>
-					<label>TestLink中的名称</label>
+					<label>TestLink名称</label>
 					<select name="testlinkName" onchange="getSuiteNames()" class="form-control">
 						<option value="choose">请选择</option>
 						<c:forEach var="item" items="${lstTestlinkName}" varStatus="status">

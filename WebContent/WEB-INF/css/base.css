@@ -512,3 +512,9 @@ label
 {
 	text-decoration:none;
 }
+
+#spanResult
+{
+	font-size:16px;
+	color:red;
+}

@@ -253,60 +253,7 @@ public class MainframeController {
 		return mv;
 	}
 	
-	@RequestMapping("/saveNewProject")
-	//保存编辑结果
-	public ModelAndView saveNewProject(HttpServletRequest req){
-		String project_id_string = req.getParameter("project_id");
-		String project_name = req.getParameter("project_name");
-		String project_name_tl = req.getParameter("testlinkName");
-		String project_name_rm = req.getParameter("redmineName");
-		String project_name_rm_support = req.getParameter("redmineSupportName");
-		
-		Integer project_id = null;
-		if(project_id_string.equals("0"))
-		{
-			if(!projectService.isProjectExist(project_name))
-			{
-				ProjectDto project = projectService.createNewProject();
-				project_id = project.getProject_id();
-			}
-			else
-			{
-				ModelAndView mv = new ModelAndView();
-				mv.setViewName("redirect:projectlist");
-				return mv;
-			}
-		}
-		else
-		{
-			project_id = Integer.parseInt(req.getParameter("project_id"));
-		}
-
-		Integer user_project_id = (Integer) req.getSession().getAttribute("project_id");
-		if(user_project_id == null || (user_project_id != project_id && user_project_id != 0)){
-			//非管理员，也不是本Project的管理人员
-			ModelAndView mv = new ModelAndView();
-			mv.setViewName("error");
-			return mv;
-		}
-		
-		ModelAndView mv = new ModelAndView();
-		if(!projectService.isProjectExist(project_name))
-		{
-			if(projectService.updateProjectNameById(project_id,project_name) && projectService.updateProjectSourceNames(project_id,project_name_tl,project_name_rm,"")
-				&& projectService.updateRedmineSupportName(project_id,project_name_rm_support) && projectService.updateProjectFlagById(project_id, SysUtil.project_flag))
-			{
-				mv.addObject("updateResult","ok");
-			}
-			else
-			{
-				mv.addObject("updateResult","err");
-			}
-		}
-		//=======================
-		mv.setViewName("redirect:projectlist");
-		return mv;
-	}
+	
 	
 	
 	
@@ -515,34 +462,6 @@ public class MainframeController {
 		}
 
 		mv.addObject("project_flag", project_flag);
-		return mv;
-	}
-	
-	
-	
-	@RequestMapping("/addProject")
-	public ModelAndView addProject(HttpServletRequest req){
-		ModelAndView mv = new ModelAndView();
-		Integer user_project_id = (Integer) req.getSession().getAttribute("project_id");
-		String flag_admin = (String) req.getSession().getAttribute("flag_admin");
-		if(user_project_id == null || user_project_id != 0){
-			//非系统管理员不能添加项目
-			mv.setViewName("error");
-			return mv;
-		}
-		mv.addObject("project_name", "");
-		//======================zhangdi  140416===============
-		List<String> lstTestlineName=testlinkHandler.getTestlinkProjectNames();
-		mv.addObject("lstTestlinkName",lstTestlineName);
-		
-		List<String> lstRedmineName=redmineCommon.getRedmineProjectNames();
-		mv.addObject("lstRedmineName",lstRedmineName);
-		
-		List<String> lstRedmineSupportName=redmineCommon.getRedmineSupportProjectNames();
-		mv.addObject("lstRedmineSupportName", lstRedmineSupportName);
-	 
-		//====================================================
-		mv.setViewName("modify_projectdetail");
 		return mv;
 	}
 	
