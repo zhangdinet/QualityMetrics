@@ -23,7 +23,7 @@
 			<h3>更新产品类项</h3>
 			<div>
 				<label>产品名称</label>
-				<input name="project_name" id="project_name" class="form-control"></input>
+				<input name="project_name" id="project_name" value="${project_name}" readonly="readonly" class="form-control"></input>
 			</div>
 			<div>
 				<label>TestLink名称</label>

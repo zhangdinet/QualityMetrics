@@ -51,12 +51,12 @@
 							<c:when test="${sessionScope.project_id == item.project_id or sessionScope.project_id == 0}">
 								<c:choose>
 									<c:when test="${item.project_flag==1}">
-										<a href="showModifyProject?project_id=${item.project_id}&project_name=${item.project_name }">
+										<a href="updateProductProject?project_id=${item.project_id}&project_name=${item.project_name }">
 											${item.project_name }
 										</a>
 									</c:when>
 									<c:otherwise>
-										<a href="showModifyProject?project_id=${item.project_id}&project_name=${item.project_name }&project_name_tl=${item.project_name_tl }&
+										<a href="updateModuleProject?project_id=${item.project_id}&project_name=${item.project_name }&project_name_tl=${item.project_name_tl }&
 											project_name_rm=${item.project_name_rm }&project_name_sn=${item.project_name_sn }&project_name_rm_support=${item.project_name_rm_support }">
 											${item.project_name }
 										</a>

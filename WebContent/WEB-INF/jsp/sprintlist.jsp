@@ -52,13 +52,14 @@
 			<c:forEach items="${sprintList}" var="item">
 				<tr>
 					<td>
-						<c:if test="${sessionScope.project_id == item.project_id}">
-							<a onclick="showPromptWait()" href="showModifySprint?sprint_id=${item.sprint_id }&project_name=${project_name }&project_flag=${project_flag }">${item.sprint_name }</a>
-						</c:if>
-				
-						<c:if test="${sessionScope.project_id != item.project_id and sessionScope.project_id == 0}">
-							<a onclick="showPromptWait()" href="showModifySprint?sprint_id=${item.sprint_id }&project_id=${project_id}&project_name=${project_name }&project_flag=${project_flag }">${item.sprint_name }</a>
-						</c:if>
+						<c:choose>
+							<c:when test="${sessionScope.project_id == item.project_id or sessionScope.project_id == 0}">
+								<a onclick="showPromptWait()" href="showModifySprint?sprint_id=${item.sprint_id }&project_id=${project_id}&project_name=${project_name }&project_flag=${project_flag }">${item.sprint_name }</a>
+							</c:when>
+							<c:otherwise>
+								${item.sprint_name}
+							</c:otherwise>
+						</c:choose>
 					</td>
 					<td>${item.testplan_testlink }</td>
 					<td>${item.version_redmine }</td>

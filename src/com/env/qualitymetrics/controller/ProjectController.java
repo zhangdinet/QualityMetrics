@@ -114,6 +114,107 @@ public class ProjectController
 		return mv;
 	}
 	
+
+	@RequestMapping("/saveUpdateProductProject")
+	public ModelAndView saveUpdateProductProject(HttpServletRequest req){
+		Integer project_id = Integer.parseInt(req.getParameter("project_id"));
+		String project_name = req.getParameter("project_name");
+		String project_name_tl = req.getParameter("testlinkName");
+		String project_name_rm = req.getParameter("redmineName");
+		String project_name_rm_support = req.getParameter("redmineSupportName");
+ 
+		ModelAndView mv = new ModelAndView();
+		if(projectService.updateProjectNameById(project_id,project_name) &&
+				projectService.updateProjectSourceNames(project_id,project_name_tl,project_name_rm,"")
+				&& projectService.updateRedmineSupportName(project_id,project_name_rm_support)
+				&& projectService.updateProjectFlagById(project_id, SysUtil.project_flag)){
+			mv.addObject("saveResult","更新成功！");
+			mv.setViewName("redirect:projectlist");
+		}else{
+			mv.addObject("saveResult","更新失败！");
+			mv.setViewName("update_product_project");
+		}
+		return mv;
+	}
+	
+	@RequestMapping("/updateModuleProject")
+	public ModelAndView updateModuleProject(HttpServletRequest req){
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("update_module_project");
+		String project_name = req.getParameter("project_name");
+		Integer project_id = Integer.parseInt(req.getParameter("project_id"));
+		ProjectDto projectDto=this.projectService.getProjectSourceNamesById(project_id,SysUtil.module_flag);
+		String project_name_tl = projectDto.getProject_name_tl();
+		String project_name_rm = projectDto.getProject_name_rm();
+		String project_name_sn = projectDto.getProject_name_sn();
+		String project_name_rm_support = projectDto.getProject_name_rm_support();
+		String suite_name_tl=projectDto.getSuite_name_tl();
+		String category_name_rm=projectDto.getCategory_name_rm();
+		mv.addObject("project_name", project_name).addObject("project_name_tl", project_name_tl)
+		.addObject("project_name_rm", project_name_rm).addObject("project_name_sn", project_name_sn)
+		.addObject("project_id", project_id).addObject("project_name_rm_support",project_name_rm_support)
+		.addObject("suite_name_tl", suite_name_tl).addObject("category_name_rm", category_name_rm)
+		.addObject("project_flag", SysUtil.module_flag);
+
+		List<String> lstTestlineName=testlinkHandler.getTestlinkProjectNames();
+		mv.addObject("lstTestlinkName",lstTestlineName);
+		List<String> lstRedmineName=redmineCommon.getRedmineProjectNames();
+		mv.addObject("lstRedmineName",lstRedmineName);
+		List<String> lstRedmineSupportName=redmineCommon.getRedmineSupportProjectNames();
+		mv.addObject("lstRedmineSupportName", lstRedmineSupportName);
+		List<String> lstTestlinkSuiteName=testlinkForSuiteHandler.getSuiteNamesByTestprojectName(project_name_tl);
+		mv.addObject("lstTestlinkSuiteName", lstTestlinkSuiteName);
+		List<String> lstRedmineCategoryName=redmineCommon.getCategoryNamesByProjectName(project_name_rm);
+		mv.addObject("lstRedmineCategoryName", lstRedmineCategoryName);
+		return mv;
+	}
+	
+	
+	@RequestMapping("/saveUpdateModuleProject")
+	//保存项目模块编辑结果
+	public ModelAndView saveUpdateModuleProject(HttpServletRequest req){
+		ModelAndView mv=new ModelAndView();
+		Integer project_id = Integer.parseInt(req.getParameter("project_id"));
+		String project_name = req.getParameter("project_name");
+		String project_name_tl = req.getParameter("testlinkName");
+		String project_name_rm = req.getParameter("redmineName");
+		String project_name_rm_support = req.getParameter("redmineSupportName");
+		
+		String[] topsuites_testlinks = req.getParameterValues("topsuite_testlink");
+		String suite_name_tl=SysUtil.suiteFilter(topsuites_testlinks);
+		suite_name_tl=suite_name_tl.substring(1,suite_name_tl.length()-1);
+		suite_name_tl=suite_name_tl.replaceAll(",",SysUtil.splitFlag);
+		String[] categories_redmine = req.getParameterValues("category_redmine");
+		String category_name_rm=Arrays.toString(categories_redmine);
+		category_name_rm=category_name_rm.substring(1,category_name_rm.length()-1);
+		category_name_rm=category_name_rm.replaceAll(",",SysUtil.splitFlag);
+		
+		if(projectService.updateProjectNameById(project_id,project_name) &&
+				projectService.updateProjectSourceNames(project_id,project_name_tl,project_name_rm,"")
+				&& projectService.updateRedmineSupportName(project_id,project_name_rm_support)
+				&& projectService.updateRedmineCategoryName(project_id, category_name_rm)
+				&& projectService.updateTestlinkSuiteName(project_id, suite_name_tl)
+				&& projectService.updateProjectFlagById(project_id, SysUtil.module_flag)){
+			mv.addObject("updateResult","更新成功！");
+			mv.setViewName("redirect:projectlist");
+			return mv;
+		}else{
+			mv.addObject("updateResult","更新失败！");
+			List<String> lstTestlineName=testlinkHandler.getTestlinkProjectNames();
+			mv.addObject("lstTestlinkName",lstTestlineName);
+			List<String> lstRedmineName=redmineCommon.getRedmineProjectNames();
+			mv.addObject("lstRedmineName",lstRedmineName);
+			List<String> lstRedmineSupportName=redmineCommon.getRedmineSupportProjectNames();
+			mv.addObject("lstRedmineSupportName", lstRedmineSupportName);
+			List<String> lstTestlinkSuiteName=testlinkForSuiteHandler.getSuiteNamesByTestprojectName(project_name_tl);
+			mv.addObject("lstTestlinkSuiteName", lstTestlinkSuiteName);
+			List<String> lstRedmineCategoryName=redmineCommon.getCategoryNamesByProjectName(project_name_rm);
+			mv.addObject("lstRedmineCategoryName", lstRedmineCategoryName);
+			mv.setViewName("update_module_project");
+			return mv;
+		}
+	}
+
 	@RequestMapping("/addProductProject")
 	public ModelAndView addProject(HttpServletRequest req){
 		ModelAndView mv=new ModelAndView();
@@ -153,6 +254,8 @@ public class ProjectController
 		return mv;
 	}
 	
+	
+	
 	@RequestMapping("/addModuleProject")
 	public ModelAndView addProjectModule(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView();
@@ -166,6 +269,7 @@ public class ProjectController
 		mv.setViewName("add_module_project");
 		return mv;
 	}
+	
 	
 	
 	@RequestMapping("/saveNewModuleProject")
@@ -213,11 +317,11 @@ public class ProjectController
 				&& projectService.updateRedmineCategoryName(project_id, category_name_rm)
 				&& projectService.updateTestlinkSuiteName(project_id, suite_name_tl)
 				&& projectService.updateProjectFlagById(project_id, SysUtil.module_flag)){
-			mv.addObject("updateResult","修改成功！");
+			mv.addObject("updateResult","添加成功！");
 			mv.setViewName("redirect:projectlist");
 			return mv;
 		}else{
-			mv.addObject("updateResult","修改失败！");
+			mv.addObject("updateResult","添加失败！");
 			List<String> lstTestlineName=testlinkHandler.getTestlinkProjectNames();
 			mv.addObject("lstTestlinkName",lstTestlineName);
 			List<String> lstRedmineName=redmineCommon.getRedmineProjectNames();
