@@ -40,7 +40,7 @@
 					</div>
 					<div>
 						<label>管理的产品模块</label>
-						<select id="select" name="select" class="form-control">
+						<select id="select" name="select" multiple="multiple" class="form-control">
 							<c:forEach var = "item" items="${projectList}">
 								<c:choose>
 										<c:when test="${item.project_id eq project_id}">

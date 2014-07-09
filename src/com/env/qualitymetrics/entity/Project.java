@@ -12,11 +12,11 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="tbl_project")
 public class Project {
 	
-	@Id  
-    @GeneratedValue(generator="system-uuid")  
-    @GenericGenerator(name = "system-uuid",strategy="native")
-    @Column
-    private int project_id;
+	@Id
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name = "system-uuid",strategy="native")
+	@Column
+	private int project_id;
 	
 	@Column
 	private String project_name;
