@@ -11,7 +11,7 @@ public interface UserDao {
 
 	public Integer getUserProjectIdByUsername(String username);
 
-	public boolean checkUserAuthorityByName(String username);
+	/*public boolean checkUserAuthorityByName(String username);*/
 
 	public List<UserDto> getUserList();
 
@@ -24,5 +24,8 @@ public interface UserDao {
 	public UserDto createNewUser();
 	
 	public boolean checkUserExist(String username);
-
+	
+	public boolean isAdmin(String username);
+	
+	public Integer getUserID(String username);
 }

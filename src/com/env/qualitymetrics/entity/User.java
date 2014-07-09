@@ -22,12 +22,15 @@ public class User {
       
     @Column(length=100)
     private String password;
-  
-    @Column(length=10)
-    private int flag_admin;
     
     @Column(length=100)
-    private int project_id;
+    private int role;
+  
+   /* @Column(length=10)
+    private int flag_admin;*/
+    
+    /*@Column(length=100)
+    private int project_id;*/
 
 	public int getUser_id() {
 		return user_id;
@@ -52,20 +55,28 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public int getRole() {
+		return role;
+	}
 
-	public int getFlag_admin() {
+	public void setRole(int role) {
+		this.role = role;
+	}
+
+	/*public int getFlag_admin() {
 		return flag_admin;
 	}
 
 	public void setFlag_admin(int flag_admin) {
 		this.flag_admin = flag_admin;
-	}
+	}*/
 
-	public int getProject_id() {
+	/*public int getProject_id() {
 		return project_id;
 	}
 
 	public void setProject_id(int project_id) {
 		this.project_id = project_id;
-	}
+	}*/
 }

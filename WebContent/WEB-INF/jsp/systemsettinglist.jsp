@@ -84,7 +84,6 @@
 							alert("delete user error!");
 						},
 					});
-					
 				}
 			}
 		</script>

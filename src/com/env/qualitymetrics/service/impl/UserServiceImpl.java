@@ -18,6 +18,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	public boolean isAdmin(String username) {
+		// TODO Auto-generated method stub
+		return this.userDao.isAdmin(username);
+	}
+	
+	@Override
 	public boolean checkUserLogin(String username, String password) {
 		// TODO Auto-generated method stub
 		return this.userDao.checkUserLogin(username, password);
@@ -41,11 +47,11 @@ public class UserServiceImpl implements UserService{
 		return this.userDao.getUserProjectIdByUsername(username);
 	}
 
-	@Override
+	/*@Override
 	public boolean checkUserAuthorityByName(String username) {
 		// TODO Auto-generated method stub
 		return this.userDao.checkUserAuthorityByName(username);
-	}
+	}*/
 
 	@Override
 	public List<UserDto> getUserList() {
@@ -84,4 +90,9 @@ public class UserServiceImpl implements UserService{
 		return userDao.createNewUser();
 	}
 
+	@Override
+	public Integer getUserID(String username)
+	{
+		return userDao.getUserID(username);
+	}
 }

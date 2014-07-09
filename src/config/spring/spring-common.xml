@@ -153,7 +153,8 @@
                 <value>com.env.qualitymetrics.entity.Ranking_sprint_score_item</value>
                 <value>com.env.qualitymetrics.entity.Ranking_sprint_score_item_pk</value>
                 <value>com.env.qualitymetrics.entity.Indicator_weight</value>
-                <value>com.env.qualitymetrics.entity.Userzd</value>
+                <value>com.env.qualitymetrics.entity.UserProject</value>
+                <!-- <value>com.env.qualitymetrics.entity.Userzd</value> -->
             </list>
         </property>
     </bean>

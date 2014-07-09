@@ -1,17 +1,21 @@
 package com.env.qualitymetrics.controller;
 
-//import java.util.List;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.env.qualitymetrics.dao.UserProjectDao;
 //import org.springframework.web.servlet.view.RedirectView;
 //import com.env.qualitymetrics.dto.RankingDto;
 import com.env.qualitymetrics.service.RankingService;
 import com.env.qualitymetrics.service.UserService;
+import com.env.qualitymetrics.service.UserProjectService;
 
 @Controller
 public class LoginController{
@@ -22,27 +26,42 @@ public class LoginController{
 	@Resource(name="rankingService")
 	private RankingService rankingService;
 	
+	@Resource(name="userProjectService")
+	private UserProjectService userProjectService;
+	
 	@RequestMapping("/login")
 	public ModelAndView LoginCheck(HttpServletRequest req, HttpServletResponse resp){
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
+		
 		ModelAndView mv = new ModelAndView();
-		if(username == null){
-			mv.setViewName("index");	//session失效或者用户已经退出了跳转到index页面
+		if(username == null)
+		{
+			mv.setViewName("index");
 			return mv;
 		}
-		if(userService.checkUserLogin(username, password)){
-			boolean flag_admin = userService.checkUserAuthorityByName(username);
+		
+		if(userService.checkUserLogin(username, password))
+		{
+			boolean isAdmin=userService.isAdmin(username);
+			//boolean flag_admin = userService.checkUserAuthorityByName(username);
+			int userID=userService.getUserID(username);
 			HttpSession session = req.getSession();
-			if(flag_admin){
+			session.setAttribute("isAdmin", isAdmin);
+			session.setAttribute("username", username);
+			session.setAttribute("password", password);
+			session.setAttribute("UserID", userID);
+			List<Integer> lstProjectID=userProjectService.getUserProjects(userID);
+			session.setAttribute("lstProjectID",lstProjectID);
+			
+			/*if(flag_admin){
 				session.setAttribute("flag_admin", "yes");
 				Integer user_project_id = userService.getUserProjectIdByUsername(username);
 				session.setAttribute("project_id",user_project_id);
 			}else{
 				session.setAttribute("flag_admin", "no");
-			}
-			session.setAttribute("username", username);
-			session.setAttribute("password", password);
+			}*/
+			
 			mv.setViewName("redirect:ranklist");
 		}else{
 			req.setAttribute("errFlag", "error");
@@ -58,6 +77,7 @@ public class LoginController{
 		session.removeAttribute("password");
 		session.removeAttribute("flag_admin");
 		session.removeAttribute("project_id");
+		session.removeAttribute("isAdmin");
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("index");
 		return mv;

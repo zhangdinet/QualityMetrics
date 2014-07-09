@@ -10,7 +10,7 @@
 		<li id="liMenuWeight"><a href="weightlist">权重设置</a></li>
 		<li id="liMenuKPI"><a href="employeeskpi">员工质量KPI</a></li>
 		<%
-			if(session.getAttribute("username").equals("admin"))
+			if((Boolean)(session.getAttribute("isAdmin")))
 			{
 		%>
 			<li id="liMenuSystemSetting"><a href="systemsettinglist">系统管理</a></li>

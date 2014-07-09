@@ -116,6 +116,7 @@ public class SystemSettingController
 		String username = req.getParameter("username");
 		int flag_admin = Integer.parseInt(req.getParameter("flag_admin"));
 		String select = req.getParameter("select");
+		
 		int project_id=0; //project默认为0
 		String project_name="无";
 		

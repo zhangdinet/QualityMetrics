@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="com.env.qualitymetrics.dao.*" %>
+<%@ page import="com.env.qualitymetrics.dto.*" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -26,16 +31,21 @@
 		<jsp:include page="commonpart/containerStart.jsp"></jsp:include>
 		
 		<h3>产品模块信息</h3>
-		<form action = "addProductProject" style="float:right">
-			<c:if test="${sessionScope.flag_admin == 'yes' and sessionScope.project_id == 0}">
-				<input type="submit" id="addProductProject" class="btn btn-primary" value="添加产品类项"></input>
-			</c:if>
-		</form>
-		<form action = "addModuleProject" style="float:right">
-			<c:if test="${sessionScope.flag_admin == 'yes' and sessionScope.project_id == 0}">
-				<input type="submit" id="addModuleProject" class="btn btn-primary" value="添加模块类项"></input>
-			</c:if>
-		</form>
+		
+		<%
+			if((Boolean)(session.getAttribute("isAdmin")))
+			{
+		%>
+				<form action = "addProductProject" style="float:right">
+					<input type="submit" id="addProductProject" class="btn btn-primary" value="添加产品类项"></input>
+				</form>
+				<form action = "addModuleProject" style="float:right">
+					<input type="submit" id="addModuleProject" class="btn btn-primary" value="添加模块类项"></input>
+				</form>
+		<%
+			}
+		%>
+		
 		<table id="tbl_project">
 			<tr>
 				<th>产品模块名称</th>
@@ -44,54 +54,96 @@
 				<th>Redmine技术支持率名称</th>
 				<th>Sprint信息</th>
 			</tr>
-			<c:forEach items="${projectList}" var="item">
-				<tr>
-					<td>
-						<c:choose>
-							<c:when test="${sessionScope.project_id == item.project_id or sessionScope.project_id == 0}">
-								<c:choose>
-									<c:when test="${item.project_flag==1}">
-										<a href="updateProductProject?project_id=${item.project_id}&project_name=${item.project_name }">
-											${item.project_name }
-										</a>
-									</c:when>
-									<c:otherwise>
-										<a href="updateModuleProject?project_id=${item.project_id}&project_name=${item.project_name }&project_name_tl=${item.project_name_tl }&
-											project_name_rm=${item.project_name_rm }&project_name_sn=${item.project_name_sn }&project_name_rm_support=${item.project_name_rm_support }">
-											${item.project_name }
-										</a>
-									</c:otherwise>
-								</c:choose>
-							</c:when>
-							<c:otherwise>
-								${item.project_name }
-							</c:otherwise>
-						</c:choose>
-					</td>
-			<c:choose>
-			<c:when test="${item.project_flag==1}">
-				<td>${item.project_name_tl }</td>
-				<td>${item.project_name_rm }</td>
-			</c:when>
-			<c:otherwise>
-			<td>
-				<c:set value="<br>${item.project_name_tl}--" var="newString_tl"/>
-				<c:set var="nameString_tl" value="${fn:replace(item.suite_name_tl, '<br>', newString_tl)}"/>
-				${item.project_name_tl }--${nameString_tl }
-			</td>
-			<td>
-				<c:set value="<br>${item.project_name_rm}--" var="newString_rm"/>
-				<c:set var="nameString_rm" value="${fn:replace(item.category_name_rm, '<br>', newString_rm)}"/>
-				${item.project_name_rm }--${nameString_rm }
-			</td>
-			</c:otherwise>
-			</c:choose>
-				<td>${item.project_name_rm_support }</td>
-				<td>
-					<a href="sprintlist?project_id=${item.project_id}&project_name=${item.project_name}&pageNumber=1">Sprint详情</a>
-				</td>
+			
+		<%
+				List<ProjectDto> lstProject=(List<ProjectDto>)request.getAttribute("projectList");
+				List<Integer> lstProjectID=(List<Integer>)session.getAttribute("lstProjectID");
+				int count=lstProject.size();
+				int idCount=lstProjectID.size();
+				for(int i=0;i<count;i++)
+				{
+					ProjectDto pDto=lstProject.get(i);
+					Integer pID=pDto.getProject_id();
+					int pFlag=pDto.getProject_flag();
+					Boolean isAdmin = (Boolean)(session.getAttribute("isAdmin"));
+					String pName=pDto.getProject_name();
+					String pNameTL=pDto.getProject_name_tl();
+					String pNameRM=pDto.getProject_name_rm();
+					String pNameSN=pDto.getProject_name_sn();
+					String pNameRMSP=pDto.getProject_name_rm_support();
+					String pNameCategoryRM = pDto.getCategory_name_rm();
+					String pNameSuiteTL = pDto.getSuite_name_tl();
+					String str = "";
+					String sprintDetail="<a href='sprintlist?project_id=" + pID + "&project_name=" + pName +"&pageNumber=1'>Sprint详情</a>";
+		%>
+			 	<tr>
+		<%
+					if(isAdmin)
+					{
+						if(pFlag==1)
+						{
+							str = "<a href='updateProductProject?project_id=" + pID + "&project_name=" + pName+"'>";
+						}
+						else
+						{
+							str="<a href='updateModuleProject?project_id="+ pID + "&project_name=" + pName + "&project_name_tl="
+									+ pNameTL + "&project_name_rm=" + pNameRM + "&project_name_sn=" + pNameSN + "&project_name_rm_support=" + pNameRMSP + "'>";
+						}
+					
+		%>						
+						<td><%= str %><%= pName %></a></td>
+		<% 
+					}
+					else
+					{
+						boolean ownerFlag=false;
+						for(int j=0;j<idCount;j++)
+						{
+							ownerFlag=false;
+							if(lstProjectID.get(i).equals(pID))
+							{
+								ownerFlag=true;
+							}
+						}
+						
+						if(ownerFlag)
+						{
+							if(pFlag==1)
+							{
+								str = "<a href='updateProductProject?project_id=" + pID + "&project_name=" + pName+"'>";
+							}
+							else
+							{
+								str="<a href='updateModuleProject?project_id="+ pID + "&project_name=" + pName + "&project_name_tl="
+										+ pNameTL + "&project_name_rm=" + pNameRM + "&project_name_sn=" + pNameSN + "&project_name_rm_support=" + pNameRMSP + "'>";
+							}
+						}
+		%>
+						<td><%= str %><%= pName %></a></td>
+		<%
+					}
+					if( pFlag == 1)
+					{
+		%>
+						<td><%= pNameTL %></td>
+						<td><%= pNameRM %></td>
+		<%
+					}
+					else
+					{
+		%>					
+						<td><%= pNameTL %> -- <%= pNameSuiteTL %></td>
+						<td><%= pNameRM %> -- <%= pNameCategoryRM %></td>
+		<%					
+					}
+		%>
+				<td><%= pNameRMSP %></td>
+				<td><%= sprintDetail %></td>
 			</tr>
-			</c:forEach>
+		<%	
+			}
+		%>
+		
 		</table>
 		<div id="settings_sprint"></div>
 		<jsp:include page="commonpart/containerEnd.jsp"></jsp:include>
@@ -120,3 +172,6 @@
 		</script>
 	</body>
 </html>
+
+
+

@@ -26,9 +26,14 @@
 
 		<h3>指标权重信息</h3>
 		<form action = "modifyWeight" style="float:right">
-			<c:if test="${sessionScope.flag_admin == 'yes' and sessionScope.project_id == 0}">
-				<input type="submit" class="btn btn-primary" value="设置"></input>
-			</c:if>
+			<%
+				if((Boolean)(session.getAttribute("isAdmin")))
+				{
+			%>
+				 	<input type="submit" class="btn btn-primary" value="设置"></input>
+			<%
+				}
+			%>
 		</form>
 		<table id="tblWeight">
 			<tr>

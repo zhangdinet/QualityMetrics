@@ -30,6 +30,17 @@
 				<img src="${pageContext.request.contextPath}/img/loading.gif">
 			</span>
 			<div style="float:right;">
+				<%
+					Boolean isAdmin=(Boolean)session.getAttribute("isAdmin");
+					if(isAdmin)
+					{
+						
+				%>
+						<input type="submit" class="btn btn-primary" value="添加" onclick="showPromptWait()"></input>
+				<%
+					}
+				%>
+			
 				<c:if test="${sessionScope.flag_admin == 'yes' and sessionScope.project_id == project_id or sessionScope.project_id == 0}">
 					<input type="submit" class="btn btn-primary" value="添加" onclick="showPromptWait()"></input>
 				</c:if>

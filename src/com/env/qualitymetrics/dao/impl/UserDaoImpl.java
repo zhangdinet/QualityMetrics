@@ -25,6 +25,41 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	@Override
+	public boolean isAdmin(String username)
+	{
+		String hql="from User u where u.username=? ";
+		Query query=sessionFactory.getCurrentSession().createQuery(hql);
+		query.setString(0, username);
+		List list=query.list();
+		Iterator iterator=list.iterator();
+		while(iterator.hasNext())
+		{
+			User u=(User)iterator.next();
+			if(u.getRole()==0)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public Integer getUserID(String username)
+	{
+		String hql="from User u where u.username=? ";
+		Query query=sessionFactory.getCurrentSession().createQuery(hql);
+		query.setString(0, username);
+		List list=query.list();
+		Iterator iterator=list.iterator();
+		while(iterator.hasNext())
+		{
+			User u=(User)iterator.next();
+			return u.getUser_id();
+		}
+		return -1;
+	}
+	
+	@Override
 	public boolean checkUserExist(String username)
 	{
 		String hql="from User u where u.username=? ";
@@ -72,7 +107,6 @@ public class UserDaoImpl implements UserDao{
 		return true;
 	}
 	
-	
 	//zhangdi todo 一个管理员可以管理多个项目时此处可能需要改动 140527
 	@Override
 	public Integer getUserProjectIdByUsername(String username) {
@@ -89,7 +123,7 @@ public class UserDaoImpl implements UserDao{
 		return user.getProject_id();
 	}
 	
-	@Override
+	/*@Override
 	public boolean checkUserAuthorityByName(String username) {
 		String hql = "from User u where u.username=?";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql); 
@@ -106,7 +140,7 @@ public class UserDaoImpl implements UserDao{
 			return true;
 		}
 		return false;
-	}
+	}*/
 	
 	@Override
 	public List<UserDto> getUserList() {

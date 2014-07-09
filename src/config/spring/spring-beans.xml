@@ -24,6 +24,8 @@
      	<property name="sessionFactory" ref="sessionFactory"></property>
      </bean>
      
+     
+     
      <bean id="rankingDao" class="com.env.qualitymetrics.dao.impl.RankingDaoImpl">
      	<property name="sessionFactory" ref="sessionFactory"></property>
      </bean>
@@ -33,6 +35,10 @@
      </bean>
      
       <bean id="weightDao" class="com.env.qualitymetrics.dao.impl.WeightDaoImpl">
+     	<property name="sessionFactory" ref="sessionFactory"></property>
+     </bean>
+     
+      <bean id="userProjectDao" class="com.env.qualitymetrics.dao.impl.UserProjectDaoImpl">
      	<property name="sessionFactory" ref="sessionFactory"></property>
      </bean>
      
@@ -119,6 +125,9 @@
     	<property name="target" ref="userServiceBase"></property>
     </bean>
     
+    <bean id="userProjectService" class="com.env.qualitymetrics.service.impl.UserProjectServiceImpl">
+    	<property name="userProjectDao" ref="userProjectDao"></property>
+    </bean>
 
     
     <!-- 获取project相关服务 -->

@@ -7,6 +7,9 @@ import com.env.qualitymetrics.entity.User;
 
 public interface UserService {
 	public User getUser();
+	public boolean isAdmin(String username);
+	public Integer getUserID(String username);
+	
 	public boolean checkUserLogin(String username, String password);
 	public boolean changePassword(String username, String password);
 	/***
@@ -18,12 +21,8 @@ public interface UserService {
 	
 	public boolean checkUserExist(String username);
 	
-	/***
-	 * 根据username判断用户权限：普通用户（查看） or 管理员（可编辑）
-	 * @param username
-	 * @return
-	 */
-	public boolean checkUserAuthorityByName(String username);
+	
+	//public boolean checkUserAuthorityByName(String username);
 	
 	/***
 	 * 获取用户列表
