@@ -17,7 +17,8 @@ public interface UserService {
 	 * @param username
 	 * @return
 	 */
-	public Integer getUserProjectIdByUsername(String username);
+	
+	public List<Integer> getUserProjectIdByUsername(String username);
 	
 	public boolean checkUserExist(String username);
 	
@@ -36,8 +37,12 @@ public interface UserService {
 	 * @param project_id
 	 * @param username
 	 */
-	public void updateUserInfo(int user_id, int flag_admin, int project_id,
-			String username);
+	public void updateUserInfo(int user_id, int flag_admin, int project_id,String username);
+	
+	
+	public void updateUserInfo(int user_id, String username);
+	
+	public void updateUserInfo(int user_id, String username,int role);
 	/***
 	 * 重置密码
 	 * @param user_id

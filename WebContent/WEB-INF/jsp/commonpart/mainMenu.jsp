@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <div id="divMainMenu">
 	<ul id="ulMainMenu">
-		<!-- <li><a href="#" onclick="showRankings()">质量龙虎榜 </a></li> -->
 		<li id="liMenuRank"><a href="ranklist">质量龙虎榜 </a></li>
 		<li id="liMenuProject"><a href="projectlist">产品模块设置 </a></li>
 		<li id="liMenuWeight"><a href="weightlist">权重设置</a></li>

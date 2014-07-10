@@ -13,6 +13,12 @@ public class UserProjectServiceImpl implements UserProjectService{
 		return userProjectDao.getUserProjects(userID);
 	}
 	
+	@Override
+	public void insertUserAndProject(int userID, int projectID)
+	{
+		this.userProjectDao.insertUserAndProject(userID, projectID);
+	}
+	
 	public void setUserProjectDao(UserProjectDao userProjectDao)
 	{
 		this.userProjectDao=userProjectDao;
@@ -20,5 +26,17 @@ public class UserProjectServiceImpl implements UserProjectService{
 	public UserProjectDao getUserProjectDao()
 	{
 		return this.userProjectDao;
+	}
+	
+	@Override
+	public void deleteUserAndProject(int userID)
+	{
+		this.userProjectDao.deleteUserAndProject(userID);
+	}
+	
+	@Override
+	public void updateUserAndProject(int userID, int projectID)
+	{
+		this.userProjectDao.updateUserAndProject(userID, projectID);
 	}
 }

@@ -15,11 +15,19 @@ import com.env.qualitymetrics.dao.UserDao;
 import com.env.qualitymetrics.dto.UserDto;
 import com.env.qualitymetrics.entity.Project;
 import com.env.qualitymetrics.entity.User;
-//import com.env.qualitymetrics.tasks.DailyTask;
+import com.env.qualitymetrics.entity.UserProject;
+import com.env.qualitymetrics.dao.UserProjectDao;
 
 public class UserDaoImpl implements UserDao{
 	private static final Logger log = LoggerFactory.getLogger(UserDaoImpl.class);
 	private SessionFactory sessionFactory;
+	
+	private UserProjectDao userProjectDao;
+	public void setUserProjectDao(UserProjectDao userProjectDao)
+	{
+		this.userProjectDao=userProjectDao;
+	}
+	
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
@@ -107,9 +115,24 @@ public class UserDaoImpl implements UserDao{
 		return true;
 	}
 	
-	//zhangdi todo 一个管理员可以管理多个项目时此处可能需要改动 140527
 	@Override
-	public Integer getUserProjectIdByUsername(String username) {
+	public List<Integer> getUserProjectIdByUsername(String username)
+	{
+		String hql = "from User u where u.username=?";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setString(0, username);
+		List list = query.list();
+		if(list.size() == 0){
+			log.error("用户名为："+username+" 未找到！");
+			return null;
+		}
+		User user = (User) list.get(0);
+		return userProjectDao.getUserProjects(user.getUser_id());
+	}
+	
+	//zhangdi todo 一个管理员可以管理多个项目时此处可能需要改动 140527
+/*	@Override
+	public Integer (String username) {
 		// TODO Auto-generated method stub
 		String hql = "from User u where u.username=?";
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
@@ -121,7 +144,7 @@ public class UserDaoImpl implements UserDao{
 		}
 		User user = (User) list.get(0);
 		return user.getProject_id();
-	}
+	}*/
 	
 	/*@Override
 	public boolean checkUserAuthorityByName(String username) {
@@ -149,31 +172,50 @@ public class UserDaoImpl implements UserDao{
 		List<UserDto> userList = new ArrayList<UserDto>();
 		List resultList = query.list();
 		Iterator iterator = resultList.iterator();
-		while(iterator.hasNext()){
+		while(iterator.hasNext())
+		{
 			User u = (User) iterator.next();
 			UserDto userDto = new UserDto();
 			userDto.setUser_id(u.getUser_id());
 			userDto.setUsername(u.getUsername());
-			userDto.setProject_id(u.getProject_id());
-			userDto.setFlag_admin(u.getFlag_admin());
-			userDto.setProject_id(u.getProject_id());
-			userDto.setProject_id(u.getProject_id());
-			if(u.getFlag_admin() == 0){
+			userList.add(userDto);
+		/*	if(u.getRole()==0)
+			{
+				continue;
+			}
+			else if(u.getRole()==2)
+			{
 				userDto.setProject_name("无");
 				userList.add(userDto);
 				continue;
-			}else{
-				if(u.getProject_id() == 0){
-					continue;
+			}*/
+			
+			/*List<Integer> lstProjectID = userProjectDao.getUserProjects(u.getUser_id());
+			String projectNames="";
+			for(Integer i:lstProjectID)
+			{
+				hql = "from Project p where p.project_id = ?";
+				query =  sessionFactory.getCurrentSession().createQuery(hql); 
+				query.setString(0, i+"");
+				List projectList = query.list();
+				if(projectNames.equals(""))
+				{
+					projectNames=((Project)projectList.get(0)).getProject_name();
+				}
+				else
+				{
+					projectNames=projectNames+ "<br>" + ((Project)projectList.get(0)).getProject_name();
 				}
 			}
-			hql = "from Project p where p.project_id = ?";
+			userDto.setProject_name(projectNames);
+			userList.add(userDto);*/
+			/*hql = "from Project p where p.project_id = ?";
 			query =  sessionFactory.getCurrentSession().createQuery(hql); 
 			query.setString(0, u.getProject_id()+"");
 			List projectList = query.list();
 			String project_name =  ((Project)projectList.get(0)).getProject_name();
 			userDto.setProject_name(project_name);
-			userList.add(userDto);
+			userList.add(userDto);*/
 		}
 		return userList;
 	}
@@ -189,6 +231,30 @@ public class UserDaoImpl implements UserDao{
 		query.executeUpdate();
 	}
 	
+	@Override
+	public void updateUserInfo(int user_id, String username)
+	{
+		String hql = "update User u set u.username = ? where u.user_id = ?";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setString(0, username);
+		//query.setString(1, flag_admin+"");
+		//query.setString(2, project_id+"");
+		query.setString(1, user_id+"");
+		query.executeUpdate();
+	}
+	
+	@Override
+	public void updateUserInfo(int user_id, String username,int role)
+	{
+		String hql = "update User u set u.username = ?,u.role= ? where u.user_id = ?";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setString(0, username);
+		//query.setString(1, flag_admin+"");
+		//query.setString(2, project_id+"");
+		query.setInteger(1,role);
+		query.setString(2, user_id+"");
+		query.executeUpdate();
+	}
 	/*@Override
 	public void addUserInfo(int user_id, int flag_admin, int project_id,String username)
 	{

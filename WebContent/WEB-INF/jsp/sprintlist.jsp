@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="com.env.qualitymetrics.dao.*" %>
+<%@ page import="com.env.qualitymetrics.dto.*" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -32,7 +36,24 @@
 			<div style="float:right;">
 				<%
 					Boolean isAdmin=(Boolean)session.getAttribute("isAdmin");
-					if(isAdmin)
+					//List<ProjectDto> lstProject=(List<ProjectDto>)request.getAttribute("projectList");
+					List<Integer> lstProjectID=(List<Integer>)session.getAttribute("lstProjectID");
+					//int count=lstProject.size();
+					int idCount=lstProjectID.size();
+					Integer pID=Integer.parseInt(request.getParameter("project_id"));
+					
+					boolean ownerFlag=false;
+					for(int i=0;i<idCount;i++)
+					{
+						ownerFlag=false;
+						if(lstProjectID.get(i).equals(pID))
+						{
+							ownerFlag=true;
+						}
+					}
+				
+				
+					if( isAdmin || ownerFlag )
 					{
 						
 				%>
@@ -40,10 +61,6 @@
 				<%
 					}
 				%>
-			
-				<c:if test="${sessionScope.flag_admin == 'yes' and sessionScope.project_id == project_id or sessionScope.project_id == 0}">
-					<input type="submit" class="btn btn-primary" value="添加" onclick="showPromptWait()"></input>
-				</c:if>
 				<input type="hidden" name="project_id" value="${project_id}"></input>
 				<input type="hidden" name="project_name" value="${project_name}"></input>
 				<input type="hidden" name="project_flag" value="${project_flag}"></input>
@@ -63,14 +80,23 @@
 			<c:forEach items="${sprintList}" var="item">
 				<tr>
 					<td>
-						<c:choose>
-							<c:when test="${sessionScope.project_id == item.project_id or sessionScope.project_id == 0}">
+						<%
+							if( isAdmin || ownerFlag )
+							{
+						%>
+						
 								<a onclick="showPromptWait()" href="showModifySprint?sprint_id=${item.sprint_id }&project_id=${project_id}&project_name=${project_name }&project_flag=${project_flag }">${item.sprint_name }</a>
-							</c:when>
-							<c:otherwise>
-								${item.sprint_name}
-							</c:otherwise>
-						</c:choose>
+						<%
+							}
+							else
+							{
+						%>
+								${item.sprint_name }
+						<%
+							}
+						%>
+						
+						 
 					</td>
 					<td>${item.testplan_testlink }</td>
 					<td>${item.version_redmine }</td>

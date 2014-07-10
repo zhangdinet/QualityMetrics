@@ -23,7 +23,7 @@
 				<form id="formUser" method="post">
 					<div>
 						<label>用户名</label>
-						<input name="newUsername" id="newUsername" class="form-control"></input>
+						<input name="updateUsername" id="updateUsername" readonly="readonly" class="form-control" value="${updateUsername}" />
 					</div>
 					<div>
 						<label>产品模块管理员</label>
@@ -40,9 +40,10 @@
 						</select>
 					</div>
 					<div>
-						<input type="button" class="btn btn-primary" value="添加" onclick="saveNewUser()"/>
+						<input type="button" class="btn btn-primary" value="更新" onclick="saveUpdateUser()"/>
 						<input type="button" class="btn btn-primary" value="返回" onclick="cancel()"/>
 					</div>
+					<input type="hidden" name="hiddenUserID" id="hiddenUserID" value="${userID}" />
 					<div class="project_tipLabel" id="user_tipLabel">
 						<c:if test="${modifyResult eq 'ok'}">修改成功！</c:if>
 						<c:if test="${modifyResult eq 'err'}">修改失败！</c:if>
@@ -66,30 +67,17 @@
 					$("#select").attr("disabled",true);
 				}
 			});
-
-			function saveNewUser()
-			{
-				if(checkEmpty())
-				{
-					$("#formUser").attr("action","saveNewUser");
-					$("#formUser").submit();
-				}
-				else
-				{
-					$("#newUsername").focus();
-				}
-			}
 			
-			function saveModifyUser()
+			function saveUpdateUser()
 			{
 				if(checkEmpty())
 				{
-					$("#formUser").attr("action","saveModifyUser");
+					$("#formUser").attr("action","saveUpdateUser");
 					$("#formUser").submit();
 				}
 				else
 				{
-					$("#newUsername").focus();
+					$("#updateUsername").focus();
 				}
 			}
 			
@@ -101,7 +89,7 @@
 			
 			function checkEmpty()
 			{
-				if( ($("#newUsername").val()==null) || $("#newUsername").val()=='')
+				if( ($("#updateUsername").val()==null) || $("#updateUsername").val()=='')
 				{
 					return false;
 				}

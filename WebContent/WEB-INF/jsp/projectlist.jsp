@@ -131,8 +131,15 @@
 					}
 					else
 					{
+						String tempPNameTL= pNameTL + "--";
+						String tempPNameSuiteTL="";
+						if(pNameSuiteTL!=null)
+						{
+							tempPNameSuiteTL = pNameSuiteTL.replaceAll("<br>", tempPNameTL);
+						}
+						
 		%>					
-						<td><%= pNameTL %> -- <%= pNameSuiteTL %></td>
+						<td><%= pNameTL %> -- <%= tempPNameSuiteTL %></td>
 						<td><%= pNameRM %> -- <%= pNameCategoryRM %></td>
 		<%					
 					}

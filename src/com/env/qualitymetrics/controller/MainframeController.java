@@ -464,27 +464,47 @@ public class MainframeController {
 		pw.write("ok");
 	}
 	
-	
-	
 	@RequestMapping("/addUser")
 	public ModelAndView addUser(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView();
-		Integer project_id = (Integer) req.getSession().getAttribute("project_id");
-		String flag_admin =  (String) req.getSession().getAttribute("flag_admin");
-		if(flag_admin.equals("yes") && project_id==0){
-			mv.addObject("project_name","");
-			mv.addObject("user_project_id","-1");//新增，设置传入的project_id和user_id为-1，保存时进行判断
-			mv.addObject("flag_admin","0");//flag_admin默认为0
-			mv.addObject("user_name","");
-			mv.addObject("user_id","-1");
-			mv.setViewName("redirect:/showModifyUsers");
+		Boolean isAdmin=(Boolean)req.getSession().getAttribute("isAdmin");
+		if(isAdmin)
+		{
+			List<ProjectDto> projectDto=projectService.getAllProjectsDetail();
+			mv.addObject("lstProjectDto", projectDto);
+			mv.setViewName("addUser");
 			return mv;
-		}else{
+		}
+		else
+		{
 			mv.setViewName("error");
 			return mv;
 		}
-		
 	}
+	
+	@RequestMapping("/updateUser")
+	public ModelAndView updateUser(HttpServletRequest req)
+	{
+		ModelAndView mv = new ModelAndView();
+		Boolean isAdmin=(Boolean)req.getSession().getAttribute("isAdmin");
+		if(isAdmin)
+		{
+			List<ProjectDto> projectDto=projectService.getAllProjectsDetail();
+			mv.addObject("lstProjectDto", projectDto);
+			mv.setViewName("updateUser");
+			String updateUsername=req.getParameter("user_name");
+			String userID=req.getParameter("userID");
+			mv.addObject("updateUsername",updateUsername);
+			mv.addObject("userID", userID);
+			return mv;
+		}
+		else
+		{
+			mv.setViewName("error");
+			return mv;
+		}
+	}
+
 
 	
 	@RequestMapping("/showIndicatorWeight")

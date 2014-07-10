@@ -2,6 +2,7 @@ package com.env.qualitymetrics.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
 
+import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller; 
@@ -30,6 +32,7 @@ import com.env.qualitymetrics.service.UserServicezd;
 import com.env.qualitymetrics.tool.RedmineCommon;
 import com.env.qualitymetrics.service.WeightService;
 import com.env.qualitymetrics.service.ProjectService;
+import com.env.qualitymetrics.service.UserProjectService;
 
 @Controller
 public class SystemSettingController
@@ -40,12 +43,35 @@ public class SystemSettingController
 	@Resource(name="projectService")
 	ProjectService projectService;
 	
+	@Resource(name="userProjectService")
+	UserProjectService userProjectService;
+	
 	private static final Logger log = LoggerFactory.getLogger(SystemSettingController.class);
 	
 	@RequestMapping("/systemsettinglist")
-	public ModelAndView showIndicatorWeight(HttpServletRequest req){
+	public ModelAndView systemSettingList(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView();
 		List<UserDto> userList = userService.getUserList();
+		
+		userList.remove(0);
+		for(UserDto userDto:userList)
+		{	
+			String projectName="";
+			 List<Integer> lstProjectID = userProjectService.getUserProjects(userDto.getUser_id());
+			 for(Integer i : lstProjectID)
+			 {
+				 String pName=projectService.getProjectNameById(i);
+				 if(projectName.equals(""))
+				 {
+					 projectName=pName;
+				 }
+				 else
+				 {
+					 projectName=projectName + "<br>" + pName;
+				 }
+			 }
+			 userDto.setProject_name(projectName);
+		}
 		mv.addObject("userList",userList);
 		mv.setViewName("systemsettinglist");
 		return mv;
@@ -109,33 +135,53 @@ public class SystemSettingController
 		return mv;
 	}
 	
-	
 	@RequestMapping("/saveNewUser")
 	public ModelAndView saveNewUser(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView();
-		String username = req.getParameter("username");
-		int flag_admin = Integer.parseInt(req.getParameter("flag_admin"));
-		String select = req.getParameter("select");
+		String username = req.getParameter("newUsername");
+		int role = Integer.parseInt(req.getParameter("role"));
 		
-		int project_id=0; //project默认为0
-		String project_name="无";
-		
-		if(select != null)
-		{
-			project_id = Integer.parseInt(req.getParameter("select"));
-			project_name = projectService.getProjectNameById(project_id);
-		}
+		int projectID=0; //project默认为0
+		String projectName="无";
 		
 		if(!userService.checkUserExist(username))
 		{
 			UserDto user = userService.createNewUser();
-			int user_id=user.getUser_id();
-			userService.updateUserInfo(user_id, flag_admin, project_id, username);
+			int userID = user.getUser_id();
+			userService.updateUserInfo(userID,username,role);
+			if(role==1)
+			{	
+				projectID = Integer.parseInt(req.getParameter("select"));
+				projectName = projectService.getProjectNameById(projectID);
+				userProjectService.insertUserAndProject(userID, projectID);
+			}
 		}
- 
 		mv.setViewName("redirect:systemsettinglist");
 		return mv;
 	}
+	
+	@RequestMapping("/saveUpdateUser")
+	public ModelAndView saveUpdateUser(HttpServletRequest req){
+		ModelAndView mv = new ModelAndView();
+		String username = req.getParameter("updateUsername");
+		int userID= Integer.parseInt(req.getParameter("hiddenUserID"));
+		int role = Integer.parseInt(req.getParameter("role"));
+		userService.updateUserInfo(userID,username,role);
+		String select=req.getParameter("select");
+		int projectID=0;
+		if(select!=null)
+		{
+			projectID = Integer.parseInt(select);
+			userProjectService.updateUserAndProject(userID, projectID);
+		}
+		else
+		{
+			userProjectService.deleteUserAndProject(userID);
+		}
+		mv.setViewName("redirect:systemsettinglist");
+		return mv;
+	}
+	
 	
 	
 	@RequestMapping("/addProjectUser")
@@ -165,7 +211,7 @@ public class SystemSettingController
 		
 		mv.addObject("project_name",project_name);
 		mv.addObject("user_project_id",project_id);
-		mv.addObject("flag_admin",flag_admin);
+		//mv.addObject("flag_admin",flag_admin);
 		mv.addObject("user_name",username);
 		mv.addObject("user_id",user_id);
 		mv.addObject("modifyResult","ok");

@@ -31,6 +31,30 @@ public class UserProjectDaoImpl implements UserProjectDao {
 		this.sessionFactory = sessionFactory;
 	}
 	
+	@Override
+	public void insertUserAndProject(int userID, int projectID) {
+		//String hql = "insert into UserProject(up.user_id,up.project_id) values(? , ?)";
+		UserProject up=new UserProject();
+		up.setProject_id(projectID);
+		up.setUser_id(userID);
+		sessionFactory.getCurrentSession().save(up);
+	}
+	
+	@Override
+	public void updateUserAndProject(int userID, int projectID) {
+		UserProject up=new UserProject();
+		up.setProject_id(projectID);
+		up.setUser_id(userID);
+		sessionFactory.getCurrentSession().save(up);
+	}
+	
+	
+	@Override
+	public void deleteUserAndProject(int userID)
+	{
+		String hql="delete from UserProject up where up.user_id = ? ";
+		sessionFactory.getCurrentSession().createQuery(hql).setInteger(0, userID).executeUpdate();
+	}
 	
 	@Override
 	public List<Integer> getUserProjects(Integer userID)

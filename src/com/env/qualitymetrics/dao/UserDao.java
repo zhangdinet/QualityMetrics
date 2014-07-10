@@ -9,13 +9,19 @@ public interface UserDao {
 	
 	public boolean changePassword(String username, String password);
 
-	public Integer getUserProjectIdByUsername(String username);
+	/*public Integer getUserProjectIdByUsername(String username);*/
+	
+	public List<Integer> getUserProjectIdByUsername(String username);
 
 	/*public boolean checkUserAuthorityByName(String username);*/
 
 	public List<UserDto> getUserList();
 
 	public void updateUserInfo(int user_id, int flag_admin, int project_id, String username);
+	
+	public void updateUserInfo(int user_id, String username);
+	
+	public void updateUserInfo(int user_id, String username,int role);
 
 	public void resetPwd(int user_id);
 
@@ -23,7 +29,7 @@ public interface UserDao {
 
 	public UserDto createNewUser();
 	
-	public boolean checkUserExist(String username);
+	boolean checkUserExist(String username);
 	
 	public boolean isAdmin(String username);
 	

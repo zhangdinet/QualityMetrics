@@ -1,19 +1,33 @@
 package com.env.qualitymetrics.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserDto {
-	int flag_admin;
+	//int flag_admin;
 	int user_id;
 	int project_id;
 	String username;
 	String password;
 	String project_name;
+	List<Integer> lstProjectID;
 	
-	public int getFlag_admin() {
+	/*public int getFlag_admin() {
 		return flag_admin;
 	}
 	public void setFlag_admin(int flag_admin) {
 		this.flag_admin = flag_admin;
+	}*/
+	
+	public List<Integer> getLstProjectID()
+	{
+		return this.lstProjectID;
 	}
+	public void setLstProjectID(List<Integer> lstProjectID)
+	{
+		this.lstProjectID=lstProjectID;
+	}
+	
 	public int getUser_id() {
 		return user_id;
 	}

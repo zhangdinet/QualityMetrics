@@ -4,7 +4,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <div id="divNavMenu">
 	<ul id="ulNavMenu">
-		<!-- <li><a href="mainframe?menuIndex=0">质量龙虎榜 </a></li> -->
 		<li id="liMenuRank"><a href="ranklist">质量龙虎榜</a></li>
 		<li id="liMenuProject"><a href="projectlist">产品模块设置 </a></li>
 		<li id="liMenuWeight"><a href="weightlist">权重设置</a></li>
@@ -13,13 +12,10 @@
 			if((Boolean)(session.getAttribute("isAdmin")))
 			{
 		%>
-			<!-- <li><a href="mainframe?menuIndex=2">系统管理 </a></li> -->
 			<li id="liMenuSystemSetting"><a href="systemsettinglist">系统管理</a></li>
 		<%
 			}
 		%>
-		<!-- <li><a href="rankinglist">龙虎榜Demo</a></li> -->
-		<!-- <li><a href="users">用户设置 </a></li> -->
 	</ul>
 	<span id="spanUser"><a id="aUser" href="logout">退出</a></span>
 	<span id="spanLog">

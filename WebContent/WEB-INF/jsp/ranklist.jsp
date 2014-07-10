@@ -91,7 +91,7 @@
 		<jsp:include page="commonpart/containerEnd.jsp"></jsp:include>
 		<script type="text/javascript">
 			$(document).ready(function(){
-				showNewestRankings();
+				//showNewestRankings();
 				showRankingChart();
 			});
 			
@@ -167,12 +167,12 @@
 						/* if(data.indexOf('<html>')>-1){
 						window.location = "login";
 						return;
-						}
-						$("#rankingsContent").html(data); */
+						} */
+						$("#rankingsContent").html(data);
 					},
 					error:function(data){
 						/* alert("test new"); */
-						//alert("showNewestRankings error!");
+						alert("showNewestRankings error!");
 					},
 				});
 			}

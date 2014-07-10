@@ -50,7 +50,7 @@ public class LoginController{
 			session.setAttribute("isAdmin", isAdmin);
 			session.setAttribute("username", username);
 			session.setAttribute("password", password);
-			session.setAttribute("UserID", userID);
+			session.setAttribute("userID", userID);
 			List<Integer> lstProjectID=userProjectService.getUserProjects(userID);
 			session.setAttribute("lstProjectID",lstProjectID);
 			
