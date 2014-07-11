@@ -23,10 +23,17 @@
 			<h3>软件产品质量龙虎榜</h3>
 			<div style="margin-top:20px">
 				<span id="spanBrowseHistory" style="float:right">查看往期
-					<select name="rankingPeriod" sytle="float:right">
+					<select name="rankingPeriod" id="rankingPeriod" sytle="float:right">
 						<option value="0">请选择</option>
 						<c:forEach var="item" items="${rankingList}" varStatus="status">
-							<option value="${item.rank_id}">${item.rank_period}</option>
+							<c:choose>
+								<c:when test="${item.rank_id == rank_id}">
+									<option selected="selected" value="${item.rank_id}">${item.rank_period}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${item.rank_id}">${item.rank_period}</option>
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
 					</select>
 				</span>
@@ -90,50 +97,19 @@
 
 		<jsp:include page="commonpart/containerEnd.jsp"></jsp:include>
 		<script type="text/javascript">
-			$(document).ready(function(){
-				//showNewestRankings();
+			$(document).ready(function()
+			{
+				/* showNewestRankings(); */
 				showRankingChart();
+				//changePeriod();
 			});
 			
 			$('select[name="rankingPeriod"]').change(function(){
 				var projectName=[];
 				var avgScore=[];
-				var selectedRankId = $(this).children('option:selected').val();
-				if(selectedRankId == "0"){
-					showNewestRankings();
-					showRankingChart();
-					return;
-				}
-				$.ajax({
-					url: 'showRankings',
-					type: 'post',
-					data: {'rankId':selectedRankId},
-					success:function(data){
-						$("#rankingsContent").html(data);
-					},
-				 	error:function(data){
-				 		alert("test");
-						alert("showSelectedRankings error!");
-					},
-				});
-				$.ajax({
-					url: 'showRankingChart',
-					type: 'post',
-					data: {'rankId':selectedRankId},
-					success:function(data){
-						 $.each(JSON.parse(data),function(i,d){
-								projectName.push([d.project_name]);
-								avgScore.push([d.avg_score]);
-							});
-							chart.series[0].setData(avgScore,true);
-							chart.xAxis[0].setCategories(projectName);
-							projectName=[];
-							avgScore=[];
-					},
-					error:function(){
-						//alert("showSelectedRankingChart error!");
-					},
-				});
+				var selectedRankId = $("#rankingPeriod").val();
+				location.href="ranklist?rank_id="+selectedRankId;
+				
 			});
 		
 			function selectProject(name)
@@ -155,27 +131,6 @@
 					}
 				}
 			}
-			
-			function showNewestRankings(){
-				var projectName=[];
-				var avgScore=[];
-				$.ajax({
-					url: 'showRankings',
-					data: {'rankId':0},
-					type: 'post',
-					success:function(data){
-						/* if(data.indexOf('<html>')>-1){
-						window.location = "login";
-						return;
-						} */
-						$("#rankingsContent").html(data);
-					},
-					error:function(data){
-						/* alert("test new"); */
-						alert("showNewestRankings error!");
-					},
-				});
-			}
 		
 			function printRankings()
 			{
@@ -195,7 +150,7 @@
 				var menuIndex=-1;
 				$.ajax({
 					url: 'showRankingChart',
-					data: {'rankId':0},
+					data: {'rank_id':$("#rankingPeriod").val()},
 					type: 'post',
 					success:function(data){
 						$.each(JSON.parse(data),function(i,d){
@@ -206,10 +161,7 @@
 						chart.xAxis[0].setCategories(projectName);
 						projectName=[];
 						avgScore=[];
-					},
-					error:function(){
-						//alert("showRankingChart error!");
-					},
+					}
 				});
 			}
 		</script>

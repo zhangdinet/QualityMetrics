@@ -311,7 +311,7 @@ public class ProjectDaoImpl implements ProjectDao{
 		sessionFactory.getCurrentSession().clear();
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		query.setString(0, project_id+"");
-		query.setString(1, rank_id+"");
+		query.setString(1, rank_id +"");
 		List sprintList = query.list();
 		//计算总平均分
 		Float avgScore = 0f;

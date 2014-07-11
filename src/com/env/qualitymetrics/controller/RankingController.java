@@ -68,47 +68,24 @@ public class RankingController {
 	@RequestMapping("/ranklist")
 	public ModelAndView ranking(HttpServletRequest req)
 	{
-		String strID=req.getParameter("rankID");
-		Integer rankID=0;
+		String strID=req.getParameter("rank_id");
+		Integer rank_id=0;
 		List<ProjectDto> projectList;
-		if(strID == null)
+		if(strID == null || strID.equals("0"))
 		{
 			projectList = projectService.getNewestRankList();
 		}
 		else
 		{
-			rankID = Integer.parseInt(req.getParameter("rankId"));
-			projectList = rankingService.getSelectedRankList(rankID);
+			rank_id = Integer.parseInt(req.getParameter("rank_id"));
+			projectList = rankingService.getSelectedRankList(rank_id);
 		}
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectList", projectList);
-		mv.addObject("rank_id", rankID);
-		List<RankingDto> rankingList = rankingService.getRankingPeriodList();
-		mv.addObject("rankingList",rankingList);
-		mv.setViewName("ranklist");
-		return mv;
-	}
-	
-	@RequestMapping("/showNewestRankings")
-	//显示最新的质量龙虎榜排名
-	public ModelAndView showNewestRankings(HttpServletRequest req){
-		List<ProjectDto> projectList = projectService.getNewestRankList();
-		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("projectList", projectList);
-		mv.addObject("rank_id", 0);
-		mv.setViewName("ranklist");
-		return mv;
-	}
-	
-	@RequestMapping("/showSelectedRankings")
-	//显示往期排名
-	public ModelAndView  showSelectedRankings(HttpServletRequest req){
-		Integer rank_id = Integer.parseInt(req.getParameter("rankId"));
-		List<ProjectDto> projectList = rankingService.getSelectedRankList(rank_id);
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("projectList", projectList);
 		mv.addObject("rank_id", rank_id);
+		List<RankingDto> rankingList = rankingService.getRankingPeriodList();
+		//List<RankingDto> rankingList=rankingService.getRankingPeriodById(rank_id);
+		mv.addObject("rankingList",rankingList);
 		mv.setViewName("ranklist");
 		return mv;
 	}
@@ -117,23 +94,23 @@ public class RankingController {
 	public ModelAndView showRankings(HttpServletRequest req)
 	{
 		String strID=req.getParameter("rankId");
-		Integer rankID=0;
+		Integer rank_id=0;
 		if(strID!=null||strID!="")
 		{
-			rankID = Integer.parseInt(strID);
+			rank_id = Integer.parseInt(strID);
 		}
 		List<ProjectDto> projectList;
-		if(rankID==0) //往期可能为零？？
+		if(rank_id==0) //往期可能为零？？
 		{
 			projectList = projectService.getNewestRankList();
 		}
 		else
 		{
-			projectList = rankingService.getSelectedRankList(rankID);
+			projectList = rankingService.getSelectedRankList(rank_id);
 		}
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectList", projectList);
-		mv.addObject("rank_id", rankID);
+		mv.addObject("rank_id", rank_id);
 		mv.setViewName("ranklist");
 		return mv;
 	}
@@ -141,17 +118,22 @@ public class RankingController {
 	@RequestMapping("showRankingChart")
 	public void showRankingChart(HttpServletRequest req,HttpServletResponse res)throws IOException
 	{
-		Integer rankID = Integer.parseInt(req.getParameter("rankId"));
+		String strID=req.getParameter("rank_id");
+		if(strID==null)
+		{
+			strID = "0";
+		}
+		Integer rank_id = Integer.parseInt(strID);
 		PrintWriter out=null;
 		ModelAndView mv = new ModelAndView();
 		List<ProjectDto> projectList;
-		if(rankID==0) //往期可能为零？？
+		if(rank_id==0) //往期可能为零？？
 		{
 			projectList = projectService.getNewestRankList();
 		}
 		else
 		{
-			projectList = rankingService.getSelectedRankList(rankID);
+			projectList = rankingService.getSelectedRankList(rank_id);
 		}
 		if(projectList.size()!=0){
 			JSONArray jsonArray=JSONArray.fromObject(projectList);
