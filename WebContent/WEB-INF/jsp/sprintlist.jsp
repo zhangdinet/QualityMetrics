@@ -21,7 +21,6 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.10.4.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.ui.datepicker-zh-CN.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/qualitymetrics.js" charset="gb2312"></script>
 	</head>
 	<body>
 		<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
@@ -95,8 +94,7 @@
 						<%
 							}
 						%>
-						
-						 
+
 					</td>
 					<td>${item.testplan_testlink }</td>
 					<td>${item.version_redmine }</td>
@@ -114,6 +112,15 @@
 		</table>
 	
 	<script type="text/javascript">
+		function showPromptWait()
+		{
+			$("#spanPromptWait").removeClass("hideElement");
+		}
+	
+		function hidePromptWait()
+		{
+			$("#spanPromptWait").addClass("hideElement");
+		}
 	</script>
 	</body>
 </html>

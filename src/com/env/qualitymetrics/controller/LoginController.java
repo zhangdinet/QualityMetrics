@@ -44,13 +44,14 @@ public class LoginController{
 		if(userService.checkUserLogin(username, password))
 		{
 			boolean isAdmin=userService.isAdmin(username);
-			//boolean flag_admin = userService.checkUserAuthorityByName(username);
 			int userID=userService.getUserID(username);
+			int role = userService.getRole(userID);
 			HttpSession session = req.getSession();
 			session.setAttribute("isAdmin", isAdmin);
 			session.setAttribute("username", username);
 			session.setAttribute("password", password);
 			session.setAttribute("userID", userID);
+			session.setAttribute("role", role);
 			List<Integer> lstProjectID=userProjectService.getUserProjects(userID);
 			session.setAttribute("lstProjectID",lstProjectID);
 			

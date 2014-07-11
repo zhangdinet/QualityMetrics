@@ -14,6 +14,8 @@ public interface ProjectService {
 	 */
 	List<ProjectDto> getAllProjectsDetail();
 	
+	public ProjectDto getProjectDetailById(int project_id,int project_flag);
+	
 	/***
 	 * 更新Project的映射信息，包括testlink,redmine,sonar。
 	 * 后续添加其他映射源后请单独加方法。
@@ -122,4 +124,8 @@ public interface ProjectService {
 	String getSource_ProjectName(int project_id, String source_name);
 	
 	public boolean isProjectExist(String projectName);
+	
+	public int getRole(int userID);
+	
+	public int getRole(String username);
 }

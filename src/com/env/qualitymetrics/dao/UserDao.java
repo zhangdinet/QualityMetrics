@@ -33,5 +33,9 @@ public interface UserDao {
 	
 	public boolean isAdmin(String username);
 	
+	public int getRole(int userID);
+	
+	public int getRole(String username);
+	
 	public Integer getUserID(String username);
 }

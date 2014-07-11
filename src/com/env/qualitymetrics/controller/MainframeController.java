@@ -58,6 +58,12 @@ public class MainframeController {
 	@Resource(name="testlinkHandler")
 	TestLinkHandler testlinkHandler;
 	
+	@Resource(name="sonarHandler")
+	SonarHandler sonarHandler;
+	
+	@Resource(name="surveyMonkeyHandler")
+	SurveyMonkeyHandler surveyMonkeyHandler;
+	
 	@Resource(name="testlinkForSuiteHandler")
 	TestLinkForSuiteHandler testlinkForSuiteHandler;
 	
@@ -67,11 +73,7 @@ public class MainframeController {
 	@Resource(name="redmineCommon")
 	RedmineCommon redmineCommon;
 	
-	@Resource(name="sonarHandler")
-	SonarHandler sonarHandler;
-	
-	@Resource(name="surveyMonkeyHandler")
-	SurveyMonkeyHandler surveyMonkeyHandler;
+
 	
 	private static final Logger log = LoggerFactory.getLogger(MainframeController.class);
 	
@@ -282,7 +284,7 @@ public class MainframeController {
 		return mv;
 	}
 	
-	@RequestMapping("/addSprint")
+	@RequestMapping("/addSprintzd")
 	public ModelAndView addSprint(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView();
 		Integer project_id = Integer.parseInt(req.getParameter("project_id"));

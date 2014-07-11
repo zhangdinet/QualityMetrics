@@ -94,7 +94,41 @@ public class ProjectDaoImpl implements ProjectDao{
 	}
 	
 	//获取project_id对应的映射源的名称
-	public ProjectDto getProjectDetailById(int project_id,int project_flag) {
+	
+	@Override
+	public ProjectDto getProjectDetailById(int project_id,int role) {
+		String hql = "select s.source_name, ps.source_project_name from Project_source ps, Source s where ps.project_source_pk.project_id = ? " +
+				"and s.source_id=ps.project_source_pk.source_id" +
+				" order by ps.project_source_pk.source_id";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		ProjectDto projectDto = new ProjectDto();
+		query.setString(0, project_id+"");
+		List resultList = query.list();
+		Iterator iterator = resultList.iterator();
+		if(resultList.size() == 0){
+			return projectDto;
+		}
+		Map<String,String> map = new HashMap<String,String>();
+		while(iterator.hasNext()){
+			Object[] o = (Object[])iterator.next();
+			String source_name = (String)o[0];
+			String source_project_name = (String)o[1];
+			map.put(source_name, source_project_name);
+		}
+		projectDto.setProject_id(project_id);
+		projectDto.setProject_name_tl(map.get("Testlink"));
+		projectDto.setProject_name_sn(map.get("Sonar"));
+		projectDto.setProject_name_rm(map.get("Redmine"));
+		projectDto.setProject_name_rm_support(map.get(SysUtil.project_name_rm_support));
+		if(role!=1){
+			projectDto.setSuite_name_tl(map.get(SysUtil.suite_name_tl));
+			projectDto.setCategory_name_rm(map.get(SysUtil.category_name_rm));
+		}
+		return projectDto;
+	}
+	
+	
+/*	public ProjectDto getProjectDetailById(int project_id,int project_flag) {
 		String hql = "select s.source_name, ps.source_project_name from Project_source ps, Source s where ps.project_source_pk.project_id = ? " +
 				"and s.source_id=ps.project_source_pk.source_id" +
 				" order by ps.project_source_pk.source_id";
@@ -124,6 +158,8 @@ public class ProjectDaoImpl implements ProjectDao{
 		}
 		return projectDto;
 	}
+	*/
+	
 	@Override
 	public boolean updateProjectSourceNames(Integer project_id,
 			String project_name_tl, String project_name_rm,

@@ -9,6 +9,8 @@ public interface UserService {
 	public User getUser();
 	public boolean isAdmin(String username);
 	public Integer getUserID(String username);
+	public int getRole(int userID);
+	public int getRole(String userName);
 	
 	public boolean checkUserLogin(String username, String password);
 	public boolean changePassword(String username, String password);

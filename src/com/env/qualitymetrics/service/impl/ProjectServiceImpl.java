@@ -7,19 +7,33 @@ import com.env.qualitymetrics.common.SysUtil;
 import com.env.qualitymetrics.dao.ProjectDao;
 import com.env.qualitymetrics.dto.ProjectDto;
 import com.env.qualitymetrics.service.ProjectService;
+import com.env.qualitymetrics.dao.UserDao;
 
 public class ProjectServiceImpl implements ProjectService{
 	
 	ProjectDao projectDao;
-	@Override
-	public List<ProjectDto> getNewestRankList() {
-		return projectDao.getNewestRankList();
-	}
+	UserDao userDao;
+	
 	public ProjectDao getProjectDao() {
 		return projectDao;
 	}
 	public void setProjectDao(ProjectDao projectDao) {
 		this.projectDao = projectDao;
+	}
+	
+	public UserDao getUserDao()
+	{
+		return this.userDao;
+	}
+	public void setUserDao(UserDao userDao)
+	{
+		this.userDao=userDao;
+	}
+	
+	
+	@Override
+	public List<ProjectDto> getNewestRankList() {
+		return projectDao.getNewestRankList();
 	}
 
 	@Override
@@ -54,6 +68,12 @@ public class ProjectServiceImpl implements ProjectService{
 	public ProjectDto getProjectSourceNamesById(int project_id,int project_flag) {
 		return projectDao.getProjectDetailById(project_id,project_flag);
 	}
+	
+	@Override
+	public ProjectDto getProjectDetailById(int project_id,int project_flag) {
+		return projectDao.getProjectDetailById(project_id,project_flag);
+	}
+	
 	@Override
 	public boolean updateRedmineSupportName(Integer project_id, String project_name_rm_support) {
 		// TODO Auto-generated method stub
@@ -112,5 +132,17 @@ public class ProjectServiceImpl implements ProjectService{
 	public boolean isProjectExist(String projectName)
 	{
 		return projectDao.isProjectExist(projectName);
+	}
+	
+	@Override
+	public int getRole(int userID)
+	{
+		return userDao.getRole(userID);
+	}
+	
+	@Override
+	public int getRole(String username)
+	{
+		return userDao.getRole(username);
 	}
 }

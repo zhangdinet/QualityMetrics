@@ -52,6 +52,38 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	@Override
+	public int getRole(String username)
+	{
+		String hql="from User u where u.username=? ";
+		Query query=sessionFactory.getCurrentSession().createQuery(hql);
+		query.setString(0, username);
+		List list=query.list();
+		Iterator iterator=list.iterator();
+		while(iterator.hasNext())
+		{
+			User u=(User)iterator.next();
+			return u.getRole();
+		}
+		return 100;
+	}
+	
+	@Override
+	public int getRole(int userID)
+	{
+		String hql="from User u where u.user_id=? ";
+		Query query=sessionFactory.getCurrentSession().createQuery(hql);
+		query.setInteger(0, userID);
+		List list=query.list();
+		Iterator iterator=list.iterator();
+		while(iterator.hasNext())
+		{
+			User u=(User)iterator.next();
+			return u.getRole();
+		}
+		return 100;
+	}
+	
+	@Override
 	public Integer getUserID(String username)
 	{
 		String hql="from User u where u.username=? ";
