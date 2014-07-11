@@ -35,15 +35,15 @@
 
     <!-- 配置testlink数据源 -->
     <bean id="dataSource_testlink" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close" >
-        <!--
+        
         <property name="url" value="jdbc:mysql://localhost/qualitymetrics?useUnicode=true&amp;characterEncoding=UTF-8"></property>
         <property name="username" value="root"></property>
         <property name="password" value="root"></property>
-        -->
+         <!--
         	<property name="url" value="jdbc:mysql://172.16.34.136/testlink?useUnicode=true&amp;characterEncoding=UTF-8"></property>
         	<property name="username" value="testlink"></property>
         	<property name="password" value="testlink"></property>
-        
+         -->
         <!-- 配置初始化大小、最小、最大 -->
      	<property name="initialSize" value="1" />
       	<property name="minIdle" value="1" /> 
@@ -64,14 +64,16 @@
  	<!-- 配置Redmine数据源 -->
     <bean id="dataSource_redmine" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close" >
         <property name="driverClassName" value="com.mysql.jdbc.Driver"></property> 
-        <!--
+        
 	        <property name="url" value="jdbc:mysql://172.16.34.170/bitnami_redmine?useUnicode=true&amp;characterEncoding=UTF-8"></property>
 	        <property name="username" value="redmine"></property>
 	        <property name="password" value="redmine"></property>
-        -->
+        <!-- 
         <property name="url" value="jdbc:mysql://localhost/bitnami_redmine?useUnicode=true&amp;characterEncoding=UTF-8"></property>
         <property name="username" value="root"></property>
         <property name="password" value="root"></property>
+         -->
+        
         <!-- 配置初始化大小、最小、最大 -->
      	<property name="initialSize" value="1" />
       	<property name="minIdle" value="1" /> 

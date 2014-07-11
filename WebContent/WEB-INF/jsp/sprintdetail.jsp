@@ -72,7 +72,7 @@
 				<td>
 				<c:choose>
 					<c:when test="${sprint.sonar_score_origin eq -1}">NA</c:when>
-					<c:otherwise>${sprint.sonar_score_origin} 分</c:otherwise>
+					<c:otherwise>Sonar代码质量扫描：${sprint.sonar_score_origin} 分</c:otherwise>
 				</c:choose>
 			</td>
 			</tr>

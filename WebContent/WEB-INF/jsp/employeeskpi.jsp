@@ -544,7 +544,7 @@
 						formatter:function(){
 							return '<b>'+ this.x +
 							'</b><br/><b>'+ parseFloat(this.y*100).toFixed(2) +'%</b>'+ '<br>'
-							+'<b>Issues:<br></b>'+ issTip[this.x];
+							+'<b>Issues ID(s):<br></b>'+ issTip[this.x];
 						}
 					},
 					series: [{
