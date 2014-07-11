@@ -12,13 +12,10 @@
 			if((Boolean)(session.getAttribute("isAdmin")))
 			{
 		%>
-			<li id="liMenuSystemSetting"><a href="systemsettinglist">系统管理</a></li>
+				<li id="liMenuSystemSetting"><a href="systemsettinglist">系统管理</a></li>
 		<%
 			}
 		%>
-		
-		<!-- <li id="liRanking"><a href="rankinglist">龙虎榜Demo</a></li> -->
-		<!-- <li id="liMenuUser"><a href="users">用户管理</a></li> -->
 	</ul>
 	<span id="spanUser"><a id="aUser" href="logout">退出</a></span>
 	<span id="spanLog">
@@ -30,7 +27,6 @@
 			</c:when>
 			<c:otherwise>
 				<span id="spanNotEnvision">
-					<%-- <a id="aLog" href="mainframe?menuIndex=4"><%=session.getAttribute("username")%></a> --%>
 					<a id="aLog" href="password"><%=session.getAttribute("username")%></a>
 				</span>
 			</c:otherwise>

@@ -223,6 +223,7 @@ public class SystemSettingController
 	public ModelAndView deleteUser(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
 		int user_id = Integer.parseInt(req.getParameter("user_id"));
+		userProjectService.deleteUserAndProject(user_id);
 		userService.deleteUserById(user_id);
 		ModelAndView mv = new ModelAndView();
 		/*List<UserDto> userList = userService.getUserList();

@@ -80,9 +80,9 @@
 							//alert("已删除！");
 							location.reload();
 						},
-						error:function(){
+						/* error:function(){
 							alert("delete user error!");
-						},
+						}, */
 					});
 				}
 			}

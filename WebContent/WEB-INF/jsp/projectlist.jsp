@@ -56,27 +56,28 @@
 			</tr>
 			
 		<%
-				List<ProjectDto> lstProject=(List<ProjectDto>)request.getAttribute("projectList");
-				List<Integer> lstProjectID=(List<Integer>)session.getAttribute("lstProjectID");
-				int count=lstProject.size();
-				int idCount=lstProjectID.size();
-				for(int i=0;i<count;i++)
-				{
-					ProjectDto pDto=lstProject.get(i);
-					Integer pID=pDto.getProject_id();
-					int pFlag=pDto.getProject_flag();
-					Boolean isAdmin = (Boolean)(session.getAttribute("isAdmin"));
-					String pName=pDto.getProject_name();
-					String pNameTL=pDto.getProject_name_tl();
-					String pNameRM=pDto.getProject_name_rm();
-					String pNameSN=pDto.getProject_name_sn();
-					String pNameRMSP=pDto.getProject_name_rm_support();
-					String pNameCategoryRM = pDto.getCategory_name_rm();
-					String pNameSuiteTL = pDto.getSuite_name_tl();
-					String str = "";
-					String sprintDetail="<a href='sprintlist?project_id=" + pID + "&project_name=" + pName +"&pageNumber=1'>Sprint详情</a>";
+			List<ProjectDto> lstProject=(List<ProjectDto>)request.getAttribute("projectList");
+			List<Integer> lstProjectID=(List<Integer>)session.getAttribute("lstProjectID");
+			int count=lstProject.size();
+			int idCount=lstProjectID.size();
+			for(int i=0;i<count;i++)
+			{
+				ProjectDto pDto=lstProject.get(i);
+				Integer pID=pDto.getProject_id();
+				int pFlag=pDto.getProject_flag();
+				Boolean isAdmin = (Boolean)(session.getAttribute("isAdmin"));
+				String pName=pDto.getProject_name();
+				String pNameTL=pDto.getProject_name_tl();
+				String pNameSuiteTL = pDto.getSuite_name_tl();
+				String pNameRM=pDto.getProject_name_rm();
+				String pNameCategoryRM = pDto.getCategory_name_rm();
+				
+				String pNameRMSP=pDto.getProject_name_rm_support();
+				String pNameSN=pDto.getProject_name_sn();
+				String str = "";
+				String sprintDetail="<a href='sprintlist?project_id=" + pID + "&project_name=" + pName +"&pageNumber=1'>Sprint详情</a>";
 		%>
-			 	<tr>
+				<tr>
 		<%
 					if(isAdmin)
 					{
@@ -89,20 +90,21 @@
 							str="<a href='updateModuleProject?project_id="+ pID + "&project_name=" + pName + "&project_name_tl="
 									+ pNameTL + "&project_name_rm=" + pNameRM + "&project_name_sn=" + pNameSN + "&project_name_rm_support=" + pNameRMSP + "'>";
 						}
-					
-		%>						
+		%>
 						<td><%= str %><%= pName %></a></td>
-		<% 
+		<%
 					}
+					
 					else
 					{
 						boolean ownerFlag=false;
 						for(int j=0;j<idCount;j++)
 						{
 							ownerFlag=false;
-							if(lstProjectID.get(i).equals(pID))
+							if(lstProjectID.get(j).equals(pID))
 							{
 								ownerFlag=true;
+								break;
 							}
 						}
 						
@@ -122,6 +124,7 @@
 						<td><%= str %><%= pName %></a></td>
 		<%
 					}
+					
 					if( pFlag == 1)
 					{
 		%>
@@ -131,23 +134,30 @@
 					}
 					else
 					{
-						String tempPNameTL= pNameTL + "--";
-						String tempPNameSuiteTL="";
+						String tempPNameTL= pNameTL + " -- ";
+						String tempPNameSuiteTL=pNameRM + " -- ";
 						if(pNameSuiteTL!=null)
 						{
-							tempPNameSuiteTL = pNameSuiteTL.replaceAll("<br>", tempPNameTL);
+							tempPNameSuiteTL = pNameSuiteTL.replaceAll("<br>", "<br>"+tempPNameTL);
 						}
 						
-		%>					
-						<td><%= pNameTL %> -- <%= tempPNameSuiteTL %></td>
-						<td><%= pNameRM %> -- <%= pNameCategoryRM %></td>
-		<%					
+						String tempPNameCategoryRM = pNameRM + " -- ";
+						
+						if(pNameCategoryRM != null)
+						{
+							tempPNameCategoryRM = pNameCategoryRM.replaceAll("<br>", "<br>"+tempPNameCategoryRM);
+						}
+						
+		%>
+						<td><%= pNameTL %>--<%= tempPNameSuiteTL %></td>
+						<td><%= pNameRM %>--<%= tempPNameCategoryRM %></td>
+		<%
 					}
 		%>
 				<td><%= pNameRMSP %></td>
 				<td><%= sprintDetail %></td>
 			</tr>
-		<%	
+		<%
 			}
 		%>
 		

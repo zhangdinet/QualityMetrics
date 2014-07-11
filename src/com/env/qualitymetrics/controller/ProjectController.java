@@ -54,7 +54,7 @@ public class ProjectController
 	private static final Logger log = LoggerFactory.getLogger(WeightController.class);
 	
 	@RequestMapping("/projectlist")
-	public ModelAndView showIndicatorWeight(HttpServletRequest req)
+	public ModelAndView projectList(HttpServletRequest req)
 	{
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("projectlist");
