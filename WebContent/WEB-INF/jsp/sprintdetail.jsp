@@ -213,7 +213,7 @@
 				var rank_id = $("input[name = 'rank_id']").val();
 				if(rank_id==""||rank_id==null)
 				{
-					window.location="updateSprint?project_id="+project_id+"&sprint_id="+sprint_id;
+					window.location="updateSprintScore?project_id="+project_id+"&sprint_id="+sprint_id;
 				}
 				else
 				{

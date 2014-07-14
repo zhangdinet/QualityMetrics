@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>添加Sprint</title>
+	<title>更新sprint</title>
 	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.4.1/build/cssreset/cssreset-min.css">	
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-theme.css">
@@ -25,7 +25,7 @@
 		<jsp:include page="commonpart/navMenu.jsp"></jsp:include>
 		<jsp:include page="commonpart/containerStart.jsp"></jsp:include>
 			<div id="divSetSprintDetail">
-			<h1>添加Sprint</h1>
+			<h1>更新Sprint</h1>
 			<form id="form" class="frmSetSprintDetail" method="post">
 				<div class="form-group">
 					<label for="project_name" style="width:90px">产品名称</label>
@@ -36,7 +36,7 @@
 
 				<div class="form-group">
 					<label for="sprint_name" style="width:90px">Sprint名称</label>
-					<input id="sprint_name" name="sprint_name" width:150px;height:30px"/>
+					<input id="sprint_name" name="sprint_name" readonly="readonly" value="${sprintName}" style="width:150px;height:30px" />
 					<label style="width:80px;margin-left:60px">结束日期</label>
 					<input type="text" id="enddate" readonly name="sprint_enddate" style="padding-left:5px" placeholder="请选择日期" style="height:30px"/>
 				</div>
@@ -152,15 +152,15 @@
 				</div>
 				
 				<div class="form-group">
-					<input type="button" class="btn btn-primary"  value="保存" onclick="saveSprintDetails()" />
+					<input type="button" class="btn btn-primary"  value="更新" onclick="saveSprintDetails()" />
 					<input type="button" class="btn btn-primary"  value="取消" onclick="backToMainframe()" />
 				</div>
 				
 				<div id="sprint_tipLabel">
 					<c:choose>
-						<c:when test="${updateResult eq 'ok'}">修改成功！
+						<c:when test="${updateResult eq 'ok'}">更新成功！
 						</c:when>
-						<c:when test="${updateResult eq 'err'}">修改失败！</c:when>
+						<c:when test="${updateResult eq 'err'}">更新失败！</c:when>
 						<c:otherwise>${updateResult}</c:otherwise>
 					</c:choose>
 				</div>
@@ -339,7 +339,7 @@
 					return;
 				}
 			}
-			$("#form").attr("action", "saveNewSprint");
+			$("#form").attr("action", "saveUpdateSprint");
 			$("#form").submit();
 		}
 

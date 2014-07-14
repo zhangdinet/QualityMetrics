@@ -1,7 +1,11 @@
+<%@page import="org.hibernate.annotations.common.reflection.java.JavaXMember"%>
+<%@page import="javassist.compiler.Javac"%>
+<%@page import="java.beans.Encoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="com.env.qualitymetrics.dao.*" %>
 <%@ page import="com.env.qualitymetrics.dto.*" %>
+<%@ page import="java.net.URLEncoder" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -35,9 +39,7 @@
 			<div style="float:right;">
 				<%
 					Boolean isAdmin=(Boolean)session.getAttribute("isAdmin");
-					//List<ProjectDto> lstProject=(List<ProjectDto>)request.getAttribute("projectList");
 					List<Integer> lstProjectID=(List<Integer>)session.getAttribute("lstProjectID");
-					//int count=lstProject.size();
 					int idCount=lstProjectID.size();
 					Integer pID=Integer.parseInt(request.getParameter("project_id"));
 					
@@ -48,9 +50,9 @@
 						if(lstProjectID.get(i).equals(pID))
 						{
 							ownerFlag=true;
+							break;
 						}
 					}
-				
 				
 					if( isAdmin || ownerFlag )
 					{
@@ -76,15 +78,19 @@
 				<th>结束日期</th>
 				<th>IPD过程质量分数（PDT或LMT）</th>
 			</tr>
+			
+			<%
+			
+			%>
 			<c:forEach items="${sprintList}" var="item">
 				<tr>
 					<td>
 						<%
 							if( isAdmin || ownerFlag )
 							{
+								
 						%>
-						
-								<a onclick="showPromptWait()" href="showModifySprint?sprint_id=${item.sprint_id }&project_id=${project_id}&project_name=${project_name }&project_flag=${project_flag }">${item.sprint_name }</a>
+								<a onclick="showPromptWait()" href="updateSprint?sprint_id=${item.sprint_id }&project_id=${project_id}&project_name=${project_name }&project_flag=${project_flag }&sprintName=${item.sprint_name}"> ${item.sprint_name } </a>
 						<%
 							}
 							else
@@ -94,7 +100,6 @@
 						<%
 							}
 						%>
-
 					</td>
 					<td>${item.testplan_testlink }</td>
 					<td>${item.version_redmine }</td>
@@ -112,6 +117,12 @@
 		</table>
 	
 	<script type="text/javascript">
+	
+		function updateSprint(projectID,projectName,sprintID,sprintName,projectFlag)
+		{
+			showPromptWait();
+			location.href="updateSprint?sprint_id=${item.sprint_id }&project_id=${project_id}&project_name=${project_name }&project_flag=${project_flag }&sprintName=${item.sprint_name}";
+		}
 		function showPromptWait()
 		{
 			$("#spanPromptWait").removeClass("hideElement");

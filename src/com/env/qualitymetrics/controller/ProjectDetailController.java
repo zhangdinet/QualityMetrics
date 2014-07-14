@@ -124,8 +124,8 @@ public class ProjectDetailController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping("/updateSprint")
-	public ModelAndView updateSprint(HttpServletRequest req){
+	@RequestMapping("/updateSprintScore")
+	public ModelAndView updateSprintScore(HttpServletRequest req){
 		String project_id_s = req.getParameter("project_id");
 		if(project_id_s == null){
 			return null;
