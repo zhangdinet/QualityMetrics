@@ -1,3 +1,4 @@
+<%@page import="java.net.URLDecoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -36,7 +37,7 @@
 
 				<div class="form-group">
 					<label for="sprint_name" style="width:90px">Sprint名称</label>
-					<input id="sprint_name" name="sprint_name" readonly="readonly" value="${sprintName}" style="width:150px;height:30px" />
+					<input id="sprint_name" name="sprint_name" readonly="readonly" value="<%=URLDecoder.decode(request.getParameter("sprintName"),"UTF-8")%>" style="width:150px;height:30px" />
 					<label style="width:80px;margin-left:60px">结束日期</label>
 					<input type="text" id="enddate" readonly name="sprint_enddate" style="padding-left:5px" placeholder="请选择日期" style="height:30px"/>
 				</div>
@@ -172,7 +173,7 @@
 				<input type="hidden" value="${sprint.sprint_id }" name="sprint_id" />
 				<input type="hidden" value="${sprint.ipd_score }" name="ipd_hidden" />
 				<input type="hidden" value="${sprint.lmt_score }" name="lmt_hidden" />
-				<input type="hidden" value="${project_flag }" name="project_flag" />
+				<input type="hidden" value="${project_flag}" name="project_flag" />
 			</form>
 		</div>
 		

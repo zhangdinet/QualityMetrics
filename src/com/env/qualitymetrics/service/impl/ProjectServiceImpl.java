@@ -65,8 +65,8 @@ public class ProjectServiceImpl implements ProjectService{
 		return projectDao.getProjectNameById(project_id);
 	}
 	@Override
-	public ProjectDto getProjectSourceNamesById(int project_id,int project_flag) {
-		return projectDao.getProjectDetailById(project_id,project_flag);
+	public ProjectDto getProjectSourceNamesById(int project_id,int role) {
+		return projectDao.getProjectDetailById(project_id,role);
 	}
 	
 	@Override

@@ -9,16 +9,6 @@
      <bean id="userDao" class="com.env.qualitymetrics.dao.impl.UserDaoImpl">
      	<property name="sessionFactory" ref="sessionFactory"></property>
      </bean>
-   <!--
-		<bean id="userDaozd" class="com.env.qualitymetrics.dao.impl.UserDaoImplzd">
-			<property name="sessionFactory" ref="sessionFactory"></property>
-		</bean>
-		
-		<bean id="userServicezd" class="com.env.qualitymetrics.service.impl.UserServiceImplzd">
-			<property name="userDaozd" ref="userDaozd"></property>
-		</bean>
-   -->
-     
      
      <bean id="projectDao" class="com.env.qualitymetrics.dao.impl.ProjectDaoImpl">
      	<property name="sessionFactory" ref="sessionFactory"></property>

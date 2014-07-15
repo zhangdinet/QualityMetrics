@@ -2,6 +2,7 @@ package com.env.qualitymetrics.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class SprintController
 	
 	@RequestMapping("/sprintlist")
 	//显示产品设置中的Sprint信息
-	public ModelAndView showSettingsSprintDetail(HttpServletRequest req){
+	public ModelAndView sprintlist(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("sprintlist");
 		Integer project_id = Integer.parseInt(req.getParameter("project_id"));
@@ -89,6 +90,7 @@ public class SprintController
 		mv.addObject("pageNumber",page.getCurrentPage());
 		mv.addObject("pageSize",page.getPageSize());
 		mv.addObject("project_flag", project_flag);
+		req.setAttribute("lstSprintDto", sprintList);
 		return mv;
 	}
 	
@@ -100,7 +102,6 @@ public class SprintController
 		Boolean isAdmin=(Boolean)(req.getSession().getAttribute("isAdmin"));
 		List<Integer> lstProjectID=(List<Integer>)(req.getSession().getAttribute("lstProjectID"));
 		int role =(Integer)(req.getSession().getAttribute("role"));
-		
 		
 		if(!isAdmin && !isProjectOwner(lstProjectID, project_id))  //非系统管理员,非本项目人员不能添加Sprint信息
 		{
@@ -120,10 +121,8 @@ public class SprintController
 		int redmine_project_id=this.redmineCommon.getProjectId(project_name_rm);
 		List<String> lstRedmine=this.redmineCommon.getVersionNames(redmine_project_id);
 		mv.addObject("lstRedmine",lstRedmine);
-
 		List<String> lstSonar=sonarHandler.getNames();
 		mv.addObject("lstSonar",lstSonar);
-
 		List<String> lstTitle=surveyMonkeyHandler.getSurveyMonkeyTitles();
 		mv.addObject("lstTitle",lstTitle);
 		return mv;
@@ -139,20 +138,26 @@ public class SprintController
 		HttpSession httpSession = (HttpSession)req.getSession();
 		
 		Integer sprint_id = Integer.parseInt(req.getParameter("sprint_id"));
-		String project_name = req.getParameter("project_name");
-		int project_flag=Integer.parseInt(req.getParameter("project_flag"));
+		int project_flag=Integer.parseInt(req.getParameter("role"));
 		SprintDto sprint = sprintService.getSprintById(sprint_id);
 		mv.addObject("sprint",sprint);
-		mv.addObject("project_name", project_name);
+		String project_name="";
+		String sprintName="";
+		try {
+			sprintName=URLDecoder.decode(URLDecoder.decode(req.getParameter("sprintName"),"UTF-8"),"UTF-8");
+			project_name=URLDecoder.decode(URLDecoder.decode(req.getParameter("project_name"),"UTF-8"),"UTF-8");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		int project_id=sprint.getProject_id();
 		mv.addObject("project_id", project_id);
-		String sprintName=req.getParameter("sprintName");
+		mv.addObject("project_name", project_name);
 		mv.addObject("sprintName",sprintName);
+		
 		Boolean isAdmin=(Boolean)(httpSession.getAttribute("isAdmin"));
 		List<Integer> lstProjectID=(List<Integer>)(httpSession.getAttribute("lstProjectID"));
 		int role =(Integer)(httpSession.getAttribute("role"));
-		
-		
 		if(!isAdmin && !isProjectOwner(lstProjectID, project_id))  //非系统管理员,非本项目人员不能添加Sprint信息
 		{
 			mv.setViewName("error");

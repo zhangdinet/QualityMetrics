@@ -1,3 +1,4 @@
+<%@page import="java.net.URLDecoder"%>
 <%@page import="org.hibernate.annotations.common.reflection.java.JavaXMember"%>
 <%@page import="javassist.compiler.Javac"%>
 <%@page import="java.beans.Encoder"%>
@@ -6,6 +7,7 @@
 <%@ page import="com.env.qualitymetrics.dao.*" %>
 <%@ page import="com.env.qualitymetrics.dto.*" %>
 <%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.text.*" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -56,7 +58,6 @@
 				
 					if( isAdmin || ownerFlag )
 					{
-						
 				%>
 						<input type="submit" class="btn btn-primary" value="添加" onclick="showPromptWait()"></input>
 				<%
@@ -71,7 +72,7 @@
 		<table id="tbl_sprint">
 			<tr>
 				<th>名称</th>
-				<th>Test Plan名称</th>
+				<th>Testplan名称</th>
 				<th>Version名称</th>
 				<th width="300px" align="left" >Build名称及构建日期</th>
 				<th>开始日期</th>
@@ -80,49 +81,71 @@
 			</tr>
 			
 			<%
-			
+				List<SprintDto> lstSprintDto=(List<SprintDto>)(request.getAttribute("lstSprintDto"));
+				int sprintCount=lstSprintDto.size();
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+				
+				for(int i=0;i<sprintCount;i++)
+				{
+					SprintDto dto=lstSprintDto.get(i);
+					Integer projectID=dto.getProject_id();
+					String projectName=request.getParameter("project_name");
+					String sprintName=dto.getSprint_name();
+					Integer sprintID=dto.getSprint_id();
+					Integer role=(Integer)(request.getSession().getAttribute("role"));
+					String encodeSprintName="";
+					String encodeProjectName="";
+					try
+					{
+						encodeSprintName=URLEncoder.encode(URLEncoder.encode(sprintName,"UTF-8"),"UTF-8");
+						encodeProjectName=URLEncoder.encode(URLEncoder.encode(projectName,"UTF-8"),"UTF-8");
+					}
+					catch(Exception e)
+					{
+					}
+					
+					if( isAdmin || ownerFlag )
+					{
+						String strHref="updateSprint?sprint_id="+sprintID+"&project_id="+projectID+
+								"&project_name="+encodeProjectName+"&role="+role+"&sprintName="+encodeSprintName;
 			%>
-			<c:forEach items="${sprintList}" var="item">
-				<tr>
-					<td>
-						<%
-							if( isAdmin || ownerFlag )
-							{
-								
-						%>
-								<a onclick="showPromptWait()" href="updateSprint?sprint_id=${item.sprint_id }&project_id=${project_id}&project_name=${project_name }&project_flag=${project_flag }&sprintName=${item.sprint_name}"> ${item.sprint_name } </a>
-						<%
-							}
-							else
-							{
-						%>
-								${item.sprint_name }
-						<%
-							}
-						%>
+						<tr><td><a onclick="showPromptWait()" href="<%=strHref%>"><%=sprintName%></a>
+			<%
+					}
+					else
+					{
+			%>
+						<tr><td><%= sprintName %>
+			<%
+					}
+			%>
 					</td>
-					<td>${item.testplan_testlink }</td>
-					<td>${item.version_redmine }</td>
-					<td>${item.sprint_build }</td>
-					<td><fmt:formatDate value="${item.sprint_startdate}" pattern="yyyy-MM-dd "/></td>
-					<td><fmt:formatDate value="${item.sprint_enddate}" pattern="yyyy-MM-dd "/></td>
-					<td>
-						<c:choose>
-							<c:when test="${item.ipd_score eq -1}">${item.lmt_score }</c:when>
-							<c:otherwise>${item.ipd_score }</c:otherwise>
-						</c:choose>
-					</td>
-				</tr>
-			</c:forEach>
+					<td><%= dto.getTestplan_testlink() %>
+					<td><%= dto.getVersion_redmine() %>
+					<td><%= dto.getSprint_build() %>
+					<td><%= sdf.format(dto.getSprint_startdate()) %></td>
+					<td><%= sdf.format(dto.getSprint_enddate()) %></td>
+					
+			<%
+					if(dto.getIpd_score()!=-1)
+					{
+						
+			%>
+						<td><%=dto.getLmt_score() %></td>
+			<%
+					}
+					else
+					{
+			%>
+						<td><%=dto.getLmt_score() %></td>
+			<%
+					}
+				}
+			%>
+			</tr>
 		</table>
 	
 	<script type="text/javascript">
-	
-		function updateSprint(projectID,projectName,sprintID,sprintName,projectFlag)
-		{
-			showPromptWait();
-			location.href="updateSprint?sprint_id=${item.sprint_id }&project_id=${project_id}&project_name=${project_name }&project_flag=${project_flag }&sprintName=${item.sprint_name}";
-		}
 		function showPromptWait()
 		{
 			$("#spanPromptWait").removeClass("hideElement");

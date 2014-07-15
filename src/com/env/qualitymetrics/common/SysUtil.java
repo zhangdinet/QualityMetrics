@@ -61,7 +61,7 @@ public class SysUtil {
 	}
 	
 	public static float formatFloat(float rate){
-		float formatRate=(float)(Math.round(rate*1000))/10;//(�����1000����3λС���,��ת���ɰٷ���)
+		float formatRate=(float)(Math.round(rate*1000))/10;
 		return formatRate;
 	}
 	//过滤testlink的suite，如果选中top suite，其下的二级suite移除

@@ -29,9 +29,7 @@
 		<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
 		<jsp:include page="commonpart/navMenu.jsp"></jsp:include>
 		<jsp:include page="commonpart/containerStart.jsp"></jsp:include>
-		
 		<h3>产品模块信息</h3>
-		
 		<%
 			if((Boolean)(session.getAttribute("isAdmin")))
 			{
@@ -54,7 +52,6 @@
 				<th>Redmine技术支持率名称</th>
 				<th>Sprint信息</th>
 			</tr>
-			
 		<%
 			List<ProjectDto> lstProject=(List<ProjectDto>)request.getAttribute("projectList");
 			List<Integer> lstProjectID=(List<Integer>)session.getAttribute("lstProjectID");
@@ -71,7 +68,6 @@
 				String pNameSuiteTL = pDto.getSuite_name_tl();
 				String pNameRM=pDto.getProject_name_rm();
 				String pNameCategoryRM = pDto.getCategory_name_rm();
-				
 				String pNameRMSP=pDto.getProject_name_rm_support();
 				String pNameSN=pDto.getProject_name_sn();
 				String str = "";
