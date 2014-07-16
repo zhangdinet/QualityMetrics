@@ -18,7 +18,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/highcharts.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sprint_chart.js"></script>
 </head>
-<body>	
+<body>
 	<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
 	<jsp:include page="commonpart/navMenu.jsp"></jsp:include>
 	<jsp:include page="commonpart/containerStart.jsp"></jsp:include>
@@ -33,23 +33,23 @@
 			</tr>
 			<c:forEach items="${sprintList}" var="item">
 				<tr>
-				<td>${item.sprint_name}</td>
-				<td>
-				<c:choose>
-				<c:when test="${item.sprint_score eq -1}">NA</c:when>
-				<c:otherwise>${item.sprint_score}</c:otherwise>
-				</c:choose>
-				</td>
-				<td>
-				<c:choose>
-				<c:when test="${rank_id !=0}">
-				<a href="showSprintHistoryDetail?sprint_id=${item.sprint_id}&rank_id=${rank_id }">查看详情</a>
-				</c:when>
-				<c:otherwise>
-				<a href="showSprintDetail?sprint_id=${item.sprint_id}">查看详情</a>
-				</c:otherwise>
-				</c:choose>
-				</td>
+					<td>${item.sprint_name}</td>
+					<td>
+						<c:choose>
+							<c:when test="${item.sprint_score eq -1}">NA</c:when>
+							<c:otherwise>${item.sprint_score}</c:otherwise>
+						</c:choose>
+					</td>
+					<td>
+						<c:choose>
+							<c:when test="${rank_id !=0}">
+								<a href="showSprintHistoryDetail?sprint_id=${item.sprint_id}&rank_id=${rank_id }">查看详情</a>
+							</c:when>
+							<c:otherwise>
+								<a href="showSprintDetail?sprint_id=${item.sprint_id}">查看详情</a>
+							</c:otherwise>
+						</c:choose>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -58,8 +58,8 @@
 			<div class="project_detail_bottom"></div>
 			<input type="submit" class="btn btn-primary" value="返回"/>
 		</form>
-	<input type="hidden" value="${project_id}" name="project_id"/>
-	<input type="hidden" value="${rank_id}" name="rank_id"/>
+		<input type="hidden" id="project_id" value="${project_id}" name="project_id"/>
+		<input type="hidden" id="rank_id" value="${rank_id}" name="rank_id"/>
 	<jsp:include page="commonpart/containerEnd.jsp"></jsp:include>
 	<jsp:include page="commonpart/footer.jsp"></jsp:include>
 	<script type="text/javascript">
@@ -69,34 +69,42 @@
 			$("tr").addClass("sucesss");
 			showSprintChart();
 		});
+		
+		
 		function showSprintChart(){
 			$.ajax({
 				url: 'showSprintChart',
-				data: {'rank_id':$("input[name = 'rank_id']").val(),project_id : $("input[name = 'project_id']").val()},
+				data:
+				{
+					'rank_id' : $("#rank_id").val(),
+					'project_id' : $("#project_id").val()
+				},
 				type: 'post',
-				success:function(data){
-					 $.each(JSON.parse(data),function(i,d){
-						 if(d.sprint_score!=-1){
-						 sprintName.push([d.sprint_name]);
-						 sprintScore.push([d.sprint_score]);
-						 }
-					    });
-	
-					 	chart.xAxis[0].setCategories(sprintName);
-						chart.series[0].setData(sprintScore,true);
-						
-						//zhangdi todo 有时间考虑修改不显示的方式===
-						if(sprintName.length==1 ||sprintName.length==0 )
+				success:function(data)
+				{
+					$.each(JSON.parse(data),function(i,d)
+					{
+						if(d.sprint_score!=-1)
 						{
-							$("#container").css('display','none');
+							sprintName.push([d.sprint_name]);
+							sprintScore.push([d.sprint_score]);
 						}
-						sprintScore=[];
-						sprintName=[];
-						
-		  		 },
-		   		error:function(){
-		  			alert("showSprintChart error!");
-		  	     }
+					});
+					chart.xAxis[0].setCategories(sprintName);
+					chart.series[0].setData(sprintScore,true);
+					
+					//zhangdi todo 有时间考虑修改不显示的方式===
+					if(sprintName.length==1 ||sprintName.length==0 )
+					{
+						$("#container").css('display','none');
+					}
+					sprintScore=[];
+					sprintName=[];
+				},
+				error:function()
+				{
+					//alert("showSprintChart error!");
+				}
 			});
 		}
 	</script>

@@ -10,7 +10,6 @@ $(function (){
 	                x: -20 //center
 	            },
 	         subtitle: {
-	                
 	                x: -20
 	            },
 	         credits: { //右下角网址信息

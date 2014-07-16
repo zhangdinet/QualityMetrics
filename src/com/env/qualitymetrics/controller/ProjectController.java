@@ -114,7 +114,6 @@ public class ProjectController
 		return mv;
 	}
 	
-
 	@RequestMapping("/saveUpdateProductProject")
 	public ModelAndView saveUpdateProductProject(HttpServletRequest req){
 		Integer project_id = Integer.parseInt(req.getParameter("project_id"));
@@ -141,7 +140,8 @@ public class ProjectController
 	public ModelAndView updateModuleProject(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("update_module_project");
-		String project_name = req.getParameter("project_name");
+		String project_name ="";
+		project_name=SysUtil.decodeUtf8(req.getParameter("project_name"));
 		Integer project_id = Integer.parseInt(req.getParameter("project_id"));
 		ProjectDto projectDto=this.projectService.getProjectSourceNamesById(project_id,SysUtil.module_flag);
 		String project_name_tl = projectDto.getProject_name_tl();
@@ -168,7 +168,6 @@ public class ProjectController
 		mv.addObject("lstRedmineCategoryName", lstRedmineCategoryName);
 		return mv;
 	}
-	
 	
 	@RequestMapping("/saveUpdateModuleProject")
 	//保存项目模块编辑结果
@@ -234,7 +233,8 @@ public class ProjectController
 	public ModelAndView updateProductProject(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("update_product_project");
-		String project_name = req.getParameter("project_name");
+		String project_name ="";
+		project_name=SysUtil.decodeUtf8(req.getParameter("project_name"));
 		Integer project_id = Integer.parseInt(req.getParameter("project_id"));
 		ProjectDto projectDto=this.projectService.getProjectSourceNamesById(project_id,SysUtil.project_flag);
 		String project_name_tl = projectDto.getProject_name_tl();
@@ -254,8 +254,6 @@ public class ProjectController
 		return mv;
 	}
 	
-	
-	
 	@RequestMapping("/addModuleProject")
 	public ModelAndView addProjectModule(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView();
@@ -269,8 +267,6 @@ public class ProjectController
 		mv.setViewName("add_module_project");
 		return mv;
 	}
-	
-	
 	
 	@RequestMapping("/saveNewModuleProject")
 	//保存项目模块编辑结果

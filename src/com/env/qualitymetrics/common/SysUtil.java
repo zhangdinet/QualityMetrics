@@ -1,6 +1,8 @@
 package com.env.qualitymetrics.common;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,6 +55,29 @@ public class SysUtil {
 		}
 		return format.format(date);
 	}
+	
+	public static String encodeWithUtf8(String name)
+	{
+		String tempName="";
+		try {
+			tempName=URLEncoder.encode(URLEncoder.encode(name,"UTF-8"),"UTF-8");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return tempName;
+	}
+	
+	public static String decodeUtf8(String name)
+	{
+		String tempName="";
+		try {
+			tempName=URLDecoder.decode(URLDecoder.decode(name, "UTF-8"),"UTF-8");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return tempName;
+	}
+	
 	
 	public static String gbkToUft8(String gbk) throws UnsupportedEncodingException{
 		String iso = new String(gbk.getBytes("UTF-8"),"ISO-8859-1");
@@ -364,5 +389,4 @@ public class SysUtil {
 	public static void setLmtOrIpd(String lmtOrIpd) {
 		SysUtil.lmtOrIpd = lmtOrIpd;
 	}
-	
-}	
+}

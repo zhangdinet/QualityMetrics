@@ -66,7 +66,7 @@ public class RankingController {
 	SonarHandler sonarHandler;
 	
 	@RequestMapping("/ranklist")
-	public ModelAndView ranking(HttpServletRequest req)
+	public ModelAndView ranklist(HttpServletRequest req)
 	{
 		String strID=req.getParameter("rank_id");
 		Integer rank_id=0;
@@ -86,6 +86,7 @@ public class RankingController {
 		List<RankingDto> rankingList = rankingService.getRankingPeriodList();
 		//List<RankingDto> rankingList=rankingService.getRankingPeriodById(rank_id);
 		mv.addObject("rankingList",rankingList);
+		req.setAttribute("projectList",projectList);
 		mv.setViewName("ranklist");
 		return mv;
 	}
@@ -118,6 +119,7 @@ public class RankingController {
 	@RequestMapping("showRankingChart")
 	public void showRankingChart(HttpServletRequest req,HttpServletResponse res)throws IOException
 	{
+		res.setCharacterEncoding("UTF-8");
 		String strID=req.getParameter("rank_id");
 		if(strID==null)
 		{
@@ -138,8 +140,7 @@ public class RankingController {
 		if(projectList.size()!=0){
 			JSONArray jsonArray=JSONArray.fromObject(projectList);
 			out = res.getWriter();
-			//out.print(jsonArray.toString());
-			out.write(jsonArray.toString());
+			out.print(jsonArray.toString());
 			if(out!=null)
 			{
 				out.close();

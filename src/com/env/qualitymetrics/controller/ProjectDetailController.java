@@ -133,11 +133,18 @@ public class ProjectDetailController {
 		Integer project_id = Integer.parseInt(project_id_s);
 		Integer user_project_id = (Integer) req.getSession().getAttribute("project_id");
 		Integer sprint_id = Integer.parseInt(req.getParameter("sprint_id"));
-		String flag_admin = (String) req.getSession().getAttribute("flag_admin");
+		
+		/*String flag_admin = (String) req.getSession().getAttribute("flag_admin");
 		if(flag_admin.equals("no") || (user_project_id.intValue() != project_id.intValue() && user_project_id.intValue()!=0))
 		{
 			return null;
+		}*/
+		if(!(Boolean)(req.getSession().getAttribute("isAdmin")))
+		{
+			return null;
 		}
+		
+		
 		SprintDto sprintDto = sprintService.getSprintById(sprint_id);
 		int project_flag=projectService.getProjectFlagById(sprintDto.getProject_id());
 		dailyTask.checkUpdateManual(sprintDto,project_flag);

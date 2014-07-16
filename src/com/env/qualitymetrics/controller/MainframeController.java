@@ -119,7 +119,7 @@ public class MainframeController {
 	//显示项目详情
 	public ModelAndView showProjectDetail(HttpServletRequest req){
 		Integer project_id = Integer.parseInt(req.getParameter("project_id"));
-		String project_name = req.getParameter("project_name");
+		String project_name = SysUtil.decodeUtf8(req.getParameter("project_name"));
 		String thisYearDetail;
 		float rate_patch;
 		List<SprintDto> sprintDtoList = sprintService.getSprintsByProjectId(project_id);
@@ -137,7 +137,7 @@ public class MainframeController {
 	//显示项目历史详情
 	public ModelAndView showProjectHistoryDetail(HttpServletRequest req){
 		Integer project_id = Integer.parseInt(req.getParameter("project_id"));
-		String project_name = req.getParameter("project_name");
+		String project_name =SysUtil.decodeUtf8(req.getParameter("project_name"));
 		Integer rank_id = Integer.parseInt(req.getParameter("rank_id"));
 		String thisYearDetail;
 		float rate_patch;

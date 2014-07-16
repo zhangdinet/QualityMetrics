@@ -1,3 +1,4 @@
+<%@page import="com.env.qualitymetrics.common.SysUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="com.env.qualitymetrics.dao.*" %>
@@ -70,8 +71,20 @@
 				String pNameCategoryRM = pDto.getCategory_name_rm();
 				String pNameRMSP=pDto.getProject_name_rm_support();
 				String pNameSN=pDto.getProject_name_sn();
+				
+				
+				String encodePName=SysUtil.encodeWithUtf8(pName);
+				String encodePNameTL=SysUtil.encodeWithUtf8(pNameTL);
+				String encodePNameSuiteTL=SysUtil.encodeWithUtf8(pNameSuiteTL);
+				String encodePNameRM=SysUtil.encodeWithUtf8(pNameRM);
+				String encodePNameCategoryRMSP=SysUtil.encodeWithUtf8(pNameRMSP);
+				String encodePNameSN=SysUtil.encodeWithUtf8(pNameSN);
+				
+				
 				String str = "";
-				String sprintDetail="<a href='sprintlist?project_id=" + pID + "&project_name=" + pName +"&pageNumber=1'>Sprint详情</a>";
+				String strHref="";
+				String sprintDetail="<a href='sprintlist?project_id=" + pID + "&project_name=" + encodePName +"&pageNumber=1'>Sprint详情</a>";
+				
 		%>
 				<tr>
 		<%
@@ -79,15 +92,19 @@
 					{
 						if(pFlag==1)
 						{
-							str = "<a href='updateProductProject?project_id=" + pID + "&project_name=" + pName+"'>";
+							//str = "<a href='updateProductProject?project_id=" + pID + "&project_name=" + pName+"'>";
+							strHref="updateProductProject?project_id=" + pID + "&project_name=" + encodePName;
 						}
 						else
 						{
-							str="<a href='updateModuleProject?project_id="+ pID + "&project_name=" + pName + "&project_name_tl="
-									+ pNameTL + "&project_name_rm=" + pNameRM + "&project_name_sn=" + pNameSN + "&project_name_rm_support=" + pNameRMSP + "'>";
+							/* str="<a href='updateModuleProject?project_id="+ pID + "&project_name=" + pName + "&project_name_tl="
+									+ pNameTL + "&project_name_rm=" + pNameRM + "&project_name_sn=" + pNameSN + "&project_name_rm_support=" + pNameRMSP + "'>"; */
+							
+							strHref="updateModuleProject?project_id="+ pID + "&project_name=" + encodePName + "&project_name_tl="
+									+ encodePNameTL + "&project_name_rm=" + encodePNameRM + "&project_name_sn=" + encodePNameSN + "&project_name_rm_support=" + encodePNameCategoryRMSP;
 						}
 		%>
-						<td><%= str %><%= pName %></a></td>
+						<td><a href="<%=strHref%>"><%= pName %></a></td>
 		<%
 					}
 					
@@ -103,21 +120,23 @@
 								break;
 							}
 						}
-						
 						if(ownerFlag)
 						{
 							if(pFlag==1)
 							{
-								str = "<a href='updateProductProject?project_id=" + pID + "&project_name=" + pName+"'>";
+								//str = "<a href='updateProductProject?project_id=" + pID + "&project_name=" + pName+"'>";
+								strHref="updateProductProject?project_id=" + pID + "&project_name=" + encodePName;
 							}
 							else
 							{
-								str="<a href='updateModuleProject?project_id="+ pID + "&project_name=" + pName + "&project_name_tl="
-										+ pNameTL + "&project_name_rm=" + pNameRM + "&project_name_sn=" + pNameSN + "&project_name_rm_support=" + pNameRMSP + "'>";
+								/* str="<a href='updateModuleProject?project_id="+ pID + "&project_name=" + pName + "&project_name_tl="
+										+ pNameTL + "&project_name_rm=" + pNameRM + "&project_name_sn=" + pNameSN + "&project_name_rm_support=" + pNameRMSP + "'>"; */
+								strHref="updateModuleProject?project_id="+ pID + "&project_name=" + encodePName + "&project_name_tl="
+										+ encodePNameTL + "&project_name_rm=" + encodePNameRM + "&project_name_sn=" + encodePNameSN + "&project_name_rm_support=" + encodePNameCategoryRMSP;
 							}
 						}
 		%>
-						<td><%= str %><%= pName %></a></td>
+						<td><a href="<%= strHref %>"><%= pName %></a></td>
 		<%
 					}
 					

@@ -64,6 +64,7 @@ public class LoginController{
 			}*/
 			
 			mv.setViewName("redirect:ranklist");
+			mv.addObject("rank_id",0);
 		}else{
 			req.setAttribute("errFlag", "error");
 			mv.setViewName("index");

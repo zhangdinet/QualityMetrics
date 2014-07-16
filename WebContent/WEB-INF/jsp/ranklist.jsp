@@ -1,4 +1,8 @@
+<%@page import="com.env.qualitymetrics.common.SysUtil"%>
+<%@page import="com.env.qualitymetrics.dto.ProjectDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="com.env.qualitymetrics.dto.RankingDto" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -42,7 +46,7 @@
 			
 			<div id="rankingsContent" style="margin-top:80px">
 					<label>筛选产品模块</label>
-					<input name="selectProject" type="text" id="txtSelectProject" placeholder="输入后请回车" onchange="selectProject(this)"/>
+					<input name="selectProject" type="text" id="txtSelectProject" style="padding-left:8px" placeholder="输入后请回车" onchange="selectProject(this)"/>
 					<table id="tbl_rankings">
 						<tr>
 							<th>排名</th>
@@ -51,43 +55,72 @@
 							<th>详情</th>
 						</tr>
 						<c:set value="1" var="rankNumber" />
-						<c:forEach items="${projectList}" var="item" varStatus="status">
-							<tr>
-								<td>
-									<c:choose>
-										<c:when test="${status.count==1}">
-											${status.count}
-										</c:when>
-										<c:otherwise>
-											<c:choose>
-												<c:when test="${item.avg_score eq projectList[status.index-1].avg_score}">
-													<c:out value="${rankNumber}" />
-												</c:when>
-												<c:otherwise>
-													${status.count}
-													<c:set value="${status.count}" var="rankNumber"/>
-												</c:otherwise>
-											</c:choose>
-										</c:otherwise>
-									</c:choose>
-								</td>
-								<td>${item.project_name}</td>
-								<td>${item.avg_score}</td>
-								<td>
-									<c:choose>
-										<c:when test="${rank_id != '0'}">
-											<a href="showProjectHistoryDetail?project_id=${item.project_id}&project_name=${item.project_name}&rank_id=${rank_id}">查看详情</a>
-										</c:when>
-										<c:otherwise>
-											<a href="showProjectDetail?project_id=${item.project_id}&project_name=${item.project_name}&rank_id=${rank_id}">查看详情</a>
-										</c:otherwise>
-									</c:choose>
-								</td>
-							</tr>
-						</c:forEach>
+						<%
+							int rankNumber=1;
+							List<ProjectDto> projectList=(List<ProjectDto>)request.getAttribute("projectList");
+							int projectCount = projectList.size();
+							String strRank=request.getParameter("rank_id");
+							Integer rank_id=1;
+							if(strRank!=null && !strRank.equals("0"))
+							{
+								rank_id=Integer.parseInt(strRank);
+							}
+							String strHref="";
+							for(int i=0;i<projectCount;i++)
+							{
+								ProjectDto dto=projectList.get(i);
+								ProjectDto prevDto;
+								int projectID=dto.getProject_id();
+								String projectName=dto.getProject_name();
+								String encodeProjectName=SysUtil.encodeWithUtf8(projectName);
+						%>
+								<tr>
+									<td>
+						<%
+									if(i==0)
+									{
+						%>
+										<%= i+1 %>
+						<%			
+									}
+									else
+									{
+										prevDto=projectList.get(i-1);
+										if(dto.getAvg_score()==prevDto.getAvg_score())
+										{
+						%>		
+											<%= rankNumber %>
+						<%			
+										}
+										else
+										{
+											rankNumber=i+1;
+						%>					
+											<%= i+1 %>
+						<%
+										}
+									}
+						%>
+									</td>
+									<td><%=projectName %></td>
+									<td><%=dto.getAvg_score()%></td>
+									<td>
+						<%
+									if(strRank==null || strRank.equals("0"))
+									{
+										strHref="showProjectDetail?project_id=" + projectID + "&project_name=" + encodeProjectName + "&rank_id=" + rank_id;
+									}
+									else
+									{
+										strHref="showProjectHistoryDetail?project_id=" + projectID + "&project_name=" + encodeProjectName + "&rank_id=" + rank_id;
+									}
+						%>
+									<a href="<%= strHref%>">查看详情</a></td></tr>
+						<%
+							}
+						%>
 					</table>
 			</div>
-			
 
 			<form id="form" class = "print">
 				<input type="hidden" name="selectedPeriodId"></input>
@@ -109,7 +142,6 @@
 				var avgScore=[];
 				var selectedRankId = $("#rankingPeriod").val();
 				location.href="ranklist?rank_id="+selectedRankId;
-				
 			});
 		
 			function selectProject(name)
