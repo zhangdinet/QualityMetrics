@@ -66,6 +66,7 @@ public class EmployeeKPIController
 	public void getFixedBugsByCategory(HttpServletRequest req,HttpServletResponse resp) throws IOException
 	{
 		resp.setContentType("text/plain");
+		resp.setCharacterEncoding("UTF-8");
 		PrintWriter writer = resp.getWriter();
 		String redmineName = req.getParameter("redmineName");
 		String version=req.getParameter("version");
@@ -83,6 +84,7 @@ public class EmployeeKPIController
 	public void getNewBugsByCategory(HttpServletRequest req,HttpServletResponse resp) throws IOException
 	{
 		resp.setContentType("text/plain");
+		resp.setCharacterEncoding("UTF-8");
 		PrintWriter writer = resp.getWriter();
 		String redmineName = req.getParameter("redmineName");
 		String version=req.getParameter("version");
@@ -103,6 +105,7 @@ public class EmployeeKPIController
 	public void getFixedRateByCategory(HttpServletRequest req,HttpServletResponse resp) throws IOException
 	{
 		resp.setContentType("text/plain");
+		resp.setCharacterEncoding("UTF-8");
 		PrintWriter writer = resp.getWriter();
 		String redmineName = req.getParameter("redmineName");
 		String version=req.getParameter("version");
@@ -123,6 +126,7 @@ public class EmployeeKPIController
 	public void getImplementedFeaturesByCategory(HttpServletRequest req,HttpServletResponse resp) throws IOException
 	{
 		resp.setContentType("text/plain");
+		resp.setCharacterEncoding("UTF-8");
 		PrintWriter writer = resp.getWriter();
 		String redmineName = req.getParameter("redmineName");
 		String version=req.getParameter("version");

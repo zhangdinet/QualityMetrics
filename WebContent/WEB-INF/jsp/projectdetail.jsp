@@ -82,6 +82,12 @@
 				type: 'post',
 				success:function(data)
 				{
+					if(data==null || data=="")
+					{
+						$("#container").css('display','none');
+						return;
+					}
+					
 					$.each(JSON.parse(data),function(i,d)
 					{
 						if(d.sprint_score!=-1)
