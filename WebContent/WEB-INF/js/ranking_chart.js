@@ -52,7 +52,7 @@ $(function (){
 		            borderWidth: 0,
 	            	dataLabels: {
 	            	   enabled: true,
-	            	   y:100,
+	            	   y:40,
 	            	  backgroundColor: 'rgba(252, 255, 197, 0.7)',
 	            	   borderRadius: 5,
 	            	   borderWidth: 1,

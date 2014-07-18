@@ -466,23 +466,7 @@ public class MainframeController {
 		pw.write("ok");
 	}
 	
-	@RequestMapping("/addUser")
-	public ModelAndView addUser(HttpServletRequest req){
-		ModelAndView mv = new ModelAndView();
-		Boolean isAdmin=(Boolean)req.getSession().getAttribute("isAdmin");
-		if(isAdmin)
-		{
-			List<ProjectDto> projectDto=projectService.getAllProjectsDetail();
-			mv.addObject("lstProjectDto", projectDto);
-			mv.setViewName("addUser");
-			return mv;
-		}
-		else
-		{
-			mv.setViewName("error");
-			return mv;
-		}
-	}
+
 	
 	@RequestMapping("/updateUser")
 	public ModelAndView updateUser(HttpServletRequest req)

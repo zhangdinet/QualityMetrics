@@ -42,12 +42,9 @@
 					<div>
 						<input type="button" class="btn btn-primary" value="更新" onclick="saveUpdateUser()"/>
 						<input type="button" class="btn btn-primary" value="返回" onclick="cancel()"/>
+						<label id="labelTip">${strTip}</label>
 					</div>
 					<input type="hidden" name="hiddenUserID" id="hiddenUserID" value="${userID}" />
-					<div class="project_tipLabel" id="user_tipLabel">
-						<c:if test="${modifyResult eq 'ok'}">修改成功！</c:if>
-						<c:if test="${modifyResult eq 'err'}">修改失败！</c:if>
-					</div> 
 				</form>
 			</div>
 		</div>

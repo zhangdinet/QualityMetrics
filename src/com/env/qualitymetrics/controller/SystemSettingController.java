@@ -135,16 +135,50 @@ public class SystemSettingController
 		return mv;
 	}
 	
+	@RequestMapping("/addUser")
+	public ModelAndView addUser(HttpServletRequest req,HttpServletResponse resp){
+		/*try {
+			req.setCharacterEncoding("UTF-8");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}*/
+		resp.setCharacterEncoding("UTF-8");
+		ModelAndView mv = new ModelAndView();
+		Boolean isAdmin=(Boolean)req.getSession().getAttribute("isAdmin");
+		String strTip=req.getParameter("strTip");
+		if(strTip!=null)
+		{
+			mv.addObject("strTip", strTip);
+		}
+		if(isAdmin)
+		{
+			List<ProjectDto> projectDto=projectService.getAllProjectsDetail();
+			mv.addObject("lstProjectDto", projectDto);
+			mv.setViewName("addUser");
+			return mv;
+		}
+		else
+		{
+			mv.setViewName("error");
+			return mv;
+		}
+	}
+	
 	@RequestMapping("/saveNewUser")
-	public ModelAndView saveNewUser(HttpServletRequest req){
+	public ModelAndView saveNewUser(HttpServletRequest req,HttpServletResponse resp){
+		//resp.setCharacterEncoding("UTF-8");
 		ModelAndView mv = new ModelAndView();
 		String username = req.getParameter("newUsername");
 		int role = Integer.parseInt(req.getParameter("role"));
 		
 		int projectID=0; //project默认为0
 		String projectName="无";
-		
-		if(!userService.checkUserExist(username))
+		String strTip="";
+		if(userService.checkUserExist(username))
+		{
+			strTip="该用户已存在，请选择其他名称！";
+		}
+		else
 		{
 			UserDto user = userService.createNewUser();
 			int userID = user.getUser_id();
@@ -155,8 +189,13 @@ public class SystemSettingController
 				projectName = projectService.getProjectNameById(projectID);
 				userProjectService.insertUserAndProject(userID, projectID);
 			}
+			strTip="添加成功！";
 		}
-		mv.setViewName("redirect:systemsettinglist");
+		//mv.setViewName("redirect:systemsettinglist");
+		mv.addObject("strTip", strTip);
+		mv.setViewName("addUser");
+		List<ProjectDto> projectDto=projectService.getAllProjectsDetail();
+		mv.addObject("lstProjectDto", projectDto);
 		return mv;
 	}
 	
@@ -178,11 +217,12 @@ public class SystemSettingController
 		{
 			userProjectService.deleteUserAndProject(userID);
 		}
-		mv.setViewName("redirect:systemsettinglist");
+		mv.setViewName("updateUser");
+		mv.addObject("strTip","更新成功！");
+		List<ProjectDto> projectDto=projectService.getAllProjectsDetail();
+		mv.addObject("lstProjectDto", projectDto);
 		return mv;
 	}
-	
-	
 	
 	@RequestMapping("/addProjectUser")
 	public ModelAndView addProjectUser(HttpServletRequest req)

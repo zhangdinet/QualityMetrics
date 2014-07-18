@@ -32,19 +32,6 @@ public class UserControllerzd
 		return mv;
 	}
 	
-	@RequestMapping("/deleteUserzd")
-	public ModelAndView deleteUser(HttpServletRequest req)
-	{
-		String id=req.getParameter("id");
-		userServicezd.deleteUserById(id);
-		
-		ModelAndView mv=new ModelAndView();
-		List<UserDtozd> userList=userServicezd.getAllUsers();
-		mv.addObject("userList",userList);
-		mv.setViewName("/users");
-		return mv;
-	}
-	
 	@RequestMapping("/saveNewUser")
 	public ModelAndView saveNewUser(HttpServletRequest req)
 	{
@@ -104,19 +91,6 @@ public class UserControllerzd
 		List<UserDtozd> userList=userServicezd.getAllUsers();
 		mv.addObject("userList",userList);
 		mv.setViewName("/users");
-		return mv;
-	}
-	
-	@RequestMapping("/editUserzd")
-	public ModelAndView editUserzd(HttpServletRequest req)
-	{
-		String id=req.getParameter("id");
-		String username=req.getParameter("username");
-		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("id",id);
-		mv.addObject("username",username);
-		mv.setViewName("/editUser");
 		return mv;
 	}
 }
