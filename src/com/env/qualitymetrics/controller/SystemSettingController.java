@@ -137,12 +137,6 @@ public class SystemSettingController
 	
 	@RequestMapping("/addUser")
 	public ModelAndView addUser(HttpServletRequest req,HttpServletResponse resp){
-		/*try {
-			req.setCharacterEncoding("UTF-8");
-		} catch (Exception e) {
-			// TODO: handle exception
-		}*/
-		resp.setCharacterEncoding("UTF-8");
 		ModelAndView mv = new ModelAndView();
 		Boolean isAdmin=(Boolean)req.getSession().getAttribute("isAdmin");
 		String strTip=req.getParameter("strTip");
@@ -191,7 +185,6 @@ public class SystemSettingController
 			}
 			strTip="添加成功！";
 		}
-		//mv.setViewName("redirect:systemsettinglist");
 		mv.addObject("strTip", strTip);
 		mv.setViewName("addUser");
 		List<ProjectDto> projectDto=projectService.getAllProjectsDetail();

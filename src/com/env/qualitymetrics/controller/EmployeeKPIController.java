@@ -311,26 +311,6 @@ public class EmployeeKPIController
 		}
 	}
 	
-	
-/*	@RequestMapping("/getScopeStability")
-	public void getScopeStability(HttpServletRequest req,HttpServletResponse resp) throws IOException
-	{
-		resp.setContentType("text/plain");
-		PrintWriter writer = resp.getWriter();
-		String redmineName = req.getParameter("redmineName");
-		String version=req.getParameter("version");
-		String sprintStart=req.getParameter("sprintStart");
-		String sprintEnd=req.getParameter("sprintEnd");
-		List<String> lstBugs=redmineCommon.getScopeStability(redmineName, version, sprintStart, sprintEnd);
-		JSONArray jsonArray=JSONArray.fromObject(lstBugs);
-		String jsonString=jsonArray.toString();
-		writer.write(jsonString);
-		if(writer!=null)
-		{
-			writer.close();
-		}
-	}*/
-	
 	@RequestMapping("/getBugsScopeStability")
 	public void getBugsScopeStability(HttpServletRequest req,HttpServletResponse resp) throws IOException
 	{

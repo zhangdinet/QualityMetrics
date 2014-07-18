@@ -260,48 +260,6 @@
 				return chart;
 			}
 			
-			/* function getScopeStability()
-			{
-				var redmineName = $("select[name='selectRedmine']").val().trim();
-				var version=$("select[name='version']").val().trim();
-				var sprintStart=$("input[name='sprintStart']").val().trim();
-				var sprintEnd=$("input[name='sprintEnd']").val().trim();
-				
-				$.ajax({
-					url : 'getBugsScopeStability',
-					type : 'post',
-					async: false,
-					data : {
-						'redmineName' : redmineName,
-						'version':version,
-						'sprintStart':sprintStart,
-						'sprintEnd':sprintEnd
-					},
-					success : function(data) {
-						if(data=='[]')
-						{
-							return;
-						}
-						var tempData=data.substring(2,data.length-2);
-						var arrData=tempData.split('","');
-						var columnValue=[];
-						var columnName=[];
-						for(var i=0;i<arrData.length;i++)
-						{
-							arrBugItem=arrData[i].split("#");
-							columnName.push(arrBugItem[0]);
-							arrBugItem[1]=parseFloat(arrBugItem[1]);
-							columnValue.push(arrBugItem);
-						}
-						var chart=prepareScopeStabilityChart();
-						chart.series[0].setData(columnValue,true);
-						chart.xAxis[0].setCategories(columnName);
-					},
-					error : function(data) {
-					},
-				});
-			} */
-			
 			function getScopeStability()
 			{
 				var redmineName = $("select[name='selectRedmine']").val().trim();

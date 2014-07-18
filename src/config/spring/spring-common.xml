@@ -94,9 +94,9 @@
     <!-- 配置Sonar数据源 -->
      <bean id="dataSource_sonar" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close" >
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-			<property name="url" value="jdbc:mysql://localhost/sonar?useUnicode=true&amp;characterEncoding=UTF-8"></property>
-			<property name="username" value="root"></property>
-			<property name="password" value="root"></property>
+			<property name="url" value="jdbc:mysql://172.16.55.103/sonar?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+			<property name="username" value="sonar"></property>
+			<property name="password" value="sonar"></property>
 		<!--
 			<property name="url" value="jdbc:mysql://172.16.55.103/sonar?useUnicode=true&amp;characterEncoding=UTF-8"></property>
 			<property name="username" value="root"></property>
