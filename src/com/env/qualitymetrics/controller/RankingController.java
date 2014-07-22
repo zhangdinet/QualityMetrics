@@ -164,7 +164,7 @@ public class RankingController {
 		String filterName = req.getParameter("filterName");
 		String rank_period;
 		List<ProjectDto> projectList;
-		List<ProjectDto> filterProjectList = new ArrayList<ProjectDto>();;
+		List<ProjectDto> filterProjectList = new ArrayList<ProjectDto>();
 		
 		if(rank_id==0 || rank_id==-1)
 		{
@@ -187,37 +187,15 @@ public class RankingController {
 				}
 			}
 		}
+		else {
+			filterProjectList=projectList;
+		}
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectList", filterProjectList);
 		mv.addObject("rank_period",rank_period);
-		mv.addObject("filterName", filterName);
-		mv.setViewName("rankings_print");
+		mv.setViewName("printRank");
 		return mv;
 	}
-	
-	/*@RequestMapping("/printRankings")
-	public ModelAndView printRankings(HttpServletRequest req){
-		Integer rank_id = Integer.parseInt(req.getParameter("selectedPeriodId"));
-		String filterName = req.getParameter("filterName");
-		String rank_period;
-		List<ProjectDto> projectList;
-		if(rank_id==0 || rank_id==-1)
-		{
-			projectList = projectService.getNewestRankList();
-			rank_period="最新";
-		}
-		else
-		{
-			rank_period = req.getParameter("selectedPeriodName");
-			projectList = rankingService.getSelectedRankList(rank_id);
-		}
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("projectList", projectList);
-		mv.addObject("rank_period",rank_period);
-		mv.addObject("filterName", filterName);
-		mv.setViewName("rankings_print");
-		return mv;
-	}*/
 	
 	@RequestMapping("/updateRankings")
 	public ModelAndView updateRankings(){

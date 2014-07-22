@@ -1,6 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="com.env.qualitymetrics.common.SysUtil"%>
 <%@page import="com.env.qualitymetrics.dto.ProjectDto"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="com.env.qualitymetrics.dto.RankingDto" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -146,6 +146,7 @@
 			$(document).ready(function()
 			{
 				/* showNewestRankings(); */
+				$("#txtSelectProject").val('');
 				showRankingChart();
 				//changePeriod();
 			});
@@ -212,9 +213,6 @@
 						avgScore=[];
 					},
 					error:function(data){
-						var a=10;
-						a++;
-						a++;
 					}
 				});
 			}

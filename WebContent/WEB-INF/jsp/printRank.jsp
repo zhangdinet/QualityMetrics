@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="com.env.qualitymetrics.dto.ProjectDto" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@page import="com.env.qualitymetrics.common.SysUtil"%>
+
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -34,13 +38,58 @@
 							<th style="width:200px">产品模块名称</th>
 							<th style="width:120px">总平均分</th>
 						</tr>
-						<c:forEach items="${projectList}" var="item" varStatus="status">
+						<%-- <c:forEach items="${projectList}" var="item" varStatus="status">
 							<tr>
 								<td >${status.count}</td>
 								<td>${item.project_name}</td>
 								<td >${item.avg_score}</td>
 							</tr>
-						</c:forEach>
+						</c:forEach> --%>
+						<%
+							int rankNumber=1;
+							List<ProjectDto> projectList=(List<ProjectDto>)request.getAttribute("projectList");
+							int projectCount = projectList.size();
+							for(int i=0;i<projectCount;i++)
+							{
+								ProjectDto dto=projectList.get(i);
+								ProjectDto prevDto;
+								int projectID=dto.getProject_id();
+								String projectName=dto.getProject_name();
+								String encodeProjectName=SysUtil.encodeWithUtf8(projectName);
+						%>
+								<tr>
+									<td>
+						<%
+									if(i==0)
+									{
+						%>
+										<%= i+1 %>
+						<%			
+									}
+									else
+									{
+										prevDto=projectList.get(i-1);
+										if(dto.getAvg_score()==prevDto.getAvg_score())
+										{
+						%>		
+											<%= rankNumber %>
+						<%			
+										}
+										else
+										{
+											rankNumber=i+1;
+						%>					
+											<%= i+1 %>
+						<%
+										}
+									}
+						%>
+									</td>
+									<td><%=projectName %></td>
+									<td><%=dto.getAvg_score()%></td></tr>
+						<%
+							}
+						%>
 					</table>
 				</div>
 			</div>
