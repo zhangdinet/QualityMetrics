@@ -1142,49 +1142,6 @@ public class DailyTask {
 		sprintDto.setSonar_score(avgStandScore);
 	}
 	
-	
-	
-	//zhangdi 140512 重构方法
-	/*public void updateSonarScore(SprintDto sprintDto) throws ArrayIndexOutOfBoundsException
-	{
-		String sprintBuildSonar=sprintDto.getBuild_sonar();
-		Calendar calendar = Calendar.getInstance();
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		Date today = calendar.getTime();
-		
-		String[] arrBuild = sprintBuildSonar.split("<br>");
-		int buildCount=arrBuild.length;
-		String[] arrBuildName=new String[buildCount];
-		String[] arrBuildDate =new String[buildCount];
-		for(int i=0;i<buildCount;i++)
-		{
-			String[] nameDate=arrBuild[i].split("=");
-			arrBuildName[i]=nameDate[0].trim();
-			arrBuildDate[i]=nameDate[1].trim();
-		}
-		float totalSonarScore = 0.0f;
-		float avgSonarScore = 0.0f;
-		for(int i=0;i<buildCount;i++)
-		{
-			float eachScore = sonarHandler.getSonarScoreOrigin(arrBuildName[i],arrBuildDate[i]);
-			if(eachScore == -1)
-			{
-				return;
-			}
-			else
-			{
-				totalSonarScore += eachScore;
-			}
-		}
-		avgSonarScore = (float)totalSonarScore/buildCount;
-		sprintService.updateScore_item_score_origin(sprintDto.getSprint_id(), avgSonarScore, SysUtil.sonar);
-		sprintDto.setSonar_score_origin(avgSonarScore);
-		float avgStandScore = sonarHandler.getSonarScore(avgSonarScore);
-		sprintService.updateScore_item_score(sprintDto.getSprint_id(), avgStandScore, SysUtil.sonar);
-		sprintDto.setSonar_score(avgStandScore);
-	}*/
-	
-	
 	/***
 	 * 测试拉取数据方法
 	 */

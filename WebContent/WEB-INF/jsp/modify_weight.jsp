@@ -65,9 +65,7 @@
 							<c:if test="${updateResult eq 'err'}">修改失败！</c:if>
 						</span>
 					</div>
-					
 				</div>
-				
 			</form>
 		</div>
 		
@@ -76,6 +74,30 @@
 			<jsp:include page="commonpart/footer.jsp"></jsp:include>
 	</div>
 	<script type="text/javascript">
+		var ipdOrLmt_rate_load=0;
+		var sonar_rate_load=0;
+		var test_pass_rate_load=0;
+		var tc_exec_rate_load=0;
+		var bug_new_rate_load=0;
+		var bug_reopen_rate_load=0;
+		var bug_escape_rate_load=0;
+		var rate_patch_rate_load=0;
+		var rate_support_rate_load=0;
+		var rate_ce_rate_load=0;
+
+		$(function()
+		{
+			ipdOrLmt_rate_load = $("input[name='ipdOrLmt_rate']").val();
+			sonar_rate_load = $("input[name='sonar_rate']").val();
+			test_pass_rate_load = $("input[name='test_pass_rate']").val();
+			tc_exec_rate_load = $("input[name='tc_exec_rate']").val();
+			bug_new_rate_load = $("input[name='bug_new_rate']").val();
+			bug_reopen_rate_load = $("input[name='bug_reopen_rate']").val();
+			bug_escape_rate_load = $("input[name='bug_escape_rate']").val();
+			rate_patch_rate_load = $("input[name='rate_patch_rate']").val();
+			rate_support_rate_load = $("input[name='rate_support_rate']").val();
+			rate_ce_rate_load = $("input[name='rate_ce_rate']").val();
+		})
 		function send(i)
 		{
 			if (i == 0)
@@ -121,7 +143,15 @@
 						|| !checkNumber(rate_support_float) || !checkNumber(rate_ce_float)) {
 					$("#project_tipLabel").html("权重值为[0-100]之间的数字");
 					return;
-				} 
+				}
+				
+				if(ipdOrLmt_float==ipdOrLmt_rate_load && sonar_float == sonar_rate_load && test_pass_float == test_pass_rate_load
+					&& tc_exec_float == tc_exec_rate_load && bug_new_float == bug_new_rate_load && bug_reopen_float == bug_reopen_rate_load && bug_escape_float == bug_escape_rate_load
+					&& rate_patch_float == rate_patch_rate_load && rate_support_float == rate_support_rate_load && rate_ce_float == rate_ce_rate_load )
+				{
+					$("#project_tipLabel").html("分数值未做改动，无需修改！");
+					return;
+				}
 				else
 				{
 					$("#form").attr("action", "saveModifyWeight");
@@ -145,7 +175,6 @@
 				return false;
 			}
 		}
-
 	</script>
 </body>
 </html>

@@ -67,7 +67,7 @@
 			</tr>
 			<tr>
 				<td>内部质量</td>
-				<td>Sonar代码质量扫描</td>
+				<td>代码整体质量</td>
 				<td>${sprint.sonar_score}</td>
 				<td>
 				<c:choose>
@@ -173,7 +173,7 @@
 					if(session.getAttribute("username").equals("admin"))
 					{
 				%>
-					<input type="button" class="btn btn-primary" value="更新" onclick="updateSprint()"/>
+						<input type="button" class="btn btn-primary" value="更新" onclick="updateSprint()"/>
 				<%
 					}
 				%>

@@ -54,15 +54,6 @@ public class LoginController{
 			session.setAttribute("role", role);
 			List<Integer> lstProjectID=userProjectService.getUserProjects(userID);
 			session.setAttribute("lstProjectID",lstProjectID);
-			
-			/*if(flag_admin){
-				session.setAttribute("flag_admin", "yes");
-				Integer user_project_id = userService.getUserProjectIdByUsername(username);
-				session.setAttribute("project_id",user_project_id);
-			}else{
-				session.setAttribute("flag_admin", "no");
-			}*/
-			
 			mv.setViewName("redirect:ranklist");
 			mv.addObject("rank_id",0);
 		}else{

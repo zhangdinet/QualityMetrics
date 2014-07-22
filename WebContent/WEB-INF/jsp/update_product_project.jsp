@@ -29,7 +29,7 @@
 			<div>
 				<label>TestLink名称</label>
 				<select name="testlinkName" class="form-control">
-					<option value="choose">请选择</option>
+					<option value="">请选择</option>
 					<c:forEach var="item" items="${lstTestlinkName}" varStatus="status">
 						<c:choose>
 							<c:when test="${item!=project_name_tl}">
@@ -46,7 +46,7 @@
 			<div>
 				<label>Redmine名称</label>
 				<select name="redmineName" class="form-control">
-					<option value="choose">请选择</option>
+					<option value="">请选择</option>
 						<c:forEach var="item" items="${lstRedmineName}" varStatus="status">
 							<c:choose>
 								<c:when test="${item!=project_name_rm}">
@@ -63,7 +63,7 @@
 			<div>
 				<label>Redmine中的工程技术支持项目名称</label>
 				<select name="redmineSupportName" class="form-control">
-					<option value="choose">请选择</option>
+					<option value="">请选择</option>
 					<c:forEach var="item" items="${lstRedmineSupportName}" varStatus="status">
 						<c:choose>
 							<c:when test="${item!=project_name_rm_support}">
@@ -97,7 +97,7 @@
 				var project_name_rm_support = $("select[name='redmineSupportName']").val();
 				
 				if (project_name == "" || project_name_tl == ""|| project_name_rm == "" || project_name_rm_support == "") {
-					$("#project_tipLabel").html("请完整填写信息！");
+					$("#spanResult").html("请完整填写信息！");
 					return;
 				}
 				$("#formProduct").attr("action", "saveUpdateProductProject");

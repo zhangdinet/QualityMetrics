@@ -50,6 +50,8 @@ public class RedmineSupport {
 	}
 	public int rateToScore(float supportRate){
 		int score=-1;
+		if(supportRate==0)
+			return 0;
 		if(supportRate==-1) return score;
 		if(supportRate<=0.03) score=5;
 		if(supportRate>0.03&supportRate<=0.05) score=4;

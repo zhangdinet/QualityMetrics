@@ -14,6 +14,7 @@ import net.sf.json.JSONArray;
 import org.springframework.stereotype.Controller; 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.MvcNamespaceHandler;
 
 import com.env.qualitymetrics.dao.UserDaozd;
 import com.env.qualitymetrics.dto.ProjectDto;
@@ -68,11 +69,19 @@ public class RankingController {
 	@RequestMapping("/ranklist")
 	public ModelAndView ranklist(HttpServletRequest req)
 	{
+		ModelAndView mv = new ModelAndView();
 		String strID=req.getParameter("rank_id");
 		Integer rank_id=0;
+		Integer selectID=-1;
 		List<ProjectDto> projectList;
-		if(strID == null || strID.equals("0"))
+		if(strID == null)
 		{
+			projectList = projectService.getNewestRankList();
+			mv.addObject("selectID",-1);
+		}
+		else if(strID.equals("0"))
+		{
+			mv.addObject("selectID",0);
 			projectList = projectService.getNewestRankList();
 		}
 		else
@@ -80,7 +89,7 @@ public class RankingController {
 			rank_id = Integer.parseInt(req.getParameter("rank_id"));
 			projectList = rankingService.getSelectedRankList(rank_id);
 		}
-		ModelAndView mv = new ModelAndView();
+		
 		mv.addObject("projectList", projectList);
 		mv.addObject("rank_id", rank_id);
 		List<RankingDto> rankingList = rankingService.getRankingPeriodList();
@@ -121,7 +130,7 @@ public class RankingController {
 	{
 		res.setCharacterEncoding("UTF-8");
 		String strID=req.getParameter("rank_id");
-		if(strID==null)
+		if(strID==null || strID=="")
 		{
 			strID = "0";
 		}

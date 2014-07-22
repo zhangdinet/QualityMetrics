@@ -28,7 +28,19 @@
 			<div style="margin-top:20px">
 				<span id="spanBrowseHistory" style="float:right">查看往期
 					<select name="rankingPeriod" id="rankingPeriod" sytle="float:right">
-						<option value="0">请选择</option>
+						<c:choose>
+							<c:when test="${selectID == -1}">
+								<option value="-1" selected disabled style="color:grey;display:none">请选择</option>
+								<option value="0">最新</option>
+							</c:when>
+							<c:when test="${selectID == 0}">
+								<option selected value="0">最新</option>
+							</c:when>
+							<c:otherwise>
+								<option value="0">最新</option>
+							</c:otherwise>
+						</c:choose>
+						
 						<c:forEach var="item" items="${rankingList}" varStatus="status">
 							<c:choose>
 								<c:when test="${item.rank_id == rank_id}">
@@ -193,6 +205,11 @@
 						chart.xAxis[0].setCategories(projectName);
 						projectName=[];
 						avgScore=[];
+					},
+					error:function(data){
+						var a=10;
+						a++;
+						a++;
 					}
 				});
 			}
