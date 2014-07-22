@@ -30,7 +30,7 @@
 					<select name="rankingPeriod" id="rankingPeriod" sytle="float:right">
 						<c:choose>
 							<c:when test="${selectID == -1}">
-								<option value="-1" selected disabled style="color:grey;display:none">请选择</option>
+								<option value="-1" selected disabled style="color:#888888;display:none">请选择</option>
 								<option value="0">最新</option>
 							</c:when>
 							<c:when test="${selectID == 0}">
@@ -137,6 +137,7 @@
 			<form id="form" class = "print">
 				<input type="hidden" name="selectedPeriodId"></input>
 				<input type="hidden" name="selectedPeriodName"></input>
+				<input type="hidden" name="filterName"></input>
 				<input type="submit" value="打印预览" class="btn btn-primary" style="float:right;" onclick="printRankings()"></input>
 			</form>
 
@@ -184,6 +185,10 @@
 				var input2 = $("input[name='selectedPeriodName']");
 				var selectedPeriodName = $('select[name="rankingPeriod"]').children('option:selected').html();
 				input2.attr('value',selectedPeriodName);
+				
+				var filterName=$("input[name='selectProject']").val();
+				var inputFilter=$("input[name='filterName']");
+				inputFilter.attr('value',filterName);
 				$("#form").attr("action","printRankings");
 				$("#form").submit();
 			}

@@ -2,6 +2,7 @@ package com.env.qualitymetrics.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -160,12 +161,50 @@ public class RankingController {
 	@RequestMapping("/printRankings")
 	public ModelAndView printRankings(HttpServletRequest req){
 		Integer rank_id = Integer.parseInt(req.getParameter("selectedPeriodId"));
+		String filterName = req.getParameter("filterName");
 		String rank_period;
 		List<ProjectDto> projectList;
-		if(rank_id==0)
+		List<ProjectDto> filterProjectList = new ArrayList<ProjectDto>();;
+		
+		if(rank_id==0 || rank_id==-1)
 		{
 			projectList = projectService.getNewestRankList();
-			rank_period="当前";
+			rank_period="最新";
+		}
+		else
+		{
+			rank_period = req.getParameter("selectedPeriodName");
+			projectList = rankingService.getSelectedRankList(rank_id);
+		}
+		if(filterName!=null && filterName!="")
+		{
+			for(ProjectDto dto:projectList)
+			{
+				String projectName=dto.getProject_name().toLowerCase();
+				if(projectName.contains(filterName))
+				{
+					filterProjectList.add(dto);
+				}
+			}
+		}
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("projectList", filterProjectList);
+		mv.addObject("rank_period",rank_period);
+		mv.addObject("filterName", filterName);
+		mv.setViewName("rankings_print");
+		return mv;
+	}
+	
+	/*@RequestMapping("/printRankings")
+	public ModelAndView printRankings(HttpServletRequest req){
+		Integer rank_id = Integer.parseInt(req.getParameter("selectedPeriodId"));
+		String filterName = req.getParameter("filterName");
+		String rank_period;
+		List<ProjectDto> projectList;
+		if(rank_id==0 || rank_id==-1)
+		{
+			projectList = projectService.getNewestRankList();
+			rank_period="最新";
 		}
 		else
 		{
@@ -175,9 +214,10 @@ public class RankingController {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("projectList", projectList);
 		mv.addObject("rank_period",rank_period);
+		mv.addObject("filterName", filterName);
 		mv.setViewName("rankings_print");
 		return mv;
-	}
+	}*/
 	
 	@RequestMapping("/updateRankings")
 	public ModelAndView updateRankings(){
