@@ -8,6 +8,7 @@
 <%@ page import="com.env.qualitymetrics.dto.*" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="java.text.*" %>
+<%@ page import="com.env.qualitymetrics.common.*" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -44,8 +45,12 @@
 					List<Integer> lstProjectID=(List<Integer>)session.getAttribute("lstProjectID");
 					int idCount=lstProjectID.size();
 					Integer pID=Integer.parseInt(request.getParameter("project_id"));
-					
 					boolean ownerFlag=false;
+					
+			/* 		String s=request.getParameter("project_name");
+					System.out.println(s);
+					System.out.println(SysUtil.decodeUtf8(s)); */
+					
 					for(int i=0;i<idCount;i++)
 					{
 						ownerFlag=false;

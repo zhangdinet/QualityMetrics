@@ -458,7 +458,7 @@
 			var selected_builds=document.getElementById("selected_builds");
 			var objOption=document.createElement("option");
 			var value= document.getElementById("build_sonar").value + "=" + document.getElementById("build_date").value;
-			if(isSelectdBuildExistence(value))
+			if(isSelectdBuildExistence(document.getElementById("build_sonar").value))
 			{
 				return;
 			}

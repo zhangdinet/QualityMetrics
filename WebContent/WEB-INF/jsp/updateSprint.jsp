@@ -461,7 +461,7 @@
 			var selected_builds=document.getElementById("selected_builds");
 			var objOption=document.createElement("option");
 			var value= document.getElementById("build_sonar").value + "=" + document.getElementById("build_date").value;
-			if(isSelectdBuildExistence(value))
+			if(isSelectdBuildExistence(document.getElementById("build_sonar").value))
 			{
 				return;
 			}
@@ -474,7 +474,7 @@
 		//判断添加构建是否已经选择 zhangdi 140504
 		function isSelectdBuildExistence(build)
 		{
-			var selectedBuilds=$("#selected_builds").val();
+			var selectedBuilds=$("#selected_builds").text();
 			if(selectedBuilds==null)
 			{
 				return false;

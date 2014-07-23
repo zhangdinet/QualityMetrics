@@ -98,6 +98,11 @@ public class SprintController
 	
 	@RequestMapping("/addSprint")
 	public ModelAndView addSprint(HttpServletRequest req){
+		try {
+			req.setCharacterEncoding("UTF-8");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		ModelAndView mv = new ModelAndView();
 		Integer project_id = Integer.parseInt(req.getParameter("project_id"));
 		Integer user_project_id = (Integer) req.getSession().getAttribute("project_id");
@@ -110,7 +115,7 @@ public class SprintController
 			mv.setViewName("error");
 			return mv;
 		}
-		String project_name = req.getParameter("project_name");
+		String project_name = SysUtil.decodeUtf8(req.getParameter("project_name"));
 		mv.setViewName("addSprint");
 		mv.addObject("project_name", project_name);
 		mv.addObject("project_id", project_id);
