@@ -234,7 +234,7 @@ li
 	width:100%;
 	background-color:rgb(43, 122, 205);
 	display:inline;
-	z-index:5;
+	z-index:10;
 }
 
 #update_flag
@@ -270,10 +270,10 @@ li
 #divMainMenu
 {
 	position:fixed;
-	top:40px;
+	top:28px;
 	width:100%;
 	background-color:rgb(43, 122, 205);
-	padding-left:120px;
+	padding-left:80px;
 	padding-right:105px;
 	z-index:5;
 }
@@ -281,8 +281,8 @@ li
 #ulMainMenu li
 {
 	font-size:16px;
-	font-weight:bold;
-	font-family:΢���ź�;
+	/* font-weight:bold; */
+	font-family:微软雅黑;
 	float:left;
 	padding:10px 20px 8px 0px;
 }
@@ -473,7 +473,7 @@ tr:nth-child(even) td
 	margin-left: auto;
 	margin-right: auto;
 	width: 200px;
-	font: bold 22px "微软雅黑";
+	font: bold 22px "寰蒋闆呴粦";
 }
 
 .frmSetSprintDetail
@@ -517,7 +517,6 @@ label
 	font-size:16px;
 	color:red;
 }
-
 
 #labelTip
 {
