@@ -7,16 +7,15 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>添加Sprint</title>
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.4.1/build/cssreset/cssreset-min.css">	
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-theme.css">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery-ui-1.10.4.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base.css">
 	<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon" />
 	<link rel="Bookmark" href="${pageContext.request.contextPath}/img/favicon.ico" />
 	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
-	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/jquery-ui-1.10.4.js"></script>
+	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/jquery-ui.js"></script>
 	<script type="text/javascript"	src="${pageContext.request.contextPath}/js/jquery.ui.datepicker-zh-CN.js"></script>
 </head>
 
@@ -31,14 +30,14 @@
 					<label for="project_name" style="width:90px">产品名称</label>
 					<input id="project_name" name="project_name" readonly="readonly" style="width:150px;height:30px" value="${project_name}" />
 					<label style="width:80px;margin-left:60px">开始日期</label>
-					<input type="text" id="begindate" readonly name="sprint_startdate" style="padding-left:5px" placeholder="请选择日期" style="height:30px"/>
+					<input type="text" id="begindate" readonly name="sprint_startdate" style="padding-left:5px;height:30px" placeholder="请选择日期" />
 				</div>
 
 				<div class="form-group">
 					<label for="sprint_name" style="width:90px">Sprint名称</label>
-					<input id="sprint_name" name="sprint_name" width:150px;height:30px"/>
+					<input id="sprint_name" name="sprint_name" style="width:150px;height:30px"/>
 					<label style="width:80px;margin-left:60px">结束日期</label>
-					<input type="text" id="enddate" readonly name="sprint_enddate" style="padding-left:5px" placeholder="请选择日期" style="height:30px"/>
+					<input type="text" id="enddate" readonly name="sprint_enddate" style="padding-left:5px;height:30px" placeholder="请选择日期" />
 				</div>
 				
 				<div class="form-group">
@@ -82,15 +81,15 @@
 					<div>
 						<select name="url_surveymonkey" multiple="multiple" class="form-control">
 							<c:forEach var="itemTitle" items="${lstTitle}">
-									<c:set var="boolFlag" value="${fn:contains(itemTitle,'#selected')}" />
-									<c:choose>
-										<c:when test="${boolFlag}">
-											<option value="${fn:substringBefore(itemTitle,'#selected')}" selected="selected"> ${fn:substringBefore(itemTitle,'#selected')} </option>
-										</c:when>
-										<c:otherwise>
-											<option value="${itemTitle}"> ${itemTitle} </option>
-										</c:otherwise>
-									</c:choose>
+								<c:set var="boolFlag" value="${fn:contains(itemTitle,'#selected')}" />
+								<c:choose>
+									<c:when test="${boolFlag}">
+										<option value="${fn:substringBefore(itemTitle,'#selected')}" selected="selected"> ${fn:substringBefore(itemTitle,'#selected')} </option>
+									</c:when>
+									<c:otherwise>
+										<option value="${itemTitle}"> ${itemTitle} </option>
+									</c:otherwise>
+								</c:choose>
 							</c:forEach>
 						</select>
 						
@@ -279,7 +278,7 @@
 			}
 		});
 		$(function() {
-			$("#begindate").datepicker({
+			/* $("#begindate").datepicker({
 				beforeShow:function(input,inst)
 				{
 					$.datepicker._pos = $.datepicker._findPos(input);
@@ -294,7 +293,7 @@
 					$.datepicker._pos[0] = input.offsetLeft;
 					$.datepicker._pos[1] += input.offsetTop;
 				}
-			});
+			}); */
 			
 			$("#begindate").datepicker($.datepicker.regional["zh-CN"]);
 			$("#begindate").datepicker("option", "dateFormat", "yy-mm-dd");

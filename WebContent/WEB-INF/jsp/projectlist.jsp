@@ -14,13 +14,13 @@
 		<title>员工质量KPI</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-theme.css">
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery-ui-1.10.4.css">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery-ui.css">
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base.css">
 		<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
 		<link rel="Bookmark" href="${pageContext.request.contextPath}/img/favicon.ico" />
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui-1.10.4.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-ui.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.ui.datepicker-zh-CN.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/highcharts.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/exporting.js"></script>
