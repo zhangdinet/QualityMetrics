@@ -131,7 +131,7 @@
 					{
 						
 			%>
-						<td><%=dto.getLmt_score() %></td>
+						<td><%=dto.getIpd_score() %></td>
 			<%
 					}
 					else
