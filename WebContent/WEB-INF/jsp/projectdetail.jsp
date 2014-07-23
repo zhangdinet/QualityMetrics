@@ -20,7 +20,7 @@
 </head>
 <body>
 	<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
-	<jsp:include page="commonpart/navMenu.jsp"></jsp:include>
+	<jsp:include page="commonpart/mainMenu.jsp"></jsp:include>
 	<jsp:include page="commonpart/containerStart.jsp"></jsp:include>
 
 		<h3 style="margin-bottom:20px">${project_name} Sprint质量衡量分数表</h3>

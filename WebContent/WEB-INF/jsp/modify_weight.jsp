@@ -18,7 +18,7 @@
 </head>
 <body>
 	<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
-	<jsp:include page="commonpart/navMenu.jsp"></jsp:include>
+	<jsp:include page="commonpart/mainMenu.jsp"></jsp:include>
 	<div class="detailwrapper">
 		<div class="sprintdetail">
 			<h1>衡量指标权重录入</h1>

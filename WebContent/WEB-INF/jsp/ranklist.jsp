@@ -22,7 +22,7 @@
 	</head>
 	<body>
 		<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
-		<jsp:include page="commonpart/navMenu.jsp"></jsp:include>
+		<jsp:include page="commonpart/mainMenu.jsp"></jsp:include>
 		<jsp:include page="commonpart/containerStart.jsp"></jsp:include>
 			<h3>软件产品质量龙虎榜</h3>
 			<div style="margin-top:20px">

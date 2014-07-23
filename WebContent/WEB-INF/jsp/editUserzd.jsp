@@ -16,7 +16,7 @@
 	</head>
 	<body id="bodyEditUser">
 		<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
-		<jsp:include page="commonpart/navMenu.jsp"></jsp:include>
+		<jsp:include page="commonpart/mainMenu.jsp"></jsp:include>
 		<jsp:include page="commonpart/containerStart.jsp"></jsp:include>
 			<div id="divEditUser">
 				<h3>系统管理</h3>

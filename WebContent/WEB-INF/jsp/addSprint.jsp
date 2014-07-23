@@ -21,7 +21,7 @@
 
 <body>
 		<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
-		<jsp:include page="commonpart/navMenu.jsp"></jsp:include>
+		<jsp:include page="commonpart/mainMenu.jsp"></jsp:include>
 		<jsp:include page="commonpart/containerStart.jsp"></jsp:include>
 			<div id="divSetSprintDetail">
 			<h1>添加Sprint</h1>

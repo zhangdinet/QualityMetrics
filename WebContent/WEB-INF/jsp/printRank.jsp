@@ -22,7 +22,7 @@
 </head>
 	<body>
 		<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
-		<jsp:include page="commonpart/navMenu.jsp"></jsp:include>
+		<jsp:include page="commonpart/mainMenu.jsp"></jsp:include>
 			<div id="divPrint">
 				<div id = "divBtnPrint" >
 					<button id = "print_button" class="btn btn-primary">打印</button>

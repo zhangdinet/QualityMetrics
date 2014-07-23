@@ -18,7 +18,7 @@
 	</head>
 	<body>
 		<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
-		<jsp:include page="commonpart/navMenu.jsp"></jsp:include>
+		<jsp:include page="commonpart/mainMenu.jsp"></jsp:include>
 		<jsp:include page="commonpart/containerStart.jsp"></jsp:include>
 			<h3>系统信息</h3>
 			<form action = "addUser" style="float:right">
