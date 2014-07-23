@@ -54,6 +54,7 @@ public class LoginController{
 			session.setAttribute("role", role);
 			List<Integer> lstProjectID=userProjectService.getUserProjects(userID);
 			session.setAttribute("lstProjectID",lstProjectID);
+			session.setMaxInactiveInterval(-1);
 			mv.setViewName("redirect:ranklist");
 			mv.addObject("rank_id",0);
 		}else{

@@ -12,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base.css">
 		<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
 		<link rel="Bookmark" href="${pageContext.request.contextPath}/img/favicon.ico" />
-		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
 	</head>
 	<body id="bodyEditUser">
 		<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
