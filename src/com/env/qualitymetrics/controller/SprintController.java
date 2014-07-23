@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import net.sf.json.JSONArray;
 
 import org.hibernate.Session;
+import org.hibernate.dialect.function.VarArgsSQLFunction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller; 
@@ -287,9 +288,12 @@ public class SprintController
 		}else{
 			sprint_id= Integer.parseInt(req.getParameter("sprint_id"));
 		}
-		String[] selected_builds = req.getParameterValues("selected_builds");
-		String strBuilds=Arrays.toString(selected_builds);
-		strBuilds=strBuilds.substring(1,strBuilds.length()-1);
+		//String[] selected_builds = req.getParameterValues("selected_builds");
+		
+		String strBuilds=req.getParameter("inputBuilds");
+		
+		//String strBuilds=Arrays.toString(selected_builds);
+		//strBuilds=strBuilds.substring(1,strBuilds.length()-1);
 		strBuilds = strBuilds.replaceAll(",","<br>");
 		SprintDto sprintDto = new SprintDto();
 		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");

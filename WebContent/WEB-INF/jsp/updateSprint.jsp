@@ -132,10 +132,11 @@
 					<div>
 						<div>
 							<select name="selected_builds" id="selected_builds" class="form-control" multiple="multiple">
-							<c:forEach var="itemBuild" items="${arrBuild}">
-								<option value="${itemBuild}" selected="selected" >${itemBuild}</option>
-							</c:forEach>
+								<c:forEach var="itemBuild" items="${arrBuild}">
+									<option value="${itemBuild}" selected="selected" >${itemBuild}</option>
+								</c:forEach>
 							</select>
+							<input type="hidden" name="inputBuilds" id="inputBuilds"/>
 						</div>
 					</div>
 				</div>
@@ -319,6 +320,17 @@
 			var lmt_score = $("input[name='lmt_score']").val();
 			var url_surveymonkey = $("select[name='url_surveymonkey']").val();
 			var selected_builds = $("select[name='selected_builds']").val();
+			
+			var selected_builds=new Array();
+			var optionCount=$("#selected_builds option").size();
+			var arrBuild=$("#selected_builds option");
+			for(var i=0;i<optionCount;i++)
+			{
+				selected_builds[i]=arrBuild[i].text;
+			}
+			
+			var inputBuilds=$("#inputBuilds");
+			inputBuilds.attr('value',selected_builds);
 			
 			var value = $("input[name='ipdOrLmtScore']:checked").val();
 			

@@ -131,10 +131,11 @@
 					<div>
 						<div>
 							<select name="selected_builds" id="selected_builds" class="form-control" multiple="multiple">
-							<c:forEach var="itemBuild" items="${arrBuild}">
-								<option value="${itemBuild}" selected="selected" >${itemBuild}</option>
-							</c:forEach>
+								<c:forEach var="itemBuild" items="${arrBuild}">
+									<option value="${itemBuild}" selected="selected" >${itemBuild}</option>
+								</c:forEach>
 							</select>
+							<input type="hidden" name="inputBuilds" id="inputBuilds"/>
 						</div>
 					</div>
 				</div>
@@ -158,8 +159,7 @@
 				
 				<div id="sprint_tipLabel">
 					<c:choose>
-						<c:when test="${updateResult eq 'ok'}">修改成功！
-						</c:when>
+						<c:when test="${updateResult eq 'ok'}">修改成功</c:when>
 						<c:when test="${updateResult eq 'err'}">修改失败！</c:when>
 						<c:otherwise>${updateResult}</c:otherwise>
 					</c:choose>
@@ -173,6 +173,7 @@
 				<input type="hidden" value="${sprint.ipd_score }" name="ipd_hidden" />
 				<input type="hidden" value="${sprint.lmt_score }" name="lmt_hidden" />
 				<input type="hidden" value="${project_flag }" name="project_flag" />
+				
 			</form>
 		</div>
 		
@@ -317,8 +318,18 @@
 			var ipd_score = $("input[name='ipd_score']").val();
 			var lmt_score = $("input[name='lmt_score']").val();
 			var url_surveymonkey = $("select[name='url_surveymonkey']").val();
-			var selected_builds = $("select[name='selected_builds']").val();
+			//var selected_builds = $("select[name='selected_builds']").val();
+			var selected_builds=new Array();
+			var optionCount=$("#selected_builds option").size();
+			var arrBuild=$("#selected_builds option");
+			for(var i=0;i<optionCount;i++)
+			{
+				selected_builds[i]=arrBuild[i].text;
+			}
 			
+			var inputBuilds=$("#inputBuilds");
+			inputBuilds.attr('value',selected_builds);
+			 
 			var value = $("input[name='ipdOrLmtScore']:checked").val();
 			
 			if(value==1)  //改为禁用判断  zhangdi todo ==========
@@ -374,7 +385,6 @@
 			{
 				return;
 			}
-			
 			var sonarProjectID=-1;
 			sonarProjectID=getSonarProjectIDByName(sonarProjectName);
 			if(sonarProjectID==-1)
@@ -462,7 +472,8 @@
 		//判断添加构建是否已经选择 zhangdi 140504
 		function isSelectdBuildExistence(build)
 		{
-			var selectedBuilds=$("#selected_builds").val();
+			//var selectedBuilds=$("#selected_builds").val();
+			var selectedBuilds=$("#selected_builds").text();
 			if(selectedBuilds==null)
 			{
 				return false;

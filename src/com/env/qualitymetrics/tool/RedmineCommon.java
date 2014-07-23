@@ -550,9 +550,11 @@ public class RedmineCommon {
 				if(userAndReopenCount.containsKey(key))
 				{
 					Long count=userAndReopenCount.get(key);
-					userAndReopenCount.replace(key,count+reopenCount);
+					//userAndReopenCount.replace(key,count+reopenCount);
+					userAndReopenCount.put(key,count+reopenCount);
 					String strID=userAndIssues.get(key);
-					userAndIssues.replace(key,strID+"<br>"+id);
+					//userAndIssues.replace(key,strID+"<br>"+id);
+					userAndIssues.put(key,strID+"<br>"+id);
 				}
 				else
 				{
@@ -814,7 +816,8 @@ public class RedmineCommon {
 			SeverityClass severity=mapResult.get(date);
 			Long count = (Long)map.get("number");
 			severity.setNewBugsCount(count);
-			mapResult.replace(date, severity);
+			//mapResult.replace(date, severity);
+			mapResult.put(date, severity);
 		}
 		
 		for(Object o : rowsUpdate)
@@ -824,7 +827,8 @@ public class RedmineCommon {
 			SeverityClass severity=mapResult.get(date);
 			Long count = (Long)map.get("number");
 			severity.setUpdateBugsCount(count);
-			mapResult.replace(date, severity);
+			//mapResult.replace(date, severity);
+			mapResult.put(date, severity);
 		}
 		
 		for(Object o : rowsNewFeature)
@@ -834,7 +838,8 @@ public class RedmineCommon {
 			SeverityClass severity=mapResult.get(date);
 			Long count = (Long)map.get("number");
 			severity.setNewFeaturesCount(count);
-			mapResult.replace(date, severity);
+			//mapResult.replace(date, severity);
+			mapResult.put(date, severity);
 		}
 		
 		for(Object o : rowsUpdateFeature)
@@ -844,7 +849,8 @@ public class RedmineCommon {
 			SeverityClass severity=mapResult.get(date);
 			Long count = (Long)map.get("number");
 			severity.setUpdateFeaturesCount(count);
-			mapResult.replace(date, severity);
+			//mapResult.replace(date, severity);
+			mapResult.put(date, severity);
 		}
 		
 		Iterator iter=mapResult.entrySet().iterator();
