@@ -6,7 +6,7 @@ $(function (){
             type:'column'
 		},
          title: {
-                text: '软件产品质量龙虎榜',
+                text: '龙虎榜',
                 style:{
             		fontWeight:'bold',
             		width:'200px',

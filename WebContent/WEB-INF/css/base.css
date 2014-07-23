@@ -25,13 +25,13 @@
 	display:block;
 }
 
-#formModule h3, #formProduct h3
+/* #formModule h3, #formProduct h3
 {
 	width:280px;
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom:30px;
-}
+} */
 
 #divPrint
 {
@@ -145,13 +145,13 @@ table th
 	height:34px;
 }
 
-#formKPI h3
+/* #formKPI h3
 {
 	width:200px;
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom:20px;
-}
+} */
 
 #formKPI select
 {
@@ -196,13 +196,13 @@ li
 	margin-top:10px;
 }
 
-#divAddUser h3,#divEditUser h3
+/* #divAddUser h3,#divEditUser h3
 {
 	font-size:24px;
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom:30px;
-}
+} */
 
 #formAddUser button,#formEditUser button
 {
@@ -522,4 +522,27 @@ label
 {
 	color:red;
 	font-size:16px;
+}
+
+/* body
+{
+	background:#f2f2f2;
+} */
+
+#mainDivContent
+{
+	background:white;
+	width:960px;
+	margin-top:100px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#hTitle
+{
+	width:100%;
+	text-align:center;
+	margin-left:auto;
+	margin-right:auto;
+	font-size:20px;
 }

@@ -23,8 +23,8 @@
 	<body>
 		<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
 		<jsp:include page="commonpart/mainMenu.jsp"></jsp:include>
-		<jsp:include page="commonpart/containerStart.jsp"></jsp:include>
-			<h3>软件产品质量龙虎榜</h3>
+		<div id="mainDivContent">
+			<h3 id="hTitle">软件产品质量龙虎榜</h3>
 			<div style="margin-top:20px">
 				<span id="spanBrowseHistory" style="float:right">查看往期
 					<select name="rankingPeriod" id="rankingPeriod" sytle="float:right">
@@ -54,11 +54,19 @@
 					</select>
 				</span>
 			</div>
-			<div id="container" style="min-width:800px;height:400px;margin-bottom:10px"></div>
+			<br>
+			
+			<div id="container" style="min-width:800px;max-width:960px;height:400px;padding:10px;margin-left:auto;margin-right:auto;margin-bottom:10px;margin-top:20px;border:2px solid #435871"></div>
 			
 			<div id="rankingsContent" style="margin-top:80px">
 					<label>筛选产品模块</label>
 					<input name="selectProject" type="text" id="txtSelectProject" style="padding-left:8px" placeholder="输入后请回车" onchange="selectProject(this)"/>
+					<form id="form" class = "print" style="float:right">
+						<input type="hidden" name="selectedPeriodId"></input>
+						<input type="hidden" name="selectedPeriodName"></input>
+						<input type="hidden" name="filterName"></input>
+						<input type="submit" value="打印预览" class="btn btn-primary" style="float:right;" onclick="printRankings()"></input>
+					</form>
 					<table id="tbl_rankings">
 						<tr>
 							<th>排名</th>
@@ -134,14 +142,9 @@
 					</table>
 			</div>
 
-			<form id="form" class = "print">
-				<input type="hidden" name="selectedPeriodId"></input>
-				<input type="hidden" name="selectedPeriodName"></input>
-				<input type="hidden" name="filterName"></input>
-				<input type="submit" value="打印预览" class="btn btn-primary" style="float:right;" onclick="printRankings()"></input>
-			</form>
+			
+		</div>
 
-		<jsp:include page="commonpart/containerEnd.jsp"></jsp:include>
 		<script type="text/javascript">
 			$(document).ready(function()
 			{
