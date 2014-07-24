@@ -25,14 +25,6 @@
 	display:block;
 }
 
-/* #formModule h3, #formProduct h3
-{
-	width:280px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-bottom:30px;
-} */
-
 #divPrint
 {
 	width:600px;
@@ -145,14 +137,6 @@ table th
 	height:34px;
 }
 
-/* #formKPI h3
-{
-	width:200px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-bottom:20px;
-} */
-
 #formKPI select
 {
 	margin-right:15px;
@@ -224,8 +208,6 @@ li
 	font-size:16px;
 }
 
-
-
 #divLogoName
 {
 	position:fixed;
@@ -242,11 +224,7 @@ li
 	font-size:16px;
 }
 
-#divMainMenu a,#divLogoName a
-{
-	text-decoration:none;
-	color:white;
-}
+
 
 
 /* #divMainMenu a:active ,#divLogoName a:active
@@ -255,48 +233,74 @@ li
 	color:green;
 } */
 
-#spanUser,#spanLog
+#spanNavLogin
 {
-	font-size:16px;
-	padding:0px 0px 8px 20px;
 	float:right;
+	height:auto;
 }
 
-.narbar,.navbar-inverse,.navbar-collapse,.narbar-fixed-top
-{
-	border-style:none;
-}
-
-#divMainMenu
+#divMainNav
 {
 	position:fixed;
-	top:28px;
+	top:30px;
 	width:100%;
 	background-color:rgb(43, 122, 205);
-	padding-left:80px;
-	padding-right:105px;
+	padding-left:56px;
+	/* padding-right:80px; */
 	z-index:5;
 }
 
-#ulMainMenu li
+#divMainNavMenu
 {
-	font-size:16px;
-	/* font-weight:bold; */
+	float:left;
+	height:30px;
+}
+
+#divLogoName a,#divMainNav a
+{
+	color:white;
+}
+
+#divLogoName a
+{
+	text-decoration:none;
+}
+
+#divMainNavLogin
+{
+	margin-right:50px;
+	float:right;
+	font-size:15px;
+	padding:0px 16px 0px 0px;
+	height:30px;
+	line-height:30px;
+}
+
+
+#divMainNavLogin a
+{
+	padding-right:12px;
+}
+
+#ulMainNavMenu li
+{
+	font-size:15px;
 	font-family:微软雅黑;
 	float:left;
-	padding:10px 20px 8px 0px;
+	padding:0px 16px 4px 0px;
+	line-height:30px;
 }
 
 .imgLogo
 {
-	width:120px;
-	height:40px;
+	width:95px;
+	height:30px;
 	float:left;
 }
 
 #aProjectName
 {
-	font-size: 24px;
+	font-size: 21px;
 }
 
 table
@@ -473,7 +477,7 @@ tr:nth-child(even) td
 	margin-left: auto;
 	margin-right: auto;
 	width: 200px;
-	font: bold 22px 微软雅黑;
+	font: bold 18px 微软雅黑;
 }
 
 .frmSetSprintDetail
