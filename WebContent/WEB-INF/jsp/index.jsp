@@ -13,7 +13,6 @@
 	</head>
 	<body id="bodyLogin">
 		<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
-
 			<div id="divLogin">
 				<form method = "post" action = "login" id="frmLogin">
 					<div id="divTitle">欢迎登录QMS</div>

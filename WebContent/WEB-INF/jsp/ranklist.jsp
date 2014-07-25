@@ -29,19 +29,9 @@
 			<div>
 				<span id="spanBrowseHistory" style="float:right">查看往期
 					<select name="rankingPeriod" id="rankingPeriod" sytle="float:right">
-						<c:choose>
-							<c:when test="${selectID == -1}">
-								<option value="-1" selected disabled style="color:#888888;display:none">请选择</option>
-								<option value="0">最新</option>
-							</c:when>
-							<c:when test="${selectID == 0}">
-								<option selected value="0">最新</option>
-							</c:when>
-							<c:otherwise>
-								<option value="0">最新</option>
-							</c:otherwise>
-						</c:choose>
-						
+						<option>
+							<option selected value="0">最新</option>
+						</option>
 						<c:forEach var="item" items="${rankingList}" varStatus="status">
 							<c:choose>
 								<c:when test="${item.rank_id == rank_id}">

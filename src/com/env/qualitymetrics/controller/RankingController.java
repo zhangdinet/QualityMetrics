@@ -73,14 +73,9 @@ public class RankingController {
 		ModelAndView mv = new ModelAndView();
 		String strID=req.getParameter("rank_id");
 		Integer rank_id=0;
-		Integer selectID=-1;
+		Integer selectID=0;
 		List<ProjectDto> projectList;
-		if(strID == null)
-		{
-			projectList = projectService.getNewestRankList();
-			mv.addObject("selectID",-1);
-		}
-		else if(strID.equals("0"))
+		if(strID==null || strID.equals("") ||strID.equals("0"))
 		{
 			mv.addObject("selectID",0);
 			projectList = projectService.getNewestRankList();
