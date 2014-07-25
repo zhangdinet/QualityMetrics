@@ -11,11 +11,12 @@
 		<title>排行榜</title>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-theme.css">
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
+		<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery.dataTables.css"> --%>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/base.css">
 		<link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon"/>
 		<link rel="Bookmark" href="${pageContext.request.contextPath}/img/favicon.ico" />
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
+		<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.dataTables.js"></script> --%>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/highcharts.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/ranking_chart.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/qualitymetrics.js" charset="gb2312"></script>
@@ -25,7 +26,7 @@
 		<jsp:include page="commonpart/mainMenu.jsp"></jsp:include>
 		<div id="mainDivContent">
 			<h3 id="hTitle">软件产品质量龙虎榜</h3>
-			<div style="margin-top:20px">
+			<div>
 				<span id="spanBrowseHistory" style="float:right">查看往期
 					<select name="rankingPeriod" id="rankingPeriod" sytle="float:right">
 						<c:choose>
@@ -152,6 +153,7 @@
 				$("#txtSelectProject").val('');
 				showRankingChart();
 				//changePeriod();
+				/* $("#tbl_rankings").dataTable(); */
 			});
 			
 			$('select[name="rankingPeriod"]').change(function(){

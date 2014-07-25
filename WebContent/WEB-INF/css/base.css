@@ -3,6 +3,36 @@
 	font-family:微软雅黑
 }
 
+
+table{
+		border: 1px solid #888888;
+  		border-collapse: collapse;
+   		font-family: Arial,Helvetica,sans-serif;
+   		margin-top: 10px;
+        width: 100%; 
+        TABLE-LAYOUT: fixed;
+	}
+table th
+{
+	background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 5px 15px 5px 5px;
+    text-align: center;
+    vertical-align: baseline;
+    font: bold 15px "微软雅黑";;
+    WORD-WRAP: break-word;
+}
+table td{
+    border: 1px solid #ddd;
+    padding: 5px 15px 5px 5px;
+    vertical-align: text-top;
+    word-break:keep-all;/* 不换行 */  
+	white-space:nowrap;/* 不换行 */  
+    overflow:hidden;
+    text-overflow:ellipsis;
+    text-align: center;
+}
+
 #navigatorForm
 {
 	font-size:16px;
@@ -458,7 +488,7 @@ input[type="button"]
 
 tr:nth-child(odd) td
 {
-	background-color:rgb(221, 221, 221);
+	background-color:#f9f9f9;
 }
 
 tr:nth-child(even) td
@@ -501,6 +531,7 @@ tr:nth-child(even) td
 label
 {
 	font-size:16px;
+	font-weight:normal
 }
 
 #lmt_score_flag, #ipd_score_flag
@@ -528,11 +559,6 @@ label
 	font-size:16px;
 }
 
-/* body
-{
-	background:#f2f2f2;
-} */
-
 #mainDivContent
 {
 	background:white;
@@ -549,4 +575,11 @@ label
 	margin-left:auto;
 	margin-right:auto;
 	font-size:20px;
+	margin-bottom:30px;
+}
+
+#frmSettingSprint
+{
+	border:2px solid #435871;
+	padding:30px 30px 10px 30px;
 }

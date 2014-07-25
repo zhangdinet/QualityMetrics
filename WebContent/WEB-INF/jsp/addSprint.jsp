@@ -20,28 +20,29 @@
 </head>
 
 <body>
-		<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
-		<jsp:include page="commonpart/mainMenu.jsp"></jsp:include>
-		<jsp:include page="commonpart/containerStart.jsp"></jsp:include>
-			<div id="divSetSprintDetail">
-			<h1>添加Sprint</h1>
-			<form id="form" class="frmSetSprintDetail" method="post">
-				<div class="form-group">
-					<label for="project_name" style="width:90px">产品名称</label>
-					<input id="project_name" name="project_name" readonly="readonly" style="width:150px;height:30px" value="${project_name}" />
-					<label style="width:80px;margin-left:60px">开始日期</label>
-					<input type="text" id="begindate" readonly name="sprint_startdate" style="padding-left:5px;height:30px" placeholder="请选择日期" />
-				</div>
-
-				<div class="form-group">
-					<label for="sprint_name" style="width:90px">Sprint名称</label>
-					<input id="sprint_name" name="sprint_name" style="width:150px;height:30px"/>
-					<label style="width:80px;margin-left:60px">结束日期</label>
-					<input type="text" id="enddate" readonly name="sprint_enddate" style="padding-left:5px;height:30px" placeholder="请选择日期" />
-				</div>
-				
-				<div class="form-group">
-					<label style="margin-top:15px">TestLink测试计划名称</label>
+	<jsp:include page="commonpart/headerLogoName.jsp"></jsp:include>
+	<jsp:include page="commonpart/mainMenu.jsp"></jsp:include>
+		<div id="mainDivContent">
+		<h3 id="hTitle">添加Sprint</h3>
+		<form id="frmSettingSprint" method="post">
+			<div style="margin-bottom:30px">
+				<span style="margin-right:16px">
+					<label for="project_name">产品名称</label>
+					<input id="project_name" name="project_name" readonly="readonly" style="height:30px;margin-right:16px" value="${project_name}" />
+					<label for="sprint_name">Sprint名称</label>
+					<input id="sprint_name" name="sprint_name" style="height:30px"/>
+				</span>
+				<span style="float:right">
+					<label>开始</label>
+					<input type="text" id="begindate" readonly name="sprint_startdate" style="padding-left:5px;width:160px;height:30px;margin-right:16px" placeholder="请选择日期" />
+					<label>结束</label>
+					<input type="text" id="enddate" readonly name="sprint_enddate" style="padding-left:5px;width:160px;height:30px" placeholder="请选择日期" />
+				</span>
+			</div>
+			
+			<div style="width:100%;height:140px;margin-bottom:30px">
+				<div style="float:left;width:28%;margin-right:4%">
+					<label>TestLink测试计划名称</label>
 					<select id="testplan_testlink" name="testplan_testlink" class="form-control" multiple="multiple">
 						<c:forEach var="itemTest" items="${lstTestPlan}">
 								<c:set var="boolFlag" value="${fn:contains(itemTest,'#selected')}"/>
@@ -55,10 +56,8 @@
 								</c:choose>
 						</c:forEach>
 					</select>
-					<span id="testplan_testlink_flag" class="span_flag"></span>
 				</div>
-				
-				<div class="form-group">
+				<div style="float:left;width:28%;margin-right:4%">
 					<label>Redmine版本名称</label>
 					<select id="version_redmine" name="version_redmine" class="form-control" multiple="multiple">
 						<c:forEach var="itemRedmine" items="${lstRedmine}">
@@ -73,110 +72,100 @@
 								</c:choose>
 						</c:forEach>
 					</select>
-					<span id="version_redmine_flag" class="span_flag"></span>
 				</div>
 				
-				<div class="form-group">
-					<label>SurveyMonkey标题</label>
-					<div>
-						<select name="url_surveymonkey" multiple="multiple" class="form-control">
-							<c:forEach var="itemTitle" items="${lstTitle}">
-								<c:set var="boolFlag" value="${fn:contains(itemTitle,'#selected')}" />
-								<c:choose>
-									<c:when test="${boolFlag}">
-										<option value="${fn:substringBefore(itemTitle,'#selected')}" selected="selected"> ${fn:substringBefore(itemTitle,'#selected')} </option>
-									</c:when>
-									<c:otherwise>
-										<option value="${itemTitle}"> ${itemTitle} </option>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						</select>
-						
-						<span id="url_surveymonkey_flag" class="flagTip"></span>
-					</div>
+				<div style="float:left;width:36%;">
+					<label>SurveyMonkey标题(可选)</label>
+					<select name="url_surveymonkey" multiple="multiple" class="form-control">
+						<c:forEach var="itemTitle" items="${lstTitle}">
+							<c:set var="boolFlag" value="${fn:contains(itemTitle,'#selected')}" />
+							<c:choose>
+								<c:when test="${boolFlag}">
+									<option value="${fn:substringBefore(itemTitle,'#selected')}" selected="selected"> ${fn:substringBefore(itemTitle,'#selected')} </option>
+								</c:when>
+								<c:otherwise>
+									<option value="${itemTitle}"> ${itemTitle} </option>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</select>
 				</div>
-				
-				<div class="form-group">
+			</div>
+
+			<div style="margin-bottom:30px">
+				<div style="width:25%;float:left;margin-right:5%">
 					<label>Sonar构建名称</label>
 					<span id="build_sonar_flag"></span>
-					<div>
-						<select name="build_sonar" id="build_sonar" class="form-control" onchange="getBuildDates()">
-							<c:forEach var="itemSonar" items="${lstSonar}">
-								<c:set var="boolFlag" value="${fn:contains(sprint.build_sonar,itemSonar)}"/>
-								<c:choose>
-									<c:when test="${boolFlag}">
-										<option value="${itemSonar}" selected="selected" >${itemSonar}</option>
-									</c:when>
-									<c:otherwise>
-										<option value="${itemSonar}">${itemSonar}</option>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-						</select>
-					</div>
+					<select name="build_sonar" id="build_sonar" class="form-control" onchange="getBuildDates()">
+						<c:forEach var="itemSonar" items="${lstSonar}">
+							<c:set var="boolFlag" value="${fn:contains(sprint.build_sonar,itemSonar)}"/>
+							<c:choose>
+								<c:when test="${boolFlag}">
+									<option value="${itemSonar}" selected="selected" >${itemSonar}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${itemSonar}">${itemSonar}</option>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</select>
+				</div>
+			
+				<div style="width:25%;float:left;margin-right:5%;">
+					<label>构建日期</label>
+					<select name="build_date" id="build_date" class="form-control"></select>
 				</div>
 				
-				<div  class="form-group">
-					<div class="form-group">
-						<label>构建日期</label>
-						<select name="build_date" id="build_date" class="form-control"></select>
-					</div>
-					<div class="form-group">
-						<input type="button" class="btn btn-primary" value="添加构建" onclick="addBuild()"/>
-						<input type="button" class="btn btn-primary" value="删除已选" onclick="deleteSelectedBuild()"/>
-						<input type="button" class="btn btn-primary" value="删除所有" onclick="deleteAllBuild()" />
-					</div>
-					<div>
-						<div>
-							<select name="selected_builds" id="selected_builds" class="form-control" multiple="multiple">
-								<c:forEach var="itemBuild" items="${arrBuild}">
-									<option value="${itemBuild}" selected="selected" >${itemBuild}</option>
-								</c:forEach>
-							</select>
-							<input type="hidden" name="inputBuilds" id="inputBuilds"/>
-						</div>
-					</div>
+				<div class="form-group" style="width:40%;float:right;margin-top:15px">
+					<input type="button" class="btn btn-primary" value="添加构建" onclick="addBuild()"/>
+					<input type="button" class="btn btn-primary" value="删除已选" onclick="deleteSelectedBuild()"/>
+					<input type="button" class="btn btn-primary" value="删除所有" onclick="deleteAllBuild()"/>
 				</div>
-				
-				<div class="form-group">
-					<input type="radio" #id="ipdScore" name="ipdOrLmtScore" class="radidItem" checked="checked" value="1"/>
-					<label>IPD分数(0-5)</label>
-					<input name="ipd_score" value="${sprint.ipd_score}" style="width:80px;height:30px" onblur="checkScore()" />
-					<span id="ipd_score_flag"></span>
-					
-					<input type="radio" #id="lmtScore" name="ipdOrLmtScore" class="radidItem" value="2" style="margin-left:50px"/>
-					<label>LMT分数(0-5)</label>
-					<input name="lmt_score" value="${sprint.lmt_score}" disabled="disabled" style="width:80px;height:30px" onblur="checkScore()" />
-					<span id="lmt_score_flag"></span>
+				<div style="clear:both">
+					<select name="selected_builds" id="selected_builds" class="form-control" multiple="multiple">
+						<c:forEach var="itemBuild" items="${arrBuild}">
+							<option value="${itemBuild}" selected="selected" >${itemBuild}</option>
+						</c:forEach>
+					</select>
+					<input type="hidden" name="inputBuilds" id="inputBuilds"/>
 				</div>
+			</div>
+
+			
+			<div style="clear:both;margin-bottom:10px">
+				<input type="radio" #id="ipdScore" name="ipdOrLmtScore" class="radidItem" checked="checked" value="1"/>
+				<label>IPD分数(0-5)</label>
+				<input name="ipd_score" value="${sprint.ipd_score}" style="width:80px;height:30px" onblur="checkScore()" />
+				<span id="ipd_score_flag"></span>
 				
-				<div class="form-group">
-					<input type="button" class="btn btn-primary"  value="保存" onclick="saveSprintDetails()" />
-					<input type="button" class="btn btn-primary"  value="取消" onclick="backToMainframe()" />
-				</div>
-				
-				<div id="sprint_tipLabel">
+				<input type="radio" #id="lmtScore" name="ipdOrLmtScore" class="radidItem" value="2" style="margin-left:50px"/>
+				<label>LMT分数(0-5)</label>
+				<input name="lmt_score" value="${sprint.lmt_score}" disabled="disabled" style="width:80px;height:30px" onblur="checkScore()" />
+				<span id="lmt_score_flag"></span>
+			</div>
+			
+			<div class="form-group">
+				<input type="button" class="btn btn-primary"  value="保存" onclick="saveSprintDetails()" />
+				<input type="button" class="btn btn-primary"  value="取消" onclick="backToMainframe()" />
+				<span id="sprint_tipLabel">
 					<c:choose>
 						<c:when test="${updateResult eq 'ok'}">修改成功</c:when>
 						<c:when test="${updateResult eq 'err'}">修改失败！</c:when>
 						<c:otherwise>${updateResult}</c:otherwise>
 					</c:choose>
-				</div>
-				
-				<input type="hidden" value="<fmt:formatDate value='${sprint.sprint_builddate }' pattern='yyyy-MM-dd'/>" id="builddateHidden" />
-				<input type="hidden" value="<fmt:formatDate value='${sprint.sprint_startdate }' pattern='yyyy-MM-dd'/>" id="startdateHidden" />
-				<input type="hidden" value="<fmt:formatDate value='${sprint.sprint_enddate }' pattern='yyyy-MM-dd'/>" id="enddateHidden" />
-				<input type="hidden" value="${project_id}" name="project_id" />
-				<input type="hidden" value="${sprint.sprint_id }" name="sprint_id" />
-				<input type="hidden" value="${sprint.ipd_score }" name="ipd_hidden" />
-				<input type="hidden" value="${sprint.lmt_score }" name="lmt_hidden" />
-				<input type="hidden" value="${project_flag }" name="project_flag" />
-				
-			</form>
-		</div>
-		
-	<jsp:include page="commonpart/containerEnd.jsp"></jsp:include>
+				</span>
+			</div>
+			
+			<input type="hidden" value="<fmt:formatDate value='${sprint.sprint_builddate }' pattern='yyyy-MM-dd'/>" id="builddateHidden" />
+			<input type="hidden" value="<fmt:formatDate value='${sprint.sprint_startdate }' pattern='yyyy-MM-dd'/>" id="startdateHidden" />
+			<input type="hidden" value="<fmt:formatDate value='${sprint.sprint_enddate }' pattern='yyyy-MM-dd'/>" id="enddateHidden" />
+			<input type="hidden" value="${project_id}" name="project_id" />
+			<input type="hidden" value="${sprint.sprint_id }" name="sprint_id" />
+			<input type="hidden" value="${sprint.ipd_score }" name="ipd_hidden" />
+			<input type="hidden" value="${sprint.lmt_score }" name="lmt_hidden" />
+			<input type="hidden" value="${project_flag }" name="project_flag" />
+		</form>
+	</div>
 	<jsp:include page="commonpart/footer.jsp"></jsp:include>
 	<script type="text/javascript">
 		function checkScore()
